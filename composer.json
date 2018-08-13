@@ -1,0 +1,32 @@
+{
+    "name":"iwd/snelstart-php",
+    "license": "GPL-3.0",
+    "type": "library",
+    "description": "Snelstart API toegepast in PHP",
+    "require": {
+        "php": ">=7.1",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.3",
+        "moneyphp/money": "^3.0",
+        "myclabs/php-enum": "^1.6",
+        "psr/log": "^1.0",
+        "ramsey/uuid": "^3.8"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.10.2",
+        "phpunit/phpunit": "^7.3"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "SnelstartPHP\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    }
+}
