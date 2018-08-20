@@ -39,9 +39,9 @@ class PasswordBearerToken implements BearerTokenInterface
     public function getFormParams(): array
     {
         return [
-            "granttype" =>  "password",
-            "username"  =>  $this->username,
-            "password"  =>  $this->password,
+            "grant_type"    =>  "password",
+            "username"      =>  $this->username,
+            "password"      =>  $this->password,
         ];
     }
 }

@@ -14,7 +14,8 @@ class ClientKeyBearerTokenTest extends TestCase
     {
         $instance = new ClientKeyBearerToken("test");
         $this->assertEquals([
-            "clientkey" => "test"
+            "grant_type"    =>  "clientkey",
+            "clientkey"     => "test"
         ], $instance->getFormParams());
     }
 }

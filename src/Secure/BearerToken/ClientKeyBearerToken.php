@@ -23,7 +23,8 @@ class ClientKeyBearerToken implements BearerTokenInterface
     public function getFormParams(): array
     {
         return [
-            "clientkey" =>  $this->clientKey,
+            "grant_type"    =>  "clientkey",
+            "clientkey"     =>  $this->clientKey,
         ];
     }
 }

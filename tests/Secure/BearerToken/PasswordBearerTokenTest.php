@@ -15,9 +15,9 @@ class PasswordBearerTokenTest extends TestCase
         $instance = new PasswordBearerToken(base64_encode("test:test"));
 
         $this->assertEquals([
-            "username"  =>  "test",
-            "password"  =>  "test",
-            "granttype" =>  "password",
+            "username"      =>  "test",
+            "password"      =>  "test",
+            "grant_type"    =>  "password",
         ], $instance->getFormParams());
     }
 
