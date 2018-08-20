@@ -6,24 +6,8 @@
 
 namespace SnelstartPHP\Model;
 
-use Ramsey\Uuid\UuidInterface;
-
 class Land extends SnelstartObject
 {
-    /**
-     * De publieke sleutel (public identifier, als uuid) dat uniek een object identificeert.
-     *
-     * @var UuidInterface
-     */
-    private $id;
-
-    /**
-     * Geeft de realtieve uri terug van het object waartoe de identifier behoort.
-     *
-     * @var string
-     */
-    private $uri;
-
     /**
      * De naam van het land.
      *
@@ -44,4 +28,63 @@ class Land extends SnelstartObject
      * @var string
      */
     private $landcode;
+
+    /**
+     * @return string
+     */
+    public function getNaam(): string
+    {
+        return $this->naam;
+    }
+
+    /**
+     * @param string $naam
+     * @return Land
+     */
+    public function setNaam(string $naam): self
+    {
+        $this->naam = $naam;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLandcodeISO(): string
+    {
+        return $this->landcodeISO;
+    }
+
+    /**
+     * @param string $landcodeISO
+     * @return Land
+     */
+    public function setLandcodeISO(string $landcodeISO): self
+    {
+        $this->landcodeISO = $landcodeISO;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLandcode(): string
+    {
+        return $this->landcode;
+    }
+
+    /**
+     * @param string $landcode
+     * @return Land
+     */
+    public function setLandcode(string $landcode): self
+    {
+        $this->landcode = $landcode;
+
+        return $this;
+    }
+    
+    
 }
