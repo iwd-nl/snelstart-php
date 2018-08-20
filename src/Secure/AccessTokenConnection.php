@@ -59,10 +59,15 @@ class AccessTokenConnection implements ConnectionInterface
             throw new \InvalidArgumentException("You have to define the type of bearer token to use.");
         }
 
-        $request = new Request("GET", "token");
+        $this->bearerToken = $bearerToken ?? $this->bearerToken;
+
+        $request = new Request("POST", $this->getEndpoint() . "token", [
+            "Content-Type"      =>  "application/x-www-form-urlencoded",
+        ], http_build_query($this->bearerToken->getFormParams()));
+
         $response = $this->doRequest($request);
 
-        return new AccessToken(\GuzzleHttp\json_decode($response->getBody(), true), $this->bearerToken = $bearerToken ?? $this->bearerToken);
+        return new AccessToken(\GuzzleHttp\json_decode($response->getBody(), true), $this->bearerToken);
     }
 
     public function getEndpoint(): string
