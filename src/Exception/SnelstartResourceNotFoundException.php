@@ -6,7 +6,8 @@
 
 namespace SnelstartPHP\Exception;
 
-class SnelstartResourceNotFoundException extends \RuntimeException
-{
+use GuzzleHttp\Exception\ClientException;
 
+class SnelstartResourceNotFoundException extends ClientException
+{
 }
