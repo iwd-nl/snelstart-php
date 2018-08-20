@@ -56,8 +56,8 @@ class AccessTokenConnectionTest extends TestCase
             ->method("send")
             ->willReturn($successResponse);
 
-        $connection = new AccessTokenConnection($this->client);
-        $accessToken = $connection->getToken($this->token);
+        $connection = new AccessTokenConnection($this->token, $this->client);
+        $accessToken = $connection->getToken();
 
         $this->assertEquals(new AccessToken($accessTokenContent, $this->token), $accessToken);
         $this->assertEquals("bearer", $accessToken->getTokenType());
@@ -78,7 +78,15 @@ class AccessTokenConnectionTest extends TestCase
             ->method("send")
             ->willThrowException(BadResponseException::create(new Request("POST", "test"), $errorResponse));
 
-        $connection = new AccessTokenConnection($this->client);
-        $connection->getToken($this->token);
+        $connection = new AccessTokenConnection($this->token, $this->client);
+        $connection->getToken();
+    }
+
+    public function testAccessTokenWithoutBearerTokenSupplied()
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $connection = new AccessTokenConnection(null, $this->client);
+        $connection->getToken();
+
     }
 }

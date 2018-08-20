@@ -22,9 +22,15 @@ class AccessTokenConnection implements ConnectionInterface
      */
     private $client;
 
-    public function __construct(?ClientInterface $client = null)
+    /**
+     * @var BearerTokenInterface|null
+     */
+    private $bearerToken;
+
+    public function __construct(?BearerTokenInterface $bearerToken = null, ?ClientInterface $client = null)
     {
         $this->client = $client;
+        $this->bearerToken = $bearerToken;
     }
 
     /**
@@ -44,14 +50,19 @@ class AccessTokenConnection implements ConnectionInterface
     /**
      * Will throw an exception if we get anything other than a success.
      *
+     * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getToken(BearerTokenInterface $bearerToken): AccessToken
+    public function getToken(?BearerTokenInterface $bearerToken = null): AccessToken
     {
+        if ($bearerToken === null && $this->bearerToken === null) {
+            throw new \InvalidArgumentException("You have to define the type of bearer token to use.");
+        }
+
         $request = new Request("GET", "token");
         $response = $this->doRequest($request);
 
-        return new AccessToken(\GuzzleHttp\json_decode($response->getBody(), true), $bearerToken);
+        return new AccessToken(\GuzzleHttp\json_decode($response->getBody(), true), $this->bearerToken = $bearerToken ?? $this->bearerToken);
     }
 
     public function getEndpoint(): string
