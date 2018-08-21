@@ -15,28 +15,28 @@ abstract class RelatieAdres
      *
      * @var string|null
      */
-    private $contactpersoon;
+    protected $contactpersoon;
 
     /**
      * De straatnaam (inclusief huisnummer).
      *
      * @var string|null
      */
-    private $straat;
+    protected $straat;
 
     /**
      * De postcode van het adres.
      *
      * @var string|null
      */
-    private $postcode;
+    protected $postcode;
 
     /**
      * De plaatsnaam van het adres.
      *
      * @var string|null
      */
-    private $plaats;
+    protected $plaats;
 
     /**
      * De Id van het land waartoe dit adres behoord.
@@ -44,5 +44,100 @@ abstract class RelatieAdres
      *
      * @var UuidInterface|null
      */
-    private $land;
+    protected $land;
+
+    /**
+     * @return null|string
+     */
+    public function getContactpersoon(): ?string
+    {
+        return $this->contactpersoon;
+    }
+
+    /**
+     * @param null|string $contactpersoon
+     * @return RelatieAdres
+     */
+    public function setContactpersoon(?string $contactpersoon): RelatieAdres
+    {
+        $this->contactpersoon = $contactpersoon;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getStraat(): ?string
+    {
+        return $this->straat;
+    }
+
+    /**
+     * @param null|string $straat
+     * @return RelatieAdres
+     */
+    public function setStraat(?string $straat): RelatieAdres
+    {
+        $this->straat = $straat;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPostcode(): ?string
+    {
+        return $this->postcode;
+    }
+
+    /**
+     * @param null|string $postcode
+     * @return RelatieAdres
+     */
+    public function setPostcode(?string $postcode): RelatieAdres
+    {
+        $this->postcode = $postcode;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPlaats(): ?string
+    {
+        return $this->plaats;
+    }
+
+    /**
+     * @param null|string $plaats
+     * @return RelatieAdres
+     */
+    public function setPlaats(?string $plaats): RelatieAdres
+    {
+        $this->plaats = $plaats;
+
+        return $this;
+    }
+
+    /**
+     * @return null|UuidInterface
+     */
+    public function getLand(): ?UuidInterface
+    {
+        return $this->land;
+    }
+
+    /**
+     * @param null|UuidInterface $land
+     * @return RelatieAdres
+     */
+    public function setLand(?UuidInterface $land): RelatieAdres
+    {
+        $this->land = $land;
+
+        return $this;
+    }
 }

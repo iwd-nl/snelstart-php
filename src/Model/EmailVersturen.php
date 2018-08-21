@@ -29,7 +29,7 @@ class EmailVersturen
      */
     private $ccEmail;
 
-    public function __construct(bool $shouldSend = false, ?string $email, ?string $ccEmail)
+    public function __construct(bool $shouldSend, ?string $email, ?string $ccEmail)
     {
         $this->shouldSend = $shouldSend;
         $this->email = $email;

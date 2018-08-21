@@ -12,4 +12,5 @@ class Relatiesoort extends Enum
 {
     private const LEVERANCIER       = 'Leverancier';
     private const KLANT             = 'Klant';
+    private const EIGEN             = 'Eigen';
 }
