@@ -7,6 +7,7 @@
 namespace SnelstartPHP\Secure;
 
 use Psr\Cache\CacheItemPoolInterface;
+use Psr\Log\LoggerInterface;
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
 class CachedAccessTokenConnection
@@ -22,6 +23,11 @@ class CachedAccessTokenConnection
     private $cacheItemPool;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Prefix to use to store the access token.
      */
     private const CACHE_ITEM_PREFIX = "snelstart.access_token.";
@@ -31,10 +37,11 @@ class CachedAccessTokenConnection
      */
     private const EXPIRES_AFTER_BUFFER = 60;
 
-    public function __construct(AccessTokenConnection $accessTokenConnection, CacheItemPoolInterface $cacheItemPool)
+    public function __construct(AccessTokenConnection $accessTokenConnection, CacheItemPoolInterface $cacheItemPool, ?LoggerInterface $logger = null)
     {
         $this->connection = $accessTokenConnection;
         $this->cacheItemPool = $cacheItemPool;
+        $this->logger = $logger;
     }
 
     /**
@@ -47,7 +54,15 @@ class CachedAccessTokenConnection
         $cacheItem = $this->cacheItemPool->getItem($this->getItemKey());
 
         if ($cacheItem->isHit()) {
+            if ($this->logger !== null) {
+                $this->logger->debug("[AccessToken] Successfully retrieved from cache.");
+            }
+
             return $cacheItem->get();
+        }
+
+        if ($this->logger !== null) {
+            $this->logger->debug("[AccessToken] Get an access token from Snelstart");
         }
 
         $accessToken = $this->connection->getToken($bearerToken);
@@ -60,11 +75,6 @@ class CachedAccessTokenConnection
         }
 
         return $accessToken;
-    }
-
-    public function getEndpoint(): string
-    {
-        return $this->connection->getEndpoint();
     }
 
     protected function getItemKey(): string
