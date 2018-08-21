@@ -10,8 +10,8 @@ use Throwable;
 
 class RateLimitException extends \RuntimeException
 {
-    public function __construct($message = "", $code = 0, Throwable $previous = null)
+    public function __construct($message = "Rate Limit for the API has been reached", $code = 0, Throwable $previous = null)
     {
-        parent::__construct("Rate Limit for the API has been reached", $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 }

@@ -46,7 +46,7 @@ class AccessToken implements \JsonSerializable
         $this->expires = $options['expires_in'] !== 0 ? time() + $options['expires_in'] : 0;
     }
 
-    public function getExpiresIn()
+    public function getExpiresIn(): int
     {
         return $this->expires - time();
     }
@@ -71,7 +71,7 @@ class AccessToken implements \JsonSerializable
         return [
             'access_token'  =>  $this->accessToken,
             'token_type'    =>  $this->tokenType,
-            'expires_in'    =>  time() - $this->expires,
+            'expires_in'    =>  $this->getExpiresIn(),
             'expires'       =>  $this->expires,
         ];
     }
