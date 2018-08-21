@@ -46,9 +46,14 @@ class AccessToken implements \JsonSerializable
         $this->expires = $options['expires_in'] !== 0 ? time() + $options['expires_in'] : 0;
     }
 
+    public function getExpiresIn()
+    {
+        return $this->expires - time();
+    }
+
     public function isExpired(): bool
     {
-        return $this->expires - time() < 1;
+        return $this->getExpiresIn() < 1;
     }
 
     public function getBearerToken(): BearerTokenInterface
