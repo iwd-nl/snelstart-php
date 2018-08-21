@@ -92,6 +92,13 @@ class AuthenticatedConnection implements ConnectionInterface
             $this->preRequestValidation($request = $request->withHeader("Authorization", sprintf("Bearer %s", $this->accessToken)));
             $this->numRetries++;
 
+            if ($this->logger !== null) {
+                $this->logger->debug("[Connection] About to send a request with the following specs", [
+                    "method"    =>  $request->getMethod(),
+                    "uri"       =>  (string) $request->getUri(),
+                ]);
+            }
+
             $response = $client->send($request);
             $this->numRetries = 0;
 
@@ -146,7 +153,7 @@ class AuthenticatedConnection implements ConnectionInterface
     protected function setOrReplaceSubscriptionKeyInRequest(RequestInterface $request, string $key): RequestInterface
     {
         if ($this->logger !== null && $request->hasHeader(self::SUBSCRIPTION_HEADER_NAME)) {
-            $this->logger->info(sprintf("Replacing the subscription key in the request to '%s'", $key));
+            $this->logger->debug(sprintf("[Connection] Replacing the subscription key in the request to '%s'", $key));
         }
 
         $request = $request->withHeader(self::SUBSCRIPTION_HEADER_NAME, $key);
