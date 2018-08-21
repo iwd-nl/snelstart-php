@@ -8,7 +8,7 @@ namespace SnelstartPHP\Connector;
 
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
-use SnelstartPHP\Request\Read\Land as LandRequest;
+use SnelstartPHP\Request\LandRequest;
 use SnelstartPHP\Mapper\LandMapper;
 use SnelstartPHP\Model\Land;
 

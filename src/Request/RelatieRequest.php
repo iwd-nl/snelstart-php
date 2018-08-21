@@ -4,14 +4,14 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Request\Read;
+namespace SnelstartPHP\Request;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
-use SnelstartPHP\Request\ODataRequestData;
+use SnelstartPHP\Model\Relatie;
 
-class Relatie
+class RelatieRequest
 {
     public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
     {

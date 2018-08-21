@@ -10,12 +10,12 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Mapper\RelatieMapper;
 use SnelstartPHP\Request\ODataRequestData;
-use SnelstartPHP\Request\Read\Relatie as RelatieRequest;
-use SnelstartPHP\Model\Relatie as RelatieModel;
+use SnelstartPHP\Request\RelatieRequest;
+use SnelstartPHP\Model\Relatie;
 
 class RelatieConnector extends BaseConnector
 {
-    public function find(UuidInterface $id): ?RelatieModel
+    public function find(UuidInterface $id): ?Relatie
     {
         try {
             return RelatieMapper::find($this->connection->doRequest(RelatieRequest::find($id)));

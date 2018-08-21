@@ -4,13 +4,13 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Request\Read;
+namespace SnelstartPHP\Request;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 
-class Land
+class LandRequest
 {
     public static function findAll(): RequestInterface
     {
