@@ -3,6 +3,16 @@
     "license": "GPL-3.0",
     "type": "library",
     "description": "Snelstart API toegepast in PHP",
+    "homepage": "https://github.com/iwd-nl/snelstart-php",
+    "keywords": [
+        "snelstart"
+    ],
+    "authors": [
+        {
+            "name": "IntoWebDevelopment",
+            "email": "manuel@mail.iwdev.nl"
+        }
+    ],
     "require": {
         "php": ">=7.1",
         "ext-json": "*",
@@ -11,6 +21,7 @@
         "myclabs/php-enum": "^1.6",
         "psr/cache": "^1.0",
         "psr/log": "^1.0",
+        "psr/http-message": "^1.0",
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {
@@ -18,7 +29,7 @@
         "phpunit/phpunit": "^7.3"
     },
     "suggest": {
-        "symfony/cache": "^4.1.*"
+        "symfony/cache": "Caching made a little easier. Comes in handy for access tokens."
     },
     "config": {
         "sort-packages": true
