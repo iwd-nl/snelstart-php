@@ -9,28 +9,22 @@ namespace SnelstartPHP\Connector;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Request\Read\Land as LandRequest;
-use SnelstartPHP\Response\Read\Land;
-use SnelstartPHP\Model\Land as LandModel;
+use SnelstartPHP\Mapper\LandMapper;
+use SnelstartPHP\Model\Land;
 
 class LandConnector extends BaseConnector
 {
-    public function find(UuidInterface $id): ?LandModel
+    public function find(UuidInterface $id): ?Land
     {
         try {
-            return Land::find($this->connection->doRequest(LandRequest::get($id)));
+            return LandMapper::find($this->connection->doRequest(LandRequest::find($id)));
         } catch (SnelstartResourceNotFoundException $e) {
             return null;
         }
     }
 
-    public function findAll(): array
+    public function findAll(): \Iterator
     {
-        $landen = [];
-
-        foreach (Land::findAll($this->connection->doRequest(LandRequest::getAll())) as $land) {
-            $landen[] = $land;
-        }
-
-        return $landen;
+        return LandMapper::findAll($this->connection->doRequest(LandRequest::findAll()));
     }
 }

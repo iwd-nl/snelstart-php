@@ -12,12 +12,12 @@ use Ramsey\Uuid\UuidInterface;
 
 class Land
 {
-    public static function getAll(): RequestInterface
+    public static function findAll(): RequestInterface
     {
         return new Request("GET", "landen");
     }
 
-    public static function get(UuidInterface $id): RequestInterface
+    public static function find(UuidInterface $id): RequestInterface
     {
         return new Request("GET", "landen/" . $id->toString());
     }
