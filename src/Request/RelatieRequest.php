@@ -23,14 +23,11 @@ class RelatieRequest extends BaseRequest
         return new Request("GET", "relaties/" . $id->toString());
     }
 
-    public static function add(Relatie $relatie)
+    public static function add(Relatie $relatie): RequestInterface
     {
-        $serialize = self::prepareAddOrEditRequestForSerialization($relatie);
-        unset($serialize["id"]);
-
         return new Request("POST", "relaties", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($serialize));
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
     }
 
     public static function update(Relatie $relatie): RequestInterface
