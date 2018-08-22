@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\Relatie;
 
-class RelatieRequest
+class RelatieRequest extends BaseRequest
 {
     public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
     {

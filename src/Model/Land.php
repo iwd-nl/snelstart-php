@@ -85,6 +85,4 @@ class Land extends SnelstartObject
 
         return $this;
     }
-    
-    
 }

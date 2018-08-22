@@ -202,6 +202,38 @@ class Relatie extends SnelstartObject
      */
     private $verkoopBoekingenUri;
 
+    public static $editableAttributes = [
+        "id",
+        "modifiedOn",
+        "relatiesoort",
+        "relatiecode",
+        "naam",
+        "vestigingsAdres",
+        "correspondentieAdres",
+        "telefoon",
+        "mobieleTelefoon",
+        "email",
+        "btwNummer",
+        "factuurkorting",
+        "krediettermijn",
+        "bankieren",
+        "nonactief",
+        "kredietLimiet",
+        "memo",
+        "kvkNummer",
+        "websiteUrl",
+        "aanmaningsoort",
+        "offerteEmailVersturen",
+        "bevestigingsEmailVersturen",
+        "factuurEmailVersturen",
+        "aanmaningEmailVersturen",
+        "ublBestandAlsBijlage",
+        "iban",
+        "bic",
+        "incassoSoort",
+        "factuurRelatie",
+    ];
+
     /**
      * @return \DateTimeInterface|null
      */
@@ -243,7 +275,7 @@ class Relatie extends SnelstartObject
     /**
      * @return int
      */
-    public function getRelatiecode(): int
+    public function getRelatiecode(): ?int
     {
         return $this->relatiecode;
     }
@@ -252,7 +284,7 @@ class Relatie extends SnelstartObject
      * @param int $relatiecode
      * @return Relatie
      */
-    public function setRelatiecode(int $relatiecode): self
+    public function setRelatiecode(?int $relatiecode): self
     {
         $this->relatiecode = $relatiecode;
 
@@ -752,6 +784,4 @@ class Relatie extends SnelstartObject
 
         return $this;
     }
-
-
 }

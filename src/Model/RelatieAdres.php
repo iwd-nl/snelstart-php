@@ -6,9 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-use Ramsey\Uuid\UuidInterface;
-
-abstract class RelatieAdres
+abstract class RelatieAdres extends BaseObject
 {
     /**
      * De volledige naam van de contactpersoon op dit adres.
@@ -42,9 +40,16 @@ abstract class RelatieAdres
      * De Id van het land waartoe dit adres behoord.
      * Indien niets is opgegeven is dit standaard "Nederland".
      *
-     * @var UuidInterface|null
+     * @var Land|null
      */
     protected $land;
+
+    public static $editableAttributes = [
+        "contactpersoon",
+        "straat",
+        "postcode",
+        "plaats",
+    ];
 
     /**
      * @return null|string
@@ -58,7 +63,7 @@ abstract class RelatieAdres
      * @param null|string $contactpersoon
      * @return RelatieAdres
      */
-    public function setContactpersoon(?string $contactpersoon): RelatieAdres
+    public function setContactpersoon(?string $contactpersoon): self
     {
         $this->contactpersoon = $contactpersoon;
 
@@ -77,7 +82,7 @@ abstract class RelatieAdres
      * @param null|string $straat
      * @return RelatieAdres
      */
-    public function setStraat(?string $straat): RelatieAdres
+    public function setStraat(?string $straat): self
     {
         $this->straat = $straat;
 
@@ -96,7 +101,7 @@ abstract class RelatieAdres
      * @param null|string $postcode
      * @return RelatieAdres
      */
-    public function setPostcode(?string $postcode): RelatieAdres
+    public function setPostcode(?string $postcode): self
     {
         $this->postcode = $postcode;
 
@@ -115,7 +120,7 @@ abstract class RelatieAdres
      * @param null|string $plaats
      * @return RelatieAdres
      */
-    public function setPlaats(?string $plaats): RelatieAdres
+    public function setPlaats(?string $plaats): self
     {
         $this->plaats = $plaats;
 
@@ -123,18 +128,18 @@ abstract class RelatieAdres
     }
 
     /**
-     * @return null|UuidInterface
+     * @return null|Land
      */
-    public function getLand(): ?UuidInterface
+    public function getLand(): ?Land
     {
         return $this->land;
     }
 
     /**
-     * @param null|UuidInterface $land
+     * @param null|Land $land
      * @return RelatieAdres
      */
-    public function setLand(?UuidInterface $land): RelatieAdres
+    public function setLand(?Land $land): self
     {
         $this->land = $land;
 
