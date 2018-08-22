@@ -12,6 +12,7 @@ use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model\EmailVersturen;
+use SnelstartPHP\Model\Land;
 use SnelstartPHP\Model\Relatie;
 use SnelstartPHP\Model\RelatieAdres;
 use SnelstartPHP\Model\RelatieCorrespondentieAdres;
@@ -32,6 +33,12 @@ class RelatieMapper extends AbstractMapper
     public static function findAll(ResponseInterface $response): \Generator
     {
         return (new static($response))->mapManyResultsToSubMappers();
+    }
+
+    public static function add(ResponseInterface $response): Relatie
+    {
+        $mapper = new static($response);
+        return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
     }
 
     /**
@@ -109,12 +116,15 @@ class RelatieMapper extends AbstractMapper
             throw new \InvalidArgumentException(sprintf("Only classes that extend '%s' are allowed here.", RelatieAdres::class));
         }
 
+        $land = new Land();
+        $land->setId(Uuid::fromString($address["land"]["id"]));
+
         return $class
             ->setContactpersoon($address["contactpersoon"])
             ->setStraat($address["straat"])
             ->setPostcode($address["postcode"])
             ->setPlaats($address["plaats"])
-            ->setLand(Uuid::fromString($address["land"]["id"]));
+            ->setLand($land);
     }
 
     /**

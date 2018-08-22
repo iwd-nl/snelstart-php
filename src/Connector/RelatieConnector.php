@@ -46,4 +46,9 @@ class RelatieConnector extends BaseConnector
 
         return $iterator;
     }
+
+    public function add(Relatie $relatie)
+    {
+        RelatieMapper::add($this->connection->doRequest(RelatieRequest::add($relatie)));
+    }
 }
