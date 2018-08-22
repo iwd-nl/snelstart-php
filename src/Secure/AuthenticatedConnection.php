@@ -109,13 +109,22 @@ class AuthenticatedConnection implements ConnectionInterface
             $response = $clientException->getResponse();
 
             if ($response->getStatusCode() === 400) {
-                $body = \GuzzleHttp\json_decode((string) $response->getBody(), true);
+                $jsonBody = (string) $response->getBody();
+                $body = \GuzzleHttp\json_decode($jsonBody, true);
 
-                throw new SnelstartApiErrorException(
-                    $body["message"] ?? "Unknown error message",
-                    $body["statusCode"] ?? 400,
-                    $response
-                );
+                if ($this->logger !== null) {
+                    $this->logger->error("[Connection] " . $jsonBody, [
+                        "exception" =>  $clientException
+                    ]);
+                }
+
+                foreach ($body as $error) {
+                    if (isset($error["errorCode"])) {
+                        throw new SnelstartApiErrorException(sprintf("%s: %s", $error["errorCode"], $error["message"]));
+                    }
+                }
+
+                throw new SnelstartApiErrorException("Unknown error message occurred", 400);
             } else if ($response->getStatusCode() === 401) {
                 throw SnelstartApiAccessDeniedException::createFromParent($clientException);
             } else if ($response->getStatusCode() === 404) {
