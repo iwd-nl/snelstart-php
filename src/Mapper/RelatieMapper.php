@@ -41,6 +41,12 @@ class RelatieMapper extends AbstractMapper
         return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
     }
 
+    public static function update(ResponseInterface $response): Relatie
+    {
+        $mapper = new static($response);
+        return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
+    }
+
     /**
      * Map many results to the mapper.
      *

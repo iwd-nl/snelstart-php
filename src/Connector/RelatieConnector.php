@@ -7,6 +7,7 @@
 namespace SnelstartPHP\Connector;
 
 use Ramsey\Uuid\UuidInterface;
+use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Mapper\RelatieMapper;
 use SnelstartPHP\Request\ODataRequestData;
@@ -47,8 +48,21 @@ class RelatieConnector extends BaseConnector
         return $iterator;
     }
 
-    public function add(Relatie $relatie)
+    public function add(Relatie $relatie): Relatie
     {
-        RelatieMapper::add($this->connection->doRequest(RelatieRequest::add($relatie)));
+        if ($relatie->getId() !== null) {
+            throw new PreValidationException("The ID of this relation should be null.");
+        }
+
+        return RelatieMapper::add($this->connection->doRequest(RelatieRequest::add($relatie)));
+    }
+
+    public function update(Relatie $relatie): Relatie
+    {
+        if ($relatie->getId() === null) {
+            throw new PreValidationException("All relations should have an ID.");
+        }
+
+        return RelatieMapper::update($this->connection->doRequest(RelatieRequest::update($relatie)));
     }
 }

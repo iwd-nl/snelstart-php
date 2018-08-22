@@ -32,4 +32,11 @@ class RelatieRequest extends BaseRequest
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode($serialize));
     }
+
+    public static function update(Relatie $relatie): RequestInterface
+    {
+        return new Request("PUT", "relaties", [
+            "Content-Type"  =>  "application/json"
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
+    }
 }
