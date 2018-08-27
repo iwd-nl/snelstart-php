@@ -48,21 +48,9 @@ class RelatieMapper extends AbstractMapper
     }
 
     /**
-     * Map many results to the mapper.
-     *
-     * @return \Generator
-     */
-    protected function mapManyResultsToSubMappers(): \Generator
-    {
-        foreach ($this->responseData as $relatieData) {
-            yield $this->mapResponseToRelatieModel(new Relatie(), $relatieData);
-        }
-    }
-
-    /**
      * Map the data from the response to the model.
      */
-    protected function mapResponseToRelatieModel(Relatie $relatie, array $data = []): Relatie
+    public function mapResponseToRelatieModel(Relatie $relatie, array $data = []): Relatie
     {
         $data = empty($data) ? $this->responseData : $data;
         $relatie = $this->mapArrayDataToModel($relatie, $data);
@@ -111,7 +99,7 @@ class RelatieMapper extends AbstractMapper
      * @param string $addressClass
      * @return RelatieAdres
      */
-    protected function mapAddressToRelatieAddress(array $address, string $addressClass): RelatieAdres
+    public function mapAddressToRelatieAddress(array $address, string $addressClass): RelatieAdres
     {
         /**
          * @var RelatieAdres $class
@@ -140,12 +128,24 @@ class RelatieMapper extends AbstractMapper
      * @param string $emailVersturenClass
      * @return EmailVersturen
      */
-    protected function mapEmailVersturenField(array $emailVersturen, string $emailVersturenClass = EmailVersturen::class): EmailVersturen
+    public function mapEmailVersturenField(array $emailVersturen, string $emailVersturenClass = EmailVersturen::class): EmailVersturen
     {
         return new $emailVersturenClass(
             $emailVersturen["shouldSend"],
             $emailVersturen["email"],
             $emailVersturen["ccEmail"]
         );
+    }
+
+    /**
+     * Map many results to the mapper.
+     *
+     * @return \Generator
+     */
+    protected function mapManyResultsToSubMappers(): \Generator
+    {
+        foreach ($this->responseData as $relatieData) {
+            yield $this->mapResponseToRelatieModel(new Relatie(), $relatieData);
+        }
     }
 }
