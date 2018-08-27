@@ -13,12 +13,13 @@ class LandMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Land
     {
-        return (new self($response))->mapArrayDataToModel(new Land(), $mapper->responseData);
+        $mapper = new static($response);
+        return $mapper->mapArrayDataToModel(new Land(), $mapper->responseData);
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        $mapper = new self($response);
+        $mapper = new static($response);
 
         foreach ($mapper->responseData as $landData) {
             yield $mapper->mapArrayDataToModel(new Land(), $landData);

@@ -26,24 +26,24 @@ class RelatieMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Relatie
     {
-        $mapper = new self($response);
+        $mapper = new static($response);
         return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        return (new self($response))->mapManyResultsToSubMappers();
+        return (new static($response))->mapManyResultsToSubMappers();
     }
 
     public static function add(ResponseInterface $response): Relatie
     {
-        $mapper = new self($response);
+        $mapper = new static($response);
         return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
     }
 
     public static function update(ResponseInterface $response): Relatie
     {
-        $mapper = new self($response);
+        $mapper = new static($response);
         return $mapper->mapResponseToRelatieModel(new Relatie(), $mapper->responseData);
     }
 
