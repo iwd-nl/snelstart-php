@@ -23,7 +23,7 @@ class Relatie extends SnelstartObject
 
     /**
      * @see Types\Relatiesoort
-     * @var array[Types\Relatiesoort]
+     * @var Types\Relatiesoort[]
      */
     private $relatiesoort;
 

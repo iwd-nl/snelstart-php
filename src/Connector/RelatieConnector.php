@@ -10,6 +10,7 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Mapper\RelatieMapper;
+use SnelstartPHP\Model\Type\Relatiesoort;
 use SnelstartPHP\Request\ODataRequestData;
 use SnelstartPHP\Request\RelatieRequest;
 use SnelstartPHP\Model\Relatie;
@@ -46,6 +47,17 @@ class RelatieConnector extends BaseConnector
         }
 
         return $iterator;
+    }
+
+    public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): \Iterator
+    {
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $ODataRequestData->setFilter(\array_merge(
+            $ODataRequestData->getFilter(),
+            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()) ])
+        );
+
+        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     public function add(Relatie $relatie): Relatie
