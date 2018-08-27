@@ -118,13 +118,7 @@ class AuthenticatedConnection implements ConnectionInterface
                     ]);
                 }
 
-                foreach ($body as $error) {
-                    if (isset($error["errorCode"])) {
-                        throw new SnelstartApiErrorException(sprintf("%s: %s", $error["errorCode"], $error["message"]));
-                    }
-                }
-
-                throw new SnelstartApiErrorException($body["Message"] ?? "Unknown error message occurred", 400);
+                throw SnelstartApiErrorException::handleError($body);
             } else if ($response->getStatusCode() === 401) {
                 throw SnelstartApiAccessDeniedException::createFromParent($clientException);
             } else if ($response->getStatusCode() === 404) {
