@@ -35,9 +35,6 @@ abstract class AbstractMapper
         return $class;
     }
 
-    /**
-     * @return  mixed
-     */
     protected static function setDataToModel(SnelstartObject $class, string $key, $value)
     {
         $methodName = "set" . ucfirst($key);
