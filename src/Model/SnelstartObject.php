@@ -51,4 +51,9 @@ abstract class SnelstartObject extends BaseObject
 
         return $this;
     }
+
+    public static function getEditableAttributes(): array
+    {
+        return \array_merge(static::$editableAttributes, self::$editableAttributes);
+    }
 }

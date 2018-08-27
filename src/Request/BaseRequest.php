@@ -18,10 +18,9 @@ abstract class BaseRequest
      */
     protected static function prepareAddOrEditRequestForSerialization(BaseObject $object)
     {
-        $className = \get_class($object);
         $serialize = [];
 
-        foreach ($className::$editableAttributes as $editableAttributeName) {
+        foreach ($object::getEditableAttributes() as $editableAttributeName) {
             $methodName = "get" . \ucfirst($editableAttributeName);
 
             if (!\method_exists($object, $methodName)) {
@@ -36,14 +35,14 @@ abstract class BaseRequest
                 $value = $value->format(Snelstart::DATETIME_FORMAT);
             } else if ($value instanceof \JsonSerializable || is_scalar($value) || is_array($value) || $value === null) {
                 // Do nothing since we accept these values.
-            } else if (is_a($value, BaseObject::class)) {
+            } else if ($value instanceof BaseObject) {
                 $value = self::prepareAddOrEditRequestForSerialization($value);
             } else {
                 throw new \LogicException(sprintf(
                     "You need to implement something to handle the serialization of '%s' (type: %s)",
                     \get_class($value),
-                    \gettype($value))
-                );
+                    \gettype($value)
+                ));
             }
 
             $serialize[$editableAttributeName] = $value;
