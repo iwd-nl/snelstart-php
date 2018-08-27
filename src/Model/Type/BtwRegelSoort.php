@@ -8,6 +8,16 @@ namespace SnelstartPHP\Model\Type;
 
 use MyCLabs\Enum\Enum;
 
+/**
+ * @method static BtwRegelSoort GEEN()
+ * @method static BtwRegelSoort VERKOPENLAAG()
+ * @method static BtwRegelSoort VERKOPENHOOG()
+ * @method static BtwRegelSoort VERKOPENOVERIG()
+ * @method static BtwRegelSoort INKOPENLAAG()
+ * @method static BtwRegelSoort INKOPENHOOG()
+ * @method static BtwRegelSoort INKOPENOVERIG()
+ * @method static BtwRegelSoort INKOPENVERLEGD()
+ */
 class BtwRegelSoort extends Enum
 {
     private const GEEN              = 'Geen';
