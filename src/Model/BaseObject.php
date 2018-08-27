@@ -12,6 +12,6 @@ abstract class BaseObject
 
     public static function getEditableAttributes(): array
     {
-        return self::$editableAttributes;
+        return \array_unique(\array_merge(self::$editableAttributes, static::$editableAttributes));
     }
 }

@@ -6,8 +6,11 @@
 
 namespace SnelstartPHP\Request;
 
+use Money\Formatter\DecimalMoneyFormatter;
+use Money\Money;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\BaseObject;
+use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Snelstart;
 
 abstract class BaseRequest
@@ -16,11 +19,15 @@ abstract class BaseRequest
      * Iterate over the Model objects and ask for the editable attributes. We will only serialize the editable fields
      * in this case.
      */
-    protected static function prepareAddOrEditRequestForSerialization(BaseObject $object)
+    protected static function prepareAddOrEditRequestForSerialization(BaseObject $object, array $editableAttributes = [])
     {
         $serialize = [];
 
-        foreach ($object::getEditableAttributes() as $editableAttributeName) {
+        if (empty($editableAttributes)) {
+            $editableAttributes = $object::getEditableAttributes();
+        }
+
+        foreach ($editableAttributes as $editableAttributeName) {
             $methodName = "get" . \ucfirst($editableAttributeName);
 
             if (!\method_exists($object, $methodName)) {
@@ -33,8 +40,31 @@ abstract class BaseRequest
                 $value = (string) $value;
             } else if ($value instanceof \DateTimeInterface) {
                 $value = $value->format(Snelstart::DATETIME_FORMAT);
-            } else if ($value instanceof \JsonSerializable || is_scalar($value) || is_array($value) || $value === null) {
+            } elseif ($value instanceof Money) {
+                $value = Snelstart::getMoneyFormatter()->format($value);
+            } else if ($editableAttributeName === "id" && $value === null) {
+                // Whenever 'id' equals null skip it.
+                continue;
+            } else if ($value instanceof \JsonSerializable || is_scalar($value) || $value === null) {
                 // Do nothing since we accept these values.
+            } else if (is_array($value)) {
+                // Apply recursion...
+                foreach ($value as &$subValue) {
+                    if ($subValue instanceof BaseObject) {
+                        $subValue = self::prepareAddOrEditRequestForSerialization($subValue);
+                    }
+                }
+
+                // Else do nothing.
+            } else if ($value instanceof SnelstartObject) {
+                $editableSubAttributes = [];
+
+                if ($value->getId() !== null) {
+                    // Because it is an existing sub-object we only have to pass on the id.
+                    $editableSubAttributes = ["id"];
+                }
+
+                $value = self::prepareAddOrEditRequestForSerialization($value, $editableSubAttributes);
             } else if ($value instanceof BaseObject) {
                 $value = self::prepareAddOrEditRequestForSerialization($value);
             } else {

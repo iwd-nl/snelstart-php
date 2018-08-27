@@ -54,6 +54,16 @@ abstract class SnelstartObject extends BaseObject
 
     public static function getEditableAttributes(): array
     {
-        return \array_merge(static::$editableAttributes, self::$editableAttributes);
+        return \array_unique(\array_merge(static::$editableAttributes, self::$editableAttributes));
+    }
+
+    /**
+     * Create an object with the given UUID (handy if you already stored the UUID somewhere).
+     *
+     * @return static
+     */
+    public static function createFromUUID(UuidInterface $uuid): self
+    {
+        return (new static())->setId($uuid);
     }
 }
