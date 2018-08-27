@@ -124,7 +124,7 @@ class AuthenticatedConnection implements ConnectionInterface
                     }
                 }
 
-                throw new SnelstartApiErrorException("Unknown error message occurred", 400);
+                throw new SnelstartApiErrorException($body["Message"] ?? "Unknown error message occurred", 400);
             } else if ($response->getStatusCode() === 401) {
                 throw SnelstartApiAccessDeniedException::createFromParent($clientException);
             } else if ($response->getStatusCode() === 404) {
@@ -135,7 +135,7 @@ class AuthenticatedConnection implements ConnectionInterface
                 }
 
                 throw new SnelstartResourceNotFoundException(
-                    $body["message"] ?? "Resource not found",
+                    $body["Message"] ?? "Resource not found",
                     $request,
                     $response,
                     $clientException
