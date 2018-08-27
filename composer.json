@@ -1,5 +1,5 @@
 {
-    "name":"iwd/snelstart-php",
+    "name":"iwd-nl/snelstart-php",
     "license": "GPL-3.0",
     "type": "library",
     "description": "Snelstart API toegepast in PHP",
@@ -20,6 +20,7 @@
         "moneyphp/money": "^3.0",
         "myclabs/php-enum": "^1.6",
         "psr/cache": "^1.0",
+        "psr/http-message": "^1.0",
         "psr/log": "^1.0",
         "psr/http-message": "^1.0",
         "ramsey/uuid": "^3.8"

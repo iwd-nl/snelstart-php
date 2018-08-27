@@ -63,7 +63,7 @@ class Dagboek extends SnelstartObject
     /**
      * RgsCodes
      *
-     * @var array[RgsCode]
+     * @var RgsCode[]
      */
     private $rgsCode;
 }

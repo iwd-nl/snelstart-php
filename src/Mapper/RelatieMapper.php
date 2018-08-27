@@ -53,6 +53,9 @@ class RelatieMapper extends AbstractMapper
     public function mapResponseToRelatieModel(Relatie $relatie, array $data = []): Relatie
     {
         $data = empty($data) ? $this->responseData : $data;
+        /**
+         * @var Relatie $relatie
+         */
         $relatie = $this->mapArrayDataToModel($relatie, $data);
         $currency = new Currency(Snelstart::CURRENCY);
 
