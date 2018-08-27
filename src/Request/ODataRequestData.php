@@ -103,6 +103,6 @@ class ODataRequestData
             return "";
         }
 
-        return http_build_query($collection);
+        return \http_build_query($collection, null, "&", \PHP_QUERY_RFC3986);
     }
 }
