@@ -6,52 +6,8 @@
 
 namespace SnelstartPHP\Model;
 
-use Money\Money;
-
-class Inkoopboeking extends SnelstartObject
+class Inkoopboeking extends Boeking
 {
-    /**
-     * Het tijdstip waarop het grootboek is aangemaakt of voor het laatst is gewijzigd
-     *
-     * @var \DateTimeInterface|null
-     */
-    private $modifiedOn;
-
-    /**
-     * Het boekstuknummer van de inkoopboeking.
-     *
-     * @var string
-     */
-    private $boekstuk;
-
-    /**
-     * Geeft aan of deze inkoopboeking is aangepast door de accountant.
-     *
-     * @var bool
-     */
-    private $gewijzigdDoorAccountant;
-
-    /**
-     * Deze inkoopboeking verdient speciale aandacht, in SnelStart wordt dit visueel benadrukt.
-     *
-     * @var bool
-     */
-    private $markering;
-
-    /**
-     * De datum van de factuur, dit is ook de datum waarop de inkoopboeking wordt geboekt.
-     *
-     * @var \DateTimeInterface|null
-     */
-    private $factuurdatum;
-
-    /**
-     * De factuurnummer van de inkoopboeking.
-     *
-     * @var string
-     */
-    private $factuurnummer;
-
     /**
      * De leverancier/crediteur van wie de factuur afkomstig is.
      *
@@ -59,37 +15,26 @@ class Inkoopboeking extends SnelstartObject
      */
     private $leverancier;
 
-    /**
-     * De omschrijving van de inkoopboeking.
-     *
-     * @var string
-     */
-    private $omschrijving;
+    public static $editableAttributes = [
+        "leverancier",
+    ];
 
-    /**
-     * @var Money
-     */
-    private $factuurbedrag;
+    public static function getEditableAttributes(): array
+    {
+        return \array_unique(
+            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        );
+    }
 
-    /**
-     * De omzetregels van de inkoopboeking. De btw-bedragen staan hier niet in,
-     * deze staan in de Btw-collectie.
-     *
-     * @see Inkoopboekingsregel
-     * @var array[Inkoopboekingsregel]
-     */
-    private $boekingsregels;
+    public function getLeverancier(): ?Relatie
+    {
+        return $this->leverancier;
+    }
 
-    /**
-     * De af te dragen btw van de inkoopboeking per btw-tarief
-     *
-     * @see InkoopBtwregel
-     * @var array[InkoopBtwregel]
-     */
-    private $btw;
+    public function setLeverancier(Relatie $leverancier): self
+    {
+        $this->leverancier = $leverancier;
 
-    /**
-     * @var string
-     */
-    private $bijlagenUri;
+        return $this;
+    }
 }
