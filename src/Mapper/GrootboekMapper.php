@@ -14,15 +14,15 @@ use SnelstartPHP\Model\Type\Rekeningcode;
 
 class GrootboekMapper extends AbstractMapper
 {
-    public static function find(ResponseInterface $response)
+    public static function find(ResponseInterface $response): ?Grootboek
     {
-        $mapper = new self($response);
+        $mapper = new static($response);
         return $mapper->mapResultToGrootboekModel(new Grootboek(), $mapper->responseData);
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        return (new self($response))->mapManyResultsToSubMappers();
+        return (new static($response))->mapManyResultsToSubMappers();
     }
 
     protected function mapManyResultsToSubMappers()
