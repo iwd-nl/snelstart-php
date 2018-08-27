@@ -23,7 +23,7 @@ class LandConnector extends BaseConnector
         }
     }
 
-    public function findAll(): \Iterator
+    public function findAll(): iterable
     {
         return LandMapper::findAll($this->connection->doRequest(LandRequest::findAll()));
     }

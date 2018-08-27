@@ -26,7 +26,7 @@ class RelatieConnector extends BaseConnector
         }
     }
 
-    public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): \Iterator
+    public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $relaties = RelatieMapper::findAll($this->connection->doRequest(RelatieRequest::findAll($ODataRequestData)));
@@ -49,7 +49,7 @@ class RelatieConnector extends BaseConnector
         return $iterator;
     }
 
-    public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): \Iterator
+    public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
