@@ -18,7 +18,7 @@ class Verkoopboeking extends Boeking
     /**
      * De betalingstermijn (in dagen) van de verkoopboeking.
      *
-     * @var int
+     * @var int|null
      */
     private $betalingstermijn;
 
@@ -37,7 +37,7 @@ class Verkoopboeking extends Boeking
     private $doorlopendeIncassoMachtiging;
 
     public static $editableAttributes = [
-        "id",
+        "klant",
         "boekstuk",
         "gewijzigdDoorAccountant",
         "markering",
@@ -64,7 +64,7 @@ class Verkoopboeking extends Boeking
         return $this;
     }
 
-    public function getBetalingstermijn(): int
+    public function getBetalingstermijn(): ?int
     {
         return $this->betalingstermijn;
     }

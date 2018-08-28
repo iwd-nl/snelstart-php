@@ -8,14 +8,17 @@ namespace SnelstartPHP\Mapper;
 
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
+use SnelstartPHP\Model\Boeking;
 use SnelstartPHP\Model\Boekingsregel;
 use SnelstartPHP\Model\Btwregel;
 use SnelstartPHP\Model\Grootboek;
+use SnelstartPHP\Model\IncassoMachtiging;
 use SnelstartPHP\Model\Inkoopboeking;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\Relatie;
 use SnelstartPHP\Model\Type\BtwRegelSoort;
 use SnelstartPHP\Model\Type\BtwSoort;
+use SnelstartPHP\Model\Verkoopboeking;
 use SnelstartPHP\Snelstart;
 
 class BoekingMapper extends AbstractMapper
@@ -26,6 +29,12 @@ class BoekingMapper extends AbstractMapper
         return $mapper->mapInkoopboekingResult(new Inkoopboeking(), $mapper->responseData);
     }
 
+    public static function addVerkoopboeking(ResponseInterface $response): Verkoopboeking
+    {
+        $mapper = new static($response);
+        return $mapper->mapVerkoopboekingResult(new Verkoopboeking(), $mapper->responseData);
+    }
+
     public function mapInkoopboekingResult(Inkoopboeking $inkoopboeking, array $data = []): Inkoopboeking
     {
         $data = empty($data) ? $this->responseData : $data;
@@ -33,18 +42,64 @@ class BoekingMapper extends AbstractMapper
         /**
          * @var Inkoopboeking $inkoopboeking
          */
-        $inkoopboeking = $this->mapArrayDataToModel($inkoopboeking, $data);
-
-        if (isset($data["modifiedOn"])) {
-            $inkoopboeking->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
-        }
-
-        if (isset($data["factuurdatum"])) {
-            $inkoopboeking->setFactuurdatum(new \DateTimeImmutable($data["factuurdatum"]));
-        }
+        $inkoopboeking = $this->mapBoekingResult($inkoopboeking, $data);
 
         if (isset($data["leverancier"])) {
             $inkoopboeking->setLeverancier(Relatie::createFromUUID(Uuid::fromString($data["leverancier"]["id"])));
+        }
+
+        return $inkoopboeking;
+    }
+
+    public function mapVerkoopboekingResult(Verkoopboeking $verkoopboeking, array $data = []): Verkoopboeking
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        /**
+         * @var Verkoopboeking $verkoopboeking
+         */
+        $verkoopboeking = $this->mapBoekingResult($verkoopboeking, $data);
+
+        if (isset($data["klant"])) {
+            $verkoopboeking->setKlant(Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
+        }
+
+        if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
+            $verkoopboeking->setDoorlopendeIncassoMachtiging(IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"])));
+        }
+
+        if (isset($data["eenmaligeIncassoMachtiging"]["datum"])) {
+            $incassomachtiging = (new IncassoMachtiging())->setDatum(new \DateTime($data["eenmaligeIncassoMachtiging"]["datum"]));
+
+            if ($data["eenmaligeIncassoMachtiging"]["kenmerk"] !== null) {
+                $incassomachtiging->setKenmerk($data["eenmaligeIncassoMachtiging"]["kenmerk"]);
+            }
+
+            if (isset($data["eenmaligeIncassoMachtiging"]["omschrijving"])) {
+                $incassomachtiging->setOmschrijving($data["eenmaligeIncassoMachtiging"]["omschrijving"]);
+            }
+
+            $verkoopboeking->setEenmaligeIncassoMachtiging($incassomachtiging);
+        }
+
+        return $verkoopboeking;
+    }
+
+    public function mapBoekingResult(Boeking $boeking, array $data = []): Boeking
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        /**
+         * @var Boeking $boeking
+         */
+        $boeking = $this->mapArrayDataToModel($boeking, $data);
+
+        if (isset($data["modifiedOn"])) {
+            $boeking->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
+        }
+
+        if (isset($data["factuurdatum"])) {
+            $boeking->setFactuurdatum(new \DateTimeImmutable($data["factuurdatum"]));
         }
 
         $boekingsregels = [];
@@ -64,7 +119,7 @@ class BoekingMapper extends AbstractMapper
             $boekingsregels[] = $boekingsregelObject;
         }
 
-        $inkoopboeking->setBoekingsregels($boekingsregels);
+        $boeking->setBoekingsregels($boekingsregels);
 
         $btwRegels = [];
         foreach ($data["btw"] ?? [] as $btw) {
@@ -74,8 +129,8 @@ class BoekingMapper extends AbstractMapper
             );
         }
 
-        $inkoopboeking->setBtw($btwRegels);
+        $boeking->setBtw($btwRegels);
 
-        return $inkoopboeking;
+        return $boeking;
     }
 }
