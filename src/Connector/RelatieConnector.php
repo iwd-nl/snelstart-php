@@ -60,6 +60,17 @@ class RelatieConnector extends BaseConnector
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
+    public function findAllKlanten(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
+    {
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $ODataRequestData->setFilter(\array_merge(
+            $ODataRequestData->getFilter(),
+            [ sprintf("Relatiesoort/any(soort:soort eq '%s') or Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT(), Relatiesoort::EIGEN()) ])
+        );
+
+        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
+    }
+
     public function add(Relatie $relatie): Relatie
     {
         if ($relatie->getId() !== null) {
