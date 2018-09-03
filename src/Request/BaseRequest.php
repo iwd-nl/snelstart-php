@@ -6,7 +6,6 @@
 
 namespace SnelstartPHP\Request;
 
-use Money\Formatter\DecimalMoneyFormatter;
 use Money\Money;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\BaseObject;
