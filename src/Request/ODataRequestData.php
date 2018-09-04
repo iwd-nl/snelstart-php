@@ -31,14 +31,27 @@ class ODataRequestData
      */
     private $skip = 0;
 
+    /**
+     * @var string
+     */
+    private $filterMode = self::FILTER_MODE_AND;
+
+    public const FILTER_MODE_OR = "or";
+
+    public const FILTER_MODE_AND = "and";
+
     public function getFilter(): array
     {
         return $this->filter;
     }
 
-    public function setFilter(array $filter): self
+    public function setFilter(array $filter, string $mode = self::FILTER_MODE_AND): self
     {
         $this->filter = $filter;
+
+        if (\in_array($mode, [ self::FILTER_MODE_OR, self::FILTER_MODE_AND ])) {
+            throw new \BadMethodCallException("We expected either 'and' or 'or'.");
+        }
 
         return $this;
     }
@@ -84,7 +97,7 @@ class ODataRequestData
         $collection = [];
 
         if (!empty($this->getFilter())) {
-            $collection['$filter'] = implode(" and ", $this->getFilter());
+            $collection['$filter'] = implode(sprintf(" %s ", $this->filterMode), $this->getFilter());
         }
 
         if (!empty($this->getTop())) {

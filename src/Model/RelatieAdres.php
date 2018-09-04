@@ -59,10 +59,6 @@ abstract class RelatieAdres extends BaseObject
         return $this->contactpersoon;
     }
 
-    /**
-     * @param null|string $contactpersoon
-     * @return RelatieAdres
-     */
     public function setContactpersoon(?string $contactpersoon): self
     {
         $this->contactpersoon = $contactpersoon;
@@ -70,18 +66,11 @@ abstract class RelatieAdres extends BaseObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getStraat(): ?string
     {
         return $this->straat;
     }
 
-    /**
-     * @param null|string $straat
-     * @return RelatieAdres
-     */
     public function setStraat(?string $straat): self
     {
         $this->straat = $straat;
@@ -89,18 +78,11 @@ abstract class RelatieAdres extends BaseObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getPostcode(): ?string
     {
         return $this->postcode;
     }
 
-    /**
-     * @param null|string $postcode
-     * @return RelatieAdres
-     */
     public function setPostcode(?string $postcode): self
     {
         $this->postcode = $postcode;
@@ -108,18 +90,11 @@ abstract class RelatieAdres extends BaseObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getPlaats(): ?string
     {
         return $this->plaats;
     }
 
-    /**
-     * @param null|string $plaats
-     * @return RelatieAdres
-     */
     public function setPlaats(?string $plaats): self
     {
         $this->plaats = $plaats;
@@ -127,18 +102,11 @@ abstract class RelatieAdres extends BaseObject
         return $this;
     }
 
-    /**
-     * @return null|Land
-     */
     public function getLand(): ?Land
     {
         return $this->land;
     }
 
-    /**
-     * @param null|Land $land
-     * @return RelatieAdres
-     */
     public function setLand(?Land $land): self
     {
         $this->land = $land;
