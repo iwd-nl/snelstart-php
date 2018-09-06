@@ -8,9 +8,8 @@ namespace SnelstartPHP\Request;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
-use Ramsey\Uuid\UuidInterface;
 
-class EchoRequest
+class EchoRequest extends BaseRequest
 {
     public static function echo(string $input): RequestInterface
     {

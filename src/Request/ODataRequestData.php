@@ -36,8 +36,14 @@ class ODataRequestData
      */
     private $filterMode = self::FILTER_MODE_AND;
 
+    /**
+     * Use 'or' when combining multiple filters.
+     */
     public const FILTER_MODE_OR = "or";
 
+    /**
+     * Use 'and' when combining multiple filters.
+     */
     public const FILTER_MODE_AND = "and";
 
     public function getFilter(): array
@@ -52,6 +58,8 @@ class ODataRequestData
         if (!\in_array($mode, [ self::FILTER_MODE_OR, self::FILTER_MODE_AND ])) {
             throw new \BadMethodCallException("We expected either 'and' or 'or'.");
         }
+
+        $this->filterMode = $mode;
 
         return $this;
     }
