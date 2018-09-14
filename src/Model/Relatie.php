@@ -315,7 +315,7 @@ class Relatie extends SnelstartObject
      */
     public function getVestigingsAdres(): RelatieVestigingsAdres
     {
-        return $this->vestigingsAdres;
+        return $this->vestigingsAdres ?? new RelatieVestigingsAdres();
     }
 
     /**
@@ -334,7 +334,7 @@ class Relatie extends SnelstartObject
      */
     public function getCorrespondentieAdres(): RelatieCorrespondentieAdres
     {
-        return $this->correspondentieAdres;
+        return $this->correspondentieAdres ?? new RelatieCorrespondentieAdres();
     }
 
     /**
@@ -600,7 +600,7 @@ class Relatie extends SnelstartObject
      */
     public function getOfferteEmailVersturen(): EmailVersturen
     {
-        return $this->offerteEmailVersturen;
+        return $this->offerteEmailVersturen ?? new EmailVersturen(false);
     }
 
     /**
@@ -619,7 +619,7 @@ class Relatie extends SnelstartObject
      */
     public function getBevestigingsEmailVersturen(): EmailVersturen
     {
-        return $this->bevestigingsEmailVersturen;
+        return $this->bevestigingsEmailVersturen ?? new EmailVersturen(false);
     }
 
     /**
@@ -638,7 +638,7 @@ class Relatie extends SnelstartObject
      */
     public function getFactuurEmailVersturen(): EmailVersturen
     {
-        return $this->factuurEmailVersturen;
+        return $this->factuurEmailVersturen ?? new EmailVersturen(false);
     }
 
     /**
@@ -657,7 +657,7 @@ class Relatie extends SnelstartObject
      */
     public function getAanmaningEmailVersturen(): EmailVersturen
     {
-        return $this->aanmaningEmailVersturen;
+        return $this->aanmaningEmailVersturen ?? new EmailVersturen(false);
     }
 
     /**

@@ -35,7 +35,7 @@ class EmailVersturen extends BaseObject
         "ccEmail"
     ];
 
-    public function __construct(bool $shouldSend, ?string $email, ?string $ccEmail)
+    public function __construct(bool $shouldSend, ?string $email = null, ?string $ccEmail = null)
     {
         $this->shouldSend = $shouldSend;
         $this->email = $email;
