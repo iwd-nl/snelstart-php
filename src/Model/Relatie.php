@@ -32,7 +32,7 @@ class Relatie extends SnelstartObject
      *
      * @var int
      */
-    private $relatiecode;
+    private $relatiecode = 0;
 
     /**
      * De volledige naam van de relatie.
