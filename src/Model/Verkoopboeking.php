@@ -38,21 +38,19 @@ class Verkoopboeking extends Boeking
 
     public static $editableAttributes = [
         "klant",
-        "boekstuk",
-        "gewijzigdDoorAccountant",
-        "markering",
-        "factuurdatum",
-        "factuurnummer",
-        "omschrijving",
-        "factuurbedrag",
-        "boekingsregels",
-        "btw",
         "betalingstermijn",
         "eenmaligeIncassoMachtiging",
         "doorlopendeIncassoMachtiging",
     ];
 
-    public function getKlant(): Relatie
+    public static function getEditableAttributes(): array
+    {
+        return \array_unique(
+            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        );
+    }
+
+    public function getKlant(): ?Relatie
     {
         return $this->klant;
     }

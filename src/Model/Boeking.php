@@ -44,7 +44,14 @@ abstract class Boeking extends SnelstartObject
      *
      * @var \DateTimeInterface|null
      */
-    protected $factuurdatum;
+    protected $factuurDatum;
+
+    /**
+     * Het tijdstip waarop de factuur is of zal vervallen
+     *
+     * @var \DateTimeInterface|null
+     */
+    protected $vervalDatum;
 
     /**
      * De factuurnummer van de boeking.
@@ -92,11 +99,12 @@ abstract class Boeking extends SnelstartObject
         "boekstuk",
         "gewijzigdDoorAccountant",
         "markering",
-        "factuurdatum",
+        "factuurDatum",
         "factuurnummer",
         "omschrijving",
-        "factuurbedrag",
+        "factuurBedrag",
         "boekingsregels",
+        "vervalDatum",
         "btw",
     ];
 
@@ -150,12 +158,24 @@ abstract class Boeking extends SnelstartObject
 
     public function getFactuurdatum(): ?\DateTimeInterface
     {
-        return $this->factuurdatum;
+        return $this->factuurDatum;
     }
 
-    public function setFactuurdatum(?\DateTimeInterface $factuurdatum): self
+    public function setFactuurdatum(?\DateTimeInterface $factuurDatum): self
     {
-        $this->factuurdatum = $factuurdatum;
+        $this->factuurDatum = $factuurDatum;
+
+        return $this;
+    }
+
+    public function getVervaldatum(): ?\DateTimeInterface
+    {
+        return $this->vervalDatum;
+    }
+
+    public function setVervaldatum(?\DateTimeInterface $vervalDatum): self
+    {
+        $this->vervalDatum = $vervalDatum;
 
         return $this;
     }

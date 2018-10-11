@@ -6,6 +6,8 @@
 
 namespace SnelstartPHP\Mapper;
 
+use Money\Currency;
+use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model\Boeking;
@@ -108,8 +110,16 @@ class BoekingMapper extends AbstractMapper
             $boeking->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
         }
 
-        if (isset($data["factuurdatum"])) {
-            $boeking->setFactuurdatum(new \DateTimeImmutable($data["factuurdatum"]));
+        if (isset($data["factuurDatum"])) {
+            $boeking->setFactuurdatum(new \DateTimeImmutable($data["factuurDatum"]));
+        }
+
+        if (isset($data["vervalDatum"])) {
+            $boeking->setVervaldatum(new \DateTimeImmutable($data["vervalDatum"]));
+        }
+
+        if (isset($data["factuurBedrag"])) {
+            $boeking->setFactuurbedrag(new Money($data["factuurBedrag"] * 100, new Currency("EUR")));
         }
 
         $boekingsregels = [];
