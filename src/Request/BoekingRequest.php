@@ -13,6 +13,20 @@ use SnelstartPHP\Model\Verkoopboeking;
 
 class BoekingRequest extends BaseRequest
 {
+    public static function findInkoopfactuur(ODataRequestData $ODataRequestData): RequestInterface
+    {
+        return new Request("GET", "inkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
+            "Content-Type"  =>  "application/json"
+        ]);
+    }
+
+    public static function findVerkoopfactuur(ODataRequestData $ODataRequestData): RequestInterface
+    {
+        return new Request("GET", "verkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
+            "Content-Type"  =>  "application/json"
+        ]);
+    }
+
     public static function addInkoopboeking(Inkoopboeking $inkoopboeking): RequestInterface
     {
         return new Request("POST", "inkoopboekingen", [

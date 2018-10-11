@@ -23,6 +23,16 @@ use SnelstartPHP\Snelstart;
 
 class BoekingMapper extends AbstractMapper
 {
+    public static function findAllInkoopfacturen(ResponseInterface $response): \Generator
+    {
+        return (new static($response))->mapManyResultsToSubMappers(Inkoopboeking::class);
+    }
+
+    public static function findAllVerkoopfacturen(ResponseInterface $response): \Generator
+    {
+        return (new static($response))->mapManyResultsToSubMappers(Verkoopboeking::class);
+    }
+
     public static function addInkoopboeking(ResponseInterface $response): Inkoopboeking
     {
         $mapper = new static($response);
@@ -132,5 +142,20 @@ class BoekingMapper extends AbstractMapper
         $boeking->setBtw($btwRegels);
 
         return $boeking;
+    }
+
+    public function mapManyResultsToSubMappers(string $className): \Generator
+    {
+        if (!in_array($className, [ Inkoopboeking::class, Verkoopboeking::class ], true)) {
+            throw new \InvalidArgumentException("Unknown class name for a booking.");
+        }
+
+        foreach ($this->responseData as $boekingData) {
+            if ($className === Inkoopboeking::class) {
+                yield $this->mapInkoopboekingResult(new $className, $boekingData);
+            } else if ($className === Verkoopboeking::class) {
+                yield $this->mapVerkoopboekingResult(new $className, $boekingData);
+            }
+        }
     }
 }
