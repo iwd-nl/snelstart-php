@@ -1,6 +1,6 @@
 {
     "name":"iwd-nl/snelstart-php",
-    "license": "GPL-3.0",
+    "license": "GPL-3.0-or-later",
     "type": "library",
     "description": "Snelstart API toegepast in PHP",
     "homepage": "https://github.com/iwd-nl/snelstart-php",
@@ -22,7 +22,6 @@
         "psr/cache": "^1.0",
         "psr/http-message": "^1.0",
         "psr/log": "^1.0",
-        "psr/http-message": "^1.0",
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {
