@@ -1,0 +1,52 @@
+# Snelstart B2B API
+
+PHP client library to use the Snelstart B2B API.
+[![Build Status](https://travis-ci.org/iwd-nl/snelstart-php.svg?branch=master)](https://travis-ci.org/iwd-nl/snelstart-php)
+
+__Note that this library is not created, or maintained, by Snelstart.__
+
+# Installation
+Installation is easy as 1, 2, 3 thanks to Composer.
+```bash
+composer require iwd-nl/snelstart
+```
+
+# Usage
+Create an account at [https://b2bapi-developer.snelstart.nl/] and subscribe to 'Verkenning'. Obtain the Primary and Secondary key from your Profile and generate a key on the web interface of Snelstart under 'Maatwerk'. You are going to need these credentials for the next chapter.
+
+## Authentication
+Now that you have obtained the credentials you can start by connection the library to the API.
+```php
+$primaryKey = "<primary>";
+$secondaryKey = "<secondary>";
+$clientKey = "<maatwerksleutel>";
+
+$bearerToken = new \SnelstartPHP\Secure\BearerToken\ClientKeyBearerToken($clientKey);
+$accessTokenConnection = new \SnelstartPHP\Secure\AccessTokenConnection($bearerToken);
+$accessToken = $accessTokenConnection->getToken();
+
+$connection = new \SnelstartPHP\Secure\AuthenticatedConnection(
+    new \SnelstartPHP\Secure\ApiSubscriptionKey($primaryKey, $secondaryKey),
+    $accessToken
+);
+```
+
+_Please note that there is also a class named `SnelstartPHP\Secure\CachedAccessTokenConnection` for once you are done with developing. This will automatically take care of renewing expired access tokens. _
+
+### Check if you are really authenticated
+We implemented the `EchoConnector` to test to see if you are authenticated.
+
+## Fetch data
+For an example see ``var/doc/example/inkoopboeking_find_all.php``
+
+## Add data
+For an example see ``var/doc/example/inkoopboeking_add.php``
+
+## Supported resources
+Not all resources are currently implemented. Feel free to create a pull request.
+
+# Links
+- [https://b2bapi-developer.snelstart.nl/]
+
+# Authors
+- [IntoWebDevelopment](https://intowebdevelopment.nl/]
