@@ -1,7 +1,7 @@
 # Snelstart B2B API
 
 PHP client library to use the Snelstart B2B API.
-[![Build Status](https://travis-ci.org/iwd-nl/snelstart-php.svg?branch=master)](https://travis-ci.org/iwd-nl/snelstart-php)
+[![Build Status](https://travis-ci.com/iwd-nl/snelstart-php.svg?branch=master)](https://travis-ci.com/iwd-nl/snelstart-php)
 
 __Note that this library is not created, or maintained, by Snelstart.__
 
