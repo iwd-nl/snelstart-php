@@ -10,78 +10,70 @@ use Money\Currency;
 use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
-use SnelstartPHP\Model\Boeking;
-use SnelstartPHP\Model\Boekingsregel;
-use SnelstartPHP\Model\Btwregel;
-use SnelstartPHP\Model\Grootboek;
-use SnelstartPHP\Model\IncassoMachtiging;
-use SnelstartPHP\Model\Inkoopboeking;
-use SnelstartPHP\Model\Kostenplaats;
-use SnelstartPHP\Model\Relatie;
-use SnelstartPHP\Model\Type\BtwRegelSoort;
-use SnelstartPHP\Model\Type\BtwSoort;
-use SnelstartPHP\Model\Verkoopboeking;
+use SnelstartPHP\Model as Model;
 use SnelstartPHP\Snelstart;
 
 class BoekingMapper extends AbstractMapper
 {
     public static function findAllInkoopfacturen(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers(Inkoopboeking::class);
+        return (new static($response))->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
     }
 
     public static function findAllVerkoopfacturen(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers(Verkoopboeking::class);
+        return (new static($response))->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
     }
 
-    public static function addInkoopboeking(ResponseInterface $response): Inkoopboeking
+    public static function addInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
     {
         $mapper = new static($response);
-        return $mapper->mapInkoopboekingResult(new Inkoopboeking(), $mapper->responseData);
+        return $mapper->mapInkoopboekingResult(new Model\Inkoopboeking(), $mapper->responseData);
     }
 
-    public static function addVerkoopboeking(ResponseInterface $response): Verkoopboeking
+    public static function addVerkoopboeking(ResponseInterface $response): Model\Verkoopboeking
     {
         $mapper = new static($response);
-        return $mapper->mapVerkoopboekingResult(new Verkoopboeking(), $mapper->responseData);
+        return $mapper->mapVerkoopboekingResult(new Model\Verkoopboeking(), $mapper->responseData);
     }
 
-    public function mapInkoopboekingResult(Inkoopboeking $inkoopboeking, array $data = []): Inkoopboeking
+    public function mapInkoopboekingResult(Model\Inkoopboeking $inkoopboeking, array $data = []): Model\Inkoopboeking
     {
         $data = empty($data) ? $this->responseData : $data;
 
         /**
-         * @var Inkoopboeking $inkoopboeking
+         * @var Model\Inkoopboeking $inkoopboeking
          */
         $inkoopboeking = $this->mapBoekingResult($inkoopboeking, $data);
 
         if (isset($data["leverancier"])) {
-            $inkoopboeking->setLeverancier(Relatie::createFromUUID(Uuid::fromString($data["leverancier"]["id"])));
+            $inkoopboeking->setLeverancier(Model\Relatie::createFromUUID(Uuid::fromString($data["leverancier"]["id"])));
         }
 
         return $inkoopboeking;
     }
 
-    public function mapVerkoopboekingResult(Verkoopboeking $verkoopboeking, array $data = []): Verkoopboeking
+    public function mapVerkoopboekingResult(Model\Verkoopboeking $verkoopboeking, array $data = []): Model\Verkoopboeking
     {
         $data = empty($data) ? $this->responseData : $data;
 
         /**
-         * @var Verkoopboeking $verkoopboeking
+         * @var Model\Verkoopboeking $verkoopboeking
          */
         $verkoopboeking = $this->mapBoekingResult($verkoopboeking, $data);
 
         if (isset($data["klant"])) {
-            $verkoopboeking->setKlant(Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
+            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
         }
 
         if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
-            $verkoopboeking->setDoorlopendeIncassoMachtiging(IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"])));
+            $doorlopendeIncassoMachtiging = Model\IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"]));
+            $verkoopboeking->setDoorlopendeIncassoMachtiging($doorlopendeIncassoMachtiging);
         }
 
         if (isset($data["eenmaligeIncassoMachtiging"]["datum"])) {
-            $incassomachtiging = (new IncassoMachtiging())->setDatum(new \DateTime($data["eenmaligeIncassoMachtiging"]["datum"]));
+            $incassomachtiging = (new Model\IncassoMachtiging())
+                ->setDatum(new \DateTime($data["eenmaligeIncassoMachtiging"]["datum"]));
 
             if ($data["eenmaligeIncassoMachtiging"]["kenmerk"] !== null) {
                 $incassomachtiging->setKenmerk($data["eenmaligeIncassoMachtiging"]["kenmerk"]);
@@ -97,12 +89,12 @@ class BoekingMapper extends AbstractMapper
         return $verkoopboeking;
     }
 
-    public function mapBoekingResult(Boeking $boeking, array $data = []): Boeking
+    public function mapBoekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
     {
         $data = empty($data) ? $this->responseData : $data;
 
         /**
-         * @var Boeking $boeking
+         * @var Model\Boeking $boeking
          */
         $boeking = $this->mapArrayDataToModel($boeking, $data);
 
@@ -124,15 +116,15 @@ class BoekingMapper extends AbstractMapper
 
         $boekingsregels = [];
         foreach ($data["boekingsregels"] ?? [] as $boekingsregel) {
-            $boekingsregelObject = (new Boekingsregel())
+            $boekingsregelObject = (new Model\Boekingsregel())
                 ->setOmschrijving($boekingsregel["omschrijving"])
-                ->setGrootboek(Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"])))
+                ->setGrootboek(Model\Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"])))
                 ->setBedrag(Snelstart::getMoneyParser()->parse((string) $boekingsregel["bedrag"], Snelstart::getCurrency()))
-                ->setBtwSoort(new BtwSoort($boekingsregel["btwSoort"]));
+                ->setBtwSoort(new Model\Type\BtwSoort($boekingsregel["btwSoort"]));
 
             if ($boekingsregel["kostenplaats"]) {
                 $boekingsregelObject->setKostenplaats(
-                    Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
+                    Model\Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
                 );
             }
 
@@ -143,8 +135,8 @@ class BoekingMapper extends AbstractMapper
 
         $btwRegels = [];
         foreach ($data["btw"] ?? [] as $btw) {
-            $btwRegels[] = new Btwregel(
-                new BtwRegelSoort($btw["btwSoort"]),
+            $btwRegels[] = new Model\Btwregel(
+                new Model\Type\BtwRegelSoort($btw["btwSoort"]),
                 Snelstart::getMoneyParser()->parse((string) $btw["btwBedrag"], Snelstart::getCurrency())
             );
         }
@@ -156,14 +148,14 @@ class BoekingMapper extends AbstractMapper
 
     public function mapManyResultsToSubMappers(string $className): \Generator
     {
-        if (!in_array($className, [ Inkoopboeking::class, Verkoopboeking::class ], true)) {
+        if (!$className instanceof Model\Boeking) {
             throw new \InvalidArgumentException("Unknown class name for a booking.");
         }
 
         foreach ($this->responseData as $boekingData) {
-            if ($className === Inkoopboeking::class) {
+            if ($className === Model\Inkoopboeking::class) {
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
-            } else if ($className === Verkoopboeking::class) {
+            } else if ($className === Model\Verkoopboeking::class) {
                 yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             }
         }

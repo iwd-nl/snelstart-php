@@ -113,8 +113,7 @@ class RelatieMapper extends AbstractMapper
             throw new \InvalidArgumentException(sprintf("Only classes that extend '%s' are allowed here.", RelatieAdres::class));
         }
 
-        $land = new Land();
-        $land->setId(Uuid::fromString($address["land"]["id"]));
+        $land = Land::createFromUUID(Uuid::fromString($address["land"]["id"]));
 
         return $class
             ->setContactpersoon($address["contactpersoon"])
