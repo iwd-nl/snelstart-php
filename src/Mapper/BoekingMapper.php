@@ -39,10 +39,6 @@ class BoekingMapper extends AbstractMapper
 
     public static function addBijlage(ResponseInterface $response, string $className): Model\Bijlage
     {
-        if (!$className instanceof Model\Bijlage) {
-            throw new \InvalidArgumentException($className . " should be compatible with Model\\Bijlage");
-        }
-
         $mapper = new static($response);
         return $mapper->mapBijlageResult(new $className, $mapper->responseData);
     }
