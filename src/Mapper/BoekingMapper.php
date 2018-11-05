@@ -37,6 +37,32 @@ class BoekingMapper extends AbstractMapper
         return $mapper->mapVerkoopboekingResult(new Model\Verkoopboeking(), $mapper->responseData);
     }
 
+    public static function addBijlage(ResponseInterface $response, string $className): Model\Bijlage
+    {
+        if (!$className instanceof Model\Bijlage) {
+            throw new \InvalidArgumentException($className . " should be compatible with Model\\Bijlage");
+        }
+
+        $mapper = new static($response);
+        return $mapper->mapBijlageResult(new $className, $mapper->responseData);
+    }
+
+    public function mapBijlageResult(Model\Bijlage $bijlage, array $data = []): Model\Bijlage
+    {
+        $data = empty($data) ? $this->responseData : $data;
+        $bijlage = $this->mapArrayDataToModel($bijlage, $data);
+
+        if (isset($data["verkoopBoekingId"]) && $bijlage instanceof Model\VerkoopboekingBijlage) {
+            $bijlage->setVerkoopBoekingId(Uuid::fromString($data["verkoopBoekingId"]));
+        }
+
+        if (isset($data["inkoopBoekingId"]) && $bijlage instanceof Model\InkoopboekingBijlage) {
+            $bijlage->setInkoopBoekingId(Uuid::fromString($data["inkoopBoekingId"]));
+        }
+
+        return $bijlage;
+    }
+
     public function mapInkoopboekingResult(Model\Inkoopboeking $inkoopboeking, array $data = []): Model\Inkoopboeking
     {
         $data = empty($data) ? $this->responseData : $data;

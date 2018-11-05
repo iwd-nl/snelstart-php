@@ -36,6 +36,11 @@ class Verkoopboeking extends Boeking
      */
     private $doorlopendeIncassoMachtiging;
 
+    /**
+     * @var VerkoopboekingBijlage[]
+     */
+    protected $bijlagen;
+
     public static $editableAttributes = [
         "klant",
         "betalingstermijn",

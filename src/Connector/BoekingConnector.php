@@ -8,8 +8,11 @@ namespace SnelstartPHP\Connector;
 
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Mapper\BoekingMapper;
+use SnelstartPHP\Model\Bijlage;
 use SnelstartPHP\Model\Inkoopboeking;
+use SnelstartPHP\Model\InkoopboekingBijlage;
 use SnelstartPHP\Model\Verkoopboeking;
+use SnelstartPHP\Model\VerkoopboekingBijlage;
 use SnelstartPHP\Request\BoekingRequest;
 use SnelstartPHP\Request\ODataRequestData;
 
@@ -51,6 +54,16 @@ class BoekingConnector extends BaseConnector
         return BoekingMapper::addInkoopboeking($this->connection->doRequest(BoekingRequest::addInkoopboeking($inkoopboeking)));
     }
 
+
+    public function addInkoopboekingBijlage(Inkoopboeking $inkoopboeking, InkoopboekingBijlage $bijlage): Bijlage
+    {
+        if ($inkoopboeking->getId() === null) {
+            throw new PreValidationException("We can only add an attachment to an existing booking.");
+        }
+
+        return BoekingMapper::addBijlage($this->connection->doRequest(BoekingRequest::addAttachmentToInkoopboeking($inkoopboeking, $bijlage)), get_class($bijlage));
+    }
+
     /**
      * @return Verkoopboeking[]|iterable
      */
@@ -85,5 +98,14 @@ class BoekingConnector extends BaseConnector
 
         $verkoopboeking->assertInBalance();
         return BoekingMapper::addVerkoopboeking($this->connection->doRequest(BoekingRequest::addVerkoopboeking($verkoopboeking)));
+    }
+
+    public function addVerkoopboekingBijlage(Verkoopboeking $verkoopboeking, VerkoopboekingBijlage $bijlage): Bijlage
+    {
+        if ($verkoopboeking->getId() === null) {
+            throw new PreValidationException("We can only add an attachment to an existing booking.");
+        }
+
+        return BoekingMapper::addBijlage($this->connection->doRequest(BoekingRequest::addAttachmentToVerkoopboeking($verkoopboeking, $bijlage)), get_class($bijlage));
     }
 }

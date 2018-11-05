@@ -15,6 +15,11 @@ class Inkoopboeking extends Boeking
      */
     private $leverancier;
 
+    /**
+     * @var InkoopboekingBijlage[]
+     */
+    protected $bijlagen;
+
     public static $editableAttributes = [
         "leverancier",
     ];

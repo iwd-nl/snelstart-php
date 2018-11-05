@@ -8,6 +8,7 @@ namespace SnelstartPHP\Request;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use SnelstartPHP\Model\Bijlage;
 use SnelstartPHP\Model\Inkoopboeking;
 use SnelstartPHP\Model\Verkoopboeking;
 
@@ -41,6 +42,13 @@ class BoekingRequest extends BaseRequest
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
+    public static function addAttachmentToInkoopboeking(Inkoopboeking $inkoopboeking, Bijlage $bijlage): RequestInterface
+    {
+        return new Request("POST", sprintf("inkoopboekingen/%s/bijlagen", $inkoopboeking->getId()), [
+            "Content-Type"  =>  "application/json"
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
+    }
+
     public static function addVerkoopboeking(Verkoopboeking $verkoopboeking): RequestInterface
     {
         return new Request("POST", "verkoopboekingen", [
@@ -53,5 +61,12 @@ class BoekingRequest extends BaseRequest
         return new Request("PUT", "verkoopboekingen/" . $verkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkoopboeking)));
+    }
+
+    public static function addAttachmentToVerkoopboeking(Verkoopboeking $verkoopboeking, Bijlage $bijlage): RequestInterface
+    {
+        return new Request("POST", sprintf("verkoopboekingen/%s/bijlagen", $verkoopboeking->getId()), [
+            "Content-Type"  =>  "application/json"
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
     }
 }

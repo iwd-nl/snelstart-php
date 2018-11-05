@@ -94,6 +94,11 @@ abstract class Boeking extends SnelstartObject
      */
     protected $bijlagenUri;
 
+    /**
+     * @var Bijlage[]
+     */
+    protected $bijlagen;
+
     public static $editableAttributes = [
         "id",
         "boekstuk",
@@ -260,6 +265,13 @@ abstract class Boeking extends SnelstartObject
         }
 
         $this->btw = $btw;
+
+        return $this;
+    }
+
+    public function addBijlage(Bijlage $bijlage): self
+    {
+        $this->bijlagen[] = $bijlage;
 
         return $this;
     }
