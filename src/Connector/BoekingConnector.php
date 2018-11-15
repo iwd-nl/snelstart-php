@@ -97,6 +97,11 @@ class BoekingConnector extends BaseConnector
         }
 
         $verkoopboeking->assertInBalance();
+
+        if ($verkoopboeking->getVervaldatum() !== null && $verkoopboeking->getBetalingstermijn() === null) {
+            $verkoopboeking->setBetalingstermijn((int) (new \DateTime())->diff($verkoopboeking->getVervaldatum())->format("%a"));
+        }
+
         return BoekingMapper::addVerkoopboeking($this->connection->doRequest(BoekingRequest::addVerkoopboeking($verkoopboeking)));
     }
 
