@@ -47,4 +47,16 @@ class GrootboekConnector extends BaseConnector
         return $iterator;
     }
 
+    public function findByNumber(string $number): ?Grootboek
+    {
+        $criteria = (new ODataRequestData())->setFilter([
+            sprintf("Nummer eq %s", $number)
+        ]);
+
+        foreach (GrootboekMapper::findAll($this->connection->doRequest(GrootboekRequest::findAll($criteria))) as $grootboek) {
+            return $grootboek;
+        }
+
+        return null;
+    }
 }
