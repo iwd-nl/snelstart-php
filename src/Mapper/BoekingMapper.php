@@ -170,10 +170,6 @@ class BoekingMapper extends AbstractMapper
 
     public function mapManyResultsToSubMappers(string $className): \Generator
     {
-        if (!$className instanceof Model\Boeking) {
-            throw new \InvalidArgumentException("Unknown class name for a booking.");
-        }
-
         foreach ($this->responseData as $boekingData) {
             if ($className === Model\Inkoopboeking::class) {
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
