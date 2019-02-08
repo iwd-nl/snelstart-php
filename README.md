@@ -8,7 +8,7 @@ __Note that this library is not created, or maintained, by Snelstart.__
 # Installation
 Installation is easy as 1, 2, 3 thanks to Composer.
 ```bash
-composer require iwd-nl/snelstart
+composer require iwd-nl/snelstart-php
 ```
 
 # Usage
