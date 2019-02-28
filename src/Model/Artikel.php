@@ -139,7 +139,8 @@ class Artikel extends SnelstartObject
      * @param array|null $subArtikelen
      * @return Artikel
      */
-    public function setSubArtikelen(?array $subArtikelen): self {
+    public function setSubArtikelen(?array $subArtikelen): self
+    {
         $this->subArtikelen = $subArtikelen;
 
         return $this;
@@ -195,7 +196,8 @@ class Artikel extends SnelstartObject
      * @param array|null $artikelomzetgroep
      * @return Artikel
      */
-    public function setArtikelOmzetgroep(?array $artikelOmzetgroep): self {
+    public function setArtikelOmzetgroep(?array $artikelOmzetgroep): self
+    {
         $this->artikelOmzetgroep = $artikelOmzetgroep;
 
         return $this;
