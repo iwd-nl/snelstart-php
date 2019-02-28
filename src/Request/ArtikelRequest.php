@@ -22,19 +22,4 @@ class ArtikelRequest
     {
         return new Request("GET", "artikelen/" . $id->toString());
     }
-
-    public static function add(Artikel $artikel): RequestInterface
-    {
-        return new Request("POST", "artikelen", [
-            "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($artikel)));
-    }
-
-    public static function update(Artikel $artikel): RequestInterface
-    {
-        return new Request("PUT", "artikelen/" . $artikel->getId()->toString(), [
-            "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($artikel)));
-    }
-
 }
