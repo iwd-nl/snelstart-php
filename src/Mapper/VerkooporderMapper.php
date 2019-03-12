@@ -73,9 +73,12 @@ class VerkooporderMapper extends AbstractMapper
         foreach ($data["regels"] ?? [] as $regel) {
             $regelObject = (new VerkooporderRegel())
                 ->setOmschrijving($regel["omschrijving"])
-                ->setAantal(($regel['aantal']))
-                ->setArtikelId(($regel['artikel']['id']));
+                ->setAantal(($regel['aantal']));
 
+            if ($regel["artikel"]) {
+
+                $regelObject->setArtikel(Artikel::createFromUUID(Uuid::fromString($regel["artikel"]["id"])));
+            }
             if (isset($regel["stuksprijs"])) {
                 $regelObject->setStuksprijs(new Money($regel["stuksprijs"] * 100, new Currency("EUR")));
             }
