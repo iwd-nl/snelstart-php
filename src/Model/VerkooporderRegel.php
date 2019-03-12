@@ -128,9 +128,9 @@ class VerkooporderRegel extends SnelstartObject
     }
 
     /**
-     * @return Money
+     * @return Money|null
      */
-    public function getKortingsPercentage(): Money
+    public function getKortingsPercentage(): ?Money
     {
         return $this->kortingsPercentage;
     }
@@ -147,9 +147,9 @@ class VerkooporderRegel extends SnelstartObject
     }
 
     /**
-     * @return Money
+     * @return Money|null
      */
-    public function getTotaal(): Money
+    public function getTotaal(): ?Money
     {
         return $this->totaal;
     }

@@ -27,4 +27,13 @@ class VerkooporderConnector extends BaseConnector
     {
         return VerkooporderMapper::findAll($this->connection->doRequest(VerkooporderRequest::findAll()));
     }
+
+    public function addVerkoopOrder(Verkooporder $verkooporder): Verkooporder
+    {
+        if ($verkooporder->getId() !== null) {
+            throw new PreValidationException("New records should not have an ID.");
+        }
+
+        return VerkooporderMapper::addVerkoopOrder($this->connection->doRequest(VerkooporderRequest::addVerkoopOrder($verkooporder)));
+    }
 }

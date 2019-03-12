@@ -166,9 +166,9 @@ class Verkooporder extends SnelstartObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getNummer(): int
+    public function getNummer(): ?int
     {
         return $this->nummer;
     }
@@ -216,9 +216,9 @@ class Verkooporder extends SnelstartObject
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getKrediettermijn(): int
+    public function getKrediettermijn(): ?int
     {
         return $this->krediettermijn;
     }
@@ -330,7 +330,7 @@ class Verkooporder extends SnelstartObject
      */
     public function getVerkooporderBtwIngaveModel(): ?VerkooporderBtwIngaveModel
     {
-        return $this->procesStatus;
+        return $this->verkooporderBtwIngaveModel;
     }
 
     /**
@@ -430,9 +430,9 @@ class Verkooporder extends SnelstartObject
     }
 
     /**
-     * @return Money
+     * @return Money|null
      */
-    public function getFactuurkorting(): Money
+    public function getFactuurkorting(): ?Money
     {
         return $this->factuurkorting;
     }
@@ -449,9 +449,9 @@ class Verkooporder extends SnelstartObject
     }
 
     /**
-     * @return Verkoopboeking
+     * @return \SnelstartPHP\Model\Verkoopboeking|null
      */
-    public function getVerkoopfactuur(): Verkoopboeking
+    public function getVerkoopfactuur(): ?Verkoopboeking
     {
         return $this->verkoopfactuur;
     }

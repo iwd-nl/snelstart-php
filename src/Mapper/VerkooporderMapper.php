@@ -39,6 +39,13 @@ class VerkooporderMapper extends AbstractMapper
         return (new static($response))->mapManyResultsToSubMappers();
     }
 
+    public static function addVerkoopOrder(ResponseInterface $response): Verkooporder
+    {
+        $mapper = new static($response);
+        return $mapper->mapResponseToVerkooporderModel(new Verkooporder, $mapper->responseData);
+    }
+
+
     /**
      * Map the data from the response to the model.
      */
