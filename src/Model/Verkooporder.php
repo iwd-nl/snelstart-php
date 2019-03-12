@@ -128,18 +128,18 @@ class Verkooporder extends SnelstartObject
     ];
 
     /**
-     * @return null|array
+     * @return Relatie|null
      */
-    public function getRelatie(): ?array
+    public function getRelatie(): ?Relatie
     {
         return $this->relatie;
     }
 
     /**
-     * @param array|null $relatie
+     * @param Relatie $relatie
      * @return Verkooporder
      */
-    public function setRelatie(?array $relatie): self
+    public function setRelatie(Relatie $relatie): self
     {
         $this->relatie = $relatie;
 

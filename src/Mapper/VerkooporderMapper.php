@@ -13,6 +13,7 @@ use Ramsey\Uuid\Uuid;
 
 use SnelstartPHP\Model\Artikel;
 use SnelstartPHP\Model\Kostenplaats;
+use SnelstartPHP\Model\Relatie;
 use SnelstartPHP\Model\Type\ProcesStatus;
 use SnelstartPHP\Model\Type\VerkooporderBtwIngaveModel;
 use SnelstartPHP\Model\Verkoopboeking;
@@ -49,6 +50,10 @@ class VerkooporderMapper extends AbstractMapper
          * @var Verkooporder $verkooporder
          */
         $verkooporder = $this->mapArrayDataToModel($verkooporder, $data);
+
+        if (isset($data["relatie"])) {
+            $verkooporder->setRelatie(Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
+        }
 
         if (isset($data["procesStatus"])) {
             $verkooporder->setProcesStatus(new ProcesStatus($data["procesStatus"]));
