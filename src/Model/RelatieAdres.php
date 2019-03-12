@@ -49,6 +49,7 @@ abstract class RelatieAdres extends BaseObject
         "straat",
         "postcode",
         "plaats",
+        "land",
     ];
 
     /**
