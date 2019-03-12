@@ -36,6 +36,10 @@ class VerkooporderRegel extends SnelstartObject
      */
     private $aantal;
 
+    /**
+     * @var string
+     */
+    private $artikelId;
 
     /**
      * @TODO refactor to double?
@@ -53,6 +57,7 @@ class VerkooporderRegel extends SnelstartObject
         'omschrijving',
         'stuksprijs',
         'aantal',
+        'artikelId',
         'kortingsPercentage',
         'totaal',
     ];
@@ -104,6 +109,25 @@ class VerkooporderRegel extends SnelstartObject
     public function setStuksprijs(Money $stuksprijs): self
     {
         $this->stuksprijs = $stuksprijs;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArtikelId(): string
+    {
+        return $this->artikelId;
+    }
+
+    /**
+     * @param string $artikelId
+     * @return VerkooporderRegel
+     */
+    public function setArtikelId(string $artikelId): self
+    {
+        $this->artikelId = $artikelId;
 
         return $this;
     }
