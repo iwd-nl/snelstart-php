@@ -36,4 +36,13 @@ class VerkooporderConnector extends BaseConnector
 
         return VerkooporderMapper::addVerkoopOrder($this->connection->doRequest(VerkooporderRequest::addVerkoopOrder($verkooporder)));
     }
+
+    public function updateVerkoopOrder(Verkooporder $verkooporder): Verkooporder
+    {
+        if ($verkooporder->getId() === null) {
+            throw new PreValidationException("Verkooporder should have an ID.");
+        }
+
+        return VerkooporderMapper::updateVerkoopOrder($this->connection->doRequest(VerkooporderRequest::updateVerkoopOrder($verkooporder)));
+    }
 }

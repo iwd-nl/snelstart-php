@@ -45,6 +45,12 @@ class VerkooporderMapper extends AbstractMapper
         return $mapper->mapResponseToVerkooporderModel(new Verkooporder, $mapper->responseData);
     }
 
+    public static function updateVerkoopOrder(ResponseInterface $response): Verkooporder
+    {
+        $mapper = new static($response);
+        return $mapper->mapResponseToVerkooporderModel(new Verkooporder, $mapper->responseData);
+    }
+
 
     /**
      * Map the data from the response to the model.
@@ -75,7 +81,7 @@ class VerkooporderMapper extends AbstractMapper
             $verkooporder->setIncassoMachtiging($incassoMachtiging);
         }
 
-        if ($data["kostenplaats"]) {
+        if (isset($data["kostenplaats"]) && strlen($data["kostenplaats"]) > 0) {
             $verkooporder->setKostenplaats(
                 Kostenplaats::createFromUUID(Uuid::fromString($data["kostenplaats"]["id"]))
             );
@@ -131,7 +137,7 @@ class VerkooporderMapper extends AbstractMapper
             $verkooporder->setFactuurKorting(new Money($data["factuurkorting"] * 100, new Currency("EUR")));
         }
 
-        if ($data["verkoopfactuur"]) {
+        if (isset($data["verkoopfactuur"])) {
             $verkooporder->setVerkoopfactuur(
                 Verkoopboeking::createFromUUID(Uuid::fromString($data["verkoopfactuur"]["id"]))
             );

@@ -150,7 +150,7 @@ class AuthenticatedConnection implements ConnectionInterface
 
     public function getEndpoint(): string
     {
-        return "https://b2bapi.snelstart.nl/v1/";
+        return "https://b2bapi.snelstart.nl/v2/";
     }
 
     protected function setOrReplaceSubscriptionKeyInRequest(RequestInterface $request, string $key): RequestInterface

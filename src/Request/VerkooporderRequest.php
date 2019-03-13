@@ -30,4 +30,11 @@ class VerkooporderRequest extends BaseRequest
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkooporder)));
     }
+
+    public static function updateVerkoopOrder(Verkooporder $verkooporder): RequestInterface
+    {
+        return new Request("PUT", "verkooporders/" . $verkooporder->getId()->toString(), [
+            "Content-Type"  =>  "application/json"
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkooporder)));
+    }
 }
