@@ -14,9 +14,9 @@ use SnelstartPHP\Model\Verkooporder;
 
 class VerkooporderRequest extends BaseRequest
 {
-    public static function findAll(): RequestInterface
+    public static function findAll($filter = null): RequestInterface
     {
-        return new Request("GET", "verkooporders");
+        return new Request("GET", "verkooporders" . $filter);
     }
 
     public static function find(UuidInterface $id): RequestInterface

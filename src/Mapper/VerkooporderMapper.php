@@ -94,20 +94,22 @@ class VerkooporderMapper extends AbstractMapper
                 ->setAantal(($regel['aantal']));
 
             if ($regel["artikel"]) {
-
                 $regelObject->setArtikel(Artikel::createFromUUID(Uuid::fromString($regel["artikel"]["id"])));
             }
+
             if (isset($regel["stuksprijs"])) {
-                $regelObject->setStuksprijs(new Money($regel["stuksprijs"] * 100, new Currency("EUR")));
+                $prijs = (int)($regel["stuksprijs"] * 100);
+                $regelObject->setStuksprijs(new Money($prijs, new Currency("EUR")));
             }
 
             if (isset($regel["kortingsPercentage"])) {
-                $regelObject->setKortingsPercentage(new Money($regel["kortingsPercentage"] * 100, new Currency("EUR")));
+                $prijs = (int)($regel["kortingsPercentage"] * 100);
+                $regelObject->setKortingsPercentage(new Money($prijs, new Currency("EUR")));
             }
 
-
             if (isset($regel["totaal"])) {
-                $regelObject->setTotaal(new Money($regel["totaal"] * 100, new Currency("EUR")));
+                $prijs = (int)($regel["totaal"] * 100);
+                $regelObject->setTotaal(new Money($prijs, new Currency("EUR")));
             }
 
 

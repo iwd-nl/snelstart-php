@@ -23,9 +23,9 @@ class VerkooporderConnector extends BaseConnector
         }
     }
 
-    public function findAll(): iterable
+    public function findAll($filter = null): iterable
     {
-        return VerkooporderMapper::findAll($this->connection->doRequest(VerkooporderRequest::findAll()));
+        return VerkooporderMapper::findAll($this->connection->doRequest(VerkooporderRequest::findAll($filter)));
     }
 
     public function addVerkoopOrder(Verkooporder $verkooporder): Verkooporder
