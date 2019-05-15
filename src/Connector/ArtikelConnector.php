@@ -11,6 +11,7 @@ use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Request\ArtikelRequest;
 use SnelstartPHP\Mapper\ArtikelMapper;
 use SnelstartPHP\Model\Artikel;
+use SnelstartPHP\Request\ODataRequestData;
 
 class ArtikelConnector extends BaseConnector
 {
@@ -23,8 +24,26 @@ class ArtikelConnector extends BaseConnector
         }
     }
 
-    public function findAll(): iterable
+    public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
-        return ArtikelMapper::findAll($this->connection->doRequest(ArtikelRequest::findAll()));
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $articles = ArtikelMapper::findAll($this->connection->doRequest(ArtikelRequest::findAll($ODataRequestData)));
+        $iterator = $previousResults ?? new \AppendIterator();
+
+        if ($articles->valid()) {
+            $iterator->append($articles);
+        }
+
+        if ($fetchAll && $articles->valid()) {
+            if ($ODataRequestData->getSkip() === 0) {
+                $ODataRequestData->setSkip(1);
+            } else {
+                $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
+            }
+
+            return $this->findAll($ODataRequestData, true, $iterator);
+        }
+
+        return $iterator;
     }
 }

@@ -13,13 +13,15 @@ use SnelstartPHP\Model\Artikel;
 
 class ArtikelRequest
 {
-    public static function findAll(): RequestInterface
+    public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
     {
-        return new Request("GET", "artikelen");
+        return new Request("GET", "artikelen?" . $ODataRequestData->getHttpCompatibleQueryString());
     }
 
     public static function find(UuidInterface $id): RequestInterface
     {
         return new Request("GET", "artikelen/" . $id->toString());
     }
+
+
 }
