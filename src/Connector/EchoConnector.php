@@ -8,7 +8,7 @@ namespace SnelstartPHP\Connector;
 
 use SnelstartPHP\Request\EchoRequest;
 
-class EchoConnector extends BaseConnector
+final class EchoConnector extends BaseConnector
 {
     public function echo(string $input): string
     {

@@ -9,7 +9,7 @@ namespace SnelstartPHP\Request;
 
 use SnelstartPHP\Snelstart;
 
-class ODataRequestData
+final class ODataRequestData
 {
     /**
      * @var array

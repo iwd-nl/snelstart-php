@@ -12,7 +12,7 @@ use SnelstartPHP\Model\Type as Types;
 /**
  * @todo Support for the property 'factuurRelatie'
  */
-class Relatie extends SnelstartObject
+final class Relatie extends SnelstartObject
 {
     /**
      * Datum waarop de gegevens van deze relatie zijn aangepast

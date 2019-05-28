@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model as Model;
 use SnelstartPHP\Snelstart;
 
-class BoekingMapper extends AbstractMapper
+final class BoekingMapper extends AbstractMapper
 {
     public static function findAllInkoopfacturen(ResponseInterface $response): \Generator
     {

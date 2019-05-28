@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Exception;
 
-class PreValidationException extends \RuntimeException
+final class PreValidationException extends \RuntimeException
 {
 
 }

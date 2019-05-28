@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Exception;
 
-class SnelstartApiErrorException extends \RuntimeException
+final class SnelstartApiErrorException extends \RuntimeException
 {
     public static function handleError(array $body): self
     {

@@ -21,7 +21,7 @@ use SnelstartPHP\Exception\{ExpiredAccessTokenException,
     SnelstartApiErrorException,
     SnelstartResourceNotFoundException};
 
-class AuthenticatedConnection implements ConnectionInterface
+final class AuthenticatedConnection implements ConnectionInterface
 {
     /**
      * @var ApiSubscriptionKey
@@ -104,7 +104,7 @@ class AuthenticatedConnection implements ConnectionInterface
 
             return $response;
         } catch (ServerException $serverException) {
-            throw new SnelstartResourceNotFoundException($serverException->getMessage(), $serverException->getCode(), $serverException);
+            throw new SnelstartResourceNotFoundException($serverException->getMessage(), $serverException->getCode(), $serverException->getResponse(), $serverException);
         } catch (ClientException $clientException) {
             $response = $clientException->getResponse();
 

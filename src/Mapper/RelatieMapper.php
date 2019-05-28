@@ -22,7 +22,7 @@ use SnelstartPHP\Model\Type\Incassosoort;
 use SnelstartPHP\Model\Type\Relatiesoort;
 use SnelstartPHP\Snelstart;
 
-class RelatieMapper extends AbstractMapper
+final class RelatieMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Relatie
     {

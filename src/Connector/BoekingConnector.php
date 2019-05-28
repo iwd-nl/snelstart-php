@@ -16,7 +16,7 @@ use SnelstartPHP\Model\VerkoopboekingBijlage;
 use SnelstartPHP\Request\BoekingRequest;
 use SnelstartPHP\Request\ODataRequestData;
 
-class BoekingConnector extends BaseConnector
+final class BoekingConnector extends BaseConnector
 {
     /**
      * @return Inkoopboeking[]|iterable

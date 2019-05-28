@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class RelatieVestigingsAdres extends RelatieAdres
+final class RelatieVestigingsAdres extends RelatieAdres
 {
 
 }

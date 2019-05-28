@@ -16,7 +16,7 @@ use Psr\Log\LoggerInterface;
 use SnelstartPHP\Exception\SnelstartApiAccessDeniedException;
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
-class AccessTokenConnection implements ConnectionInterface
+final class AccessTokenConnection implements ConnectionInterface
 {
     /**
      * @var ClientInterface|null

@@ -26,7 +26,8 @@
     },
     "require-dev": {
         "phpstan/phpstan": "^0.10.2",
-        "phpunit/phpunit": "^7.3"
+        "phpunit/phpunit": "^7.3",
+        "symfony/cache": "4.2.*"
     },
     "suggest": {
         "symfony/cache": "Caching made a little easier. Comes in handy for access tokens."

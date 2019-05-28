@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class IncassoMachtiging extends SnelstartObject
+final class IncassoMachtiging extends SnelstartObject
 {
     /**
      * @var string

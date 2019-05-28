@@ -8,7 +8,7 @@ namespace SnelstartPHP\Model;
 
 use Ramsey\Uuid\UuidInterface;
 
-class VerkoopboekingBijlage extends Bijlage
+final class VerkoopboekingBijlage extends Bijlage
 {
     /**
      * @var UuidInterface

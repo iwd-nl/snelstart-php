@@ -8,7 +8,7 @@ namespace SnelstartPHP\Model;
 
 use Ramsey\Uuid\UuidInterface;
 
-class FactuurRelatie extends BaseObject
+final class FactuurRelatie extends BaseObject
 {
     /**
      * De publieke sleutel (public identifier, als uuid) dat uniek een object identificeert.

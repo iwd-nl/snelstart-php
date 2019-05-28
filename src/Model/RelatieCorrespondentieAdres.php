@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class RelatieCorrespondentieAdres extends RelatieAdres
+final class RelatieCorrespondentieAdres extends RelatieAdres
 {
 
 }

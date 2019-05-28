@@ -9,7 +9,7 @@ namespace SnelstartPHP\Model;
 use Money\Money;
 use SnelstartPHP\Model\Type\BtwRegelSoort;
 
-class Btwregel extends BaseObject
+final class Btwregel extends BaseObject
 {
     /**
      * @var BtwRegelSoort

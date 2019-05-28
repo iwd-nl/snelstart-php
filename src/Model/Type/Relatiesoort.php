@@ -13,7 +13,7 @@ use MyCLabs\Enum\Enum;
  * @method static Relatiesoort KLANT()
  * @method static Relatiesoort EIGEN()
  */
-class Relatiesoort extends Enum
+final class Relatiesoort extends Enum
 {
     private const LEVERANCIER       = 'Leverancier';
     private const KLANT             = 'Klant';

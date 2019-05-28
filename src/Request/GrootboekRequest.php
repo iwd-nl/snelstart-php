@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\Grootboek;
 
-class GrootboekRequest extends BaseRequest
+final class GrootboekRequest extends BaseRequest
 {
     public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
     {

@@ -12,7 +12,7 @@ use SnelstartPHP\Request\LandRequest;
 use SnelstartPHP\Mapper\LandMapper;
 use SnelstartPHP\Model\Land;
 
-class LandConnector extends BaseConnector
+final class LandConnector extends BaseConnector
 {
     public function find(UuidInterface $id): ?Land
     {

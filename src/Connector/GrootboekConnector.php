@@ -13,7 +13,7 @@ use SnelstartPHP\Model\Grootboek;
 use SnelstartPHP\Request\GrootboekRequest;
 use SnelstartPHP\Request\ODataRequestData;
 
-class GrootboekConnector extends BaseConnector
+final class GrootboekConnector extends BaseConnector
 {
     public function find(UuidInterface $id): ?Grootboek
     {

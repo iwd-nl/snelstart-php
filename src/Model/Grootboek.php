@@ -9,7 +9,7 @@ namespace SnelstartPHP\Model;
 use SnelstartPHP\Model\Type\Grootboekfunctie;
 use SnelstartPHP\Model\Type\Rekeningcode;
 
-class Grootboek extends SnelstartObject
+final class Grootboek extends SnelstartObject
 {
     /**
      * Het tijdstip waarop het grootboek is aangemaakt of voor het laatst is gewijzigd

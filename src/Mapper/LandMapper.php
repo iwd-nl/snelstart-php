@@ -9,7 +9,7 @@ namespace SnelstartPHP\Mapper;
 use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Model\Land;
 
-class LandMapper extends AbstractMapper
+final class LandMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Land
     {

@@ -12,7 +12,7 @@ use SnelstartPHP\Model\Bijlage;
 use SnelstartPHP\Model\Inkoopboeking;
 use SnelstartPHP\Model\Verkoopboeking;
 
-class BoekingRequest extends BaseRequest
+final class BoekingRequest extends BaseRequest
 {
     public static function findInkoopfactuur(ODataRequestData $ODataRequestData): RequestInterface
     {

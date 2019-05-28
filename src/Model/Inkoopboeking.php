@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class Inkoopboeking extends Boeking
+final class Inkoopboeking extends Boeking
 {
     /**
      * De leverancier/crediteur van wie de factuur afkomstig is.

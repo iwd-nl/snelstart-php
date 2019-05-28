@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class Verkoopboeking extends Boeking
+final class Verkoopboeking extends Boeking
 {
     /**
      * De klant/debiteur aan wie de factuur is gericht.

@@ -8,7 +8,7 @@ namespace SnelstartPHP\Model;
 
 use SnelstartPHP\Model\Type as Types;
 
-class Dagboek extends SnelstartObject
+final class Dagboek extends SnelstartObject
 {
     /**
      * Het nummer van het grootboek.

@@ -12,7 +12,7 @@ use SnelstartPHP\Model\RgsCode;
 use SnelstartPHP\Model\Type\Grootboekfunctie;
 use SnelstartPHP\Model\Type\Rekeningcode;
 
-class GrootboekMapper extends AbstractMapper
+final class GrootboekMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Grootboek
     {
