@@ -12,6 +12,11 @@ use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
+use SnelstartPHP\Model\EmailVersturen;
+use SnelstartPHP\Model\Land;
+use SnelstartPHP\Model\RelatieAdres;
+use SnelstartPHP\Model\RelatieCorrespondentieAdres;
+use SnelstartPHP\Model\RelatieVestigingsAdres;
 use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Snelstart;
@@ -74,11 +79,11 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if (!empty($data["vestigingsAdres"])) {
-            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"], Model\RelatieVestigingsAdres::class));
+            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"], RelatieVestigingsAdres::class));
         }
 
         if (!empty($data["correspondentieAdres"])) {
-            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"], Model\RelatieCorrespondentieAdres::class));
+            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"], RelatieCorrespondentieAdres::class));
         }
 
         $relatie->setOfferteEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
@@ -94,20 +99,20 @@ final class RelatieMapper extends AbstractMapper
      *
      * @param array  $address
      * @param string $addressClass
-     * @return Model\RelatieAdres
+     * @return RelatieAdres
      */
-    public function mapAddressToRelatieAddress(array $address, string $addressClass): Model\RelatieAdres
+    public function mapAddressToRelatieAddress(array $address, string $addressClass): RelatieAdres
     {
         /**
-         * @var Model\RelatieAdres $class
+         * @var \RelatieAdres $class
          */
         $class = new $addressClass;
 
-        if (!$class instanceof Model\RelatieAdres) {
-            throw new \InvalidArgumentException(sprintf("Only classes that extend '%s' are allowed here.", Model\RelatieAdres::class));
+        if (!$class instanceof RelatieAdres) {
+            throw new \InvalidArgumentException(sprintf("Only classes that extend '%s' are allowed here.", RelatieAdres::class));
         }
 
-        $land = Model\Land::createFromUUID(Uuid::fromString($address["land"]["id"]));
+        $land = Land::createFromUUID(Uuid::fromString($address["land"]["id"]));
 
         return $class
             ->setContactpersoon($address["contactpersoon"])
@@ -122,9 +127,9 @@ final class RelatieMapper extends AbstractMapper
      *
      * @param array  $emailVersturen
      * @param string $emailVersturenClass
-     * @return Model\EmailVersturen
+     * @return EmailVersturen
      */
-    public function mapEmailVersturenField(array $emailVersturen, string $emailVersturenClass = Model\EmailVersturen::class): Model\EmailVersturen
+    public function mapEmailVersturenField(array $emailVersturen, string $emailVersturenClass = EmailVersturen::class): EmailVersturen
     {
         return new $emailVersturenClass(
             $emailVersturen["shouldSend"],

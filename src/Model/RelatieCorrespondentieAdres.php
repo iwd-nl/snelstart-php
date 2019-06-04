@@ -4,9 +4,9 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Model\V1;
+namespace SnelstartPHP\Model;
 
-final class RelatieVestigingsAdres extends RelatieAdres
+final class RelatieCorrespondentieAdres extends RelatieAdres
 {
 
 }

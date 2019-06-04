@@ -4,7 +4,7 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Model\V1;
+namespace SnelstartPHP\Model;
 
 use SnelstartPHP\Model\SnelstartObject;
 

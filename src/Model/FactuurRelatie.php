@@ -4,10 +4,9 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Model\V1;
+namespace SnelstartPHP\Model;
 
 use Ramsey\Uuid\UuidInterface;
-use SnelstartPHP\Model\BaseObject;
 
 final class FactuurRelatie extends BaseObject
 {

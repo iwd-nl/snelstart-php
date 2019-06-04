@@ -47,18 +47,12 @@ if (!class_exists(Model\Verkoopboeking::class)) {
     \class_alias(Model\V1\Boekingsregel::class, Model\Boekingsregel::class);
     \class_alias(Model\V1\Btwregel::class, Model\Btwregel::class);
     \class_alias(Model\V1\Dagboek::class, Model\Dagboek::class);
-    \class_alias(Model\V1\EmailVersturen::class, Model\EmailVersturen::class);
-    \class_alias(Model\V1\FactuurRelatie::class, Model\FactuurRelatie::class);
     \class_alias(Model\V1\Grootboek::class, Model\Grootboek::class);
     \class_alias(Model\V1\IncassoMachtiging::class, Model\IncassoMachtiging::class);
     \class_alias(Model\V1\Inkoopboeking::class, Model\Inkoopboeking::class);
     \class_alias(Model\V1\InkoopboekingBijlage::class, Model\InkoopboekingBijlage::class);
     \class_alias(Model\V1\Kostenplaats::class, Model\Kostenplaats::class);
-    \class_alias(Model\V1\Land::class, Model\Land::class);
     \class_alias(Model\V1\Relatie::class, Model\Relatie::class);
-    \class_alias(Model\V1\RelatieAdres::class, Model\RelatieAdres::class);
-    \class_alias(Model\V1\RelatieCorrespondentieAdres::class, Model\RelatieCorrespondentieAdres::class);
-    \class_alias(Model\V1\RelatieVestigingsAdres::class, Model\RelatieVestigingsAdres::class);
     \class_alias(Model\V1\RgsCode::class, Model\RgsCode::class);
     \class_alias(Model\V1\Verkoopboeking::class, Model\Verkoopboeking::class);
     \class_alias(Model\V1\VerkoopboekingBijlage::class, Model\VerkoopboekingBijlage::class);

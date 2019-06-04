@@ -8,7 +8,7 @@ namespace SnelstartPHP\Mapper\V1;
 
 use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Mapper\AbstractMapper;
-use SnelstartPHP\Model\V1\Land;
+use SnelstartPHP\Model\Land;
 
 final class LandMapper extends AbstractMapper
 {

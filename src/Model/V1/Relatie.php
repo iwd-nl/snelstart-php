@@ -7,6 +7,9 @@
 namespace SnelstartPHP\Model\V1;
 
 use Money\Money;
+use SnelstartPHP\Model\EmailVersturen;
+use SnelstartPHP\Model\RelatieCorrespondentieAdres;
+use SnelstartPHP\Model\RelatieVestigingsAdres;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type as Types;
 

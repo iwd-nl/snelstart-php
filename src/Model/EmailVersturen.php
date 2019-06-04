@@ -4,9 +4,7 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Model\V1;
-
-use SnelstartPHP\Model\BaseObject;
+namespace SnelstartPHP\Model;
 
 final class EmailVersturen extends BaseObject
 {

@@ -10,12 +10,12 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Connector\BaseConnector;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
 use SnelstartPHP\Mapper\V1\LandMapper;
-use SnelstartPHP\Model\V1\Land;
+use SnelstartPHP\Model\Land;
 use SnelstartPHP\Request\V1\LandRequest;
 
 final class LandConnector extends BaseConnector
 {
-    public function find(UuidInterface $id): ?Land
+    public function find(UuidInterface $id): ?\SnelstartPHP\Model\Land
     {
         try {
             return LandMapper::find($this->connection->doRequest(LandRequest::find($id)));
