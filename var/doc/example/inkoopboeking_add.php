@@ -14,42 +14,42 @@ $bearerToken = new \SnelstartPHP\Secure\BearerToken\ClientKeyBearerToken($client
 $accessTokenConnection = new \SnelstartPHP\Secure\AccessTokenConnection($bearerToken);
 $accessToken = $accessTokenConnection->getToken();
 
-$connection = new \SnelstartPHP\Secure\AuthenticatedConnection(
+$connection = new \SnelstartPHP\Secure\V1Connector(
     new \SnelstartPHP\Secure\ApiSubscriptionKey($primaryKey, $secondaryKey),
     $accessToken
 );
 
-$leverancierConnector = new \SnelstartPHP\Connector\RelatieConnector($connection);
+$leverancierConnector = new \SnelstartPHP\Connector\V1\RelatieConnector($connection);
 $leverancier = null;
 
 /**
- * @var \SnelstartPHP\Model\Relatie $leverancier
+ * @var \SnelstartPHP\Model\V1\Relatie $leverancier
  */
 foreach ($leverancierConnector->findAllLeveranciers() as $leverancier) {
     break;
 }
 
-$grootboekConnector = new \SnelstartPHP\Connector\GrootboekConnector($connection);
+$grootboekConnector = new \SnelstartPHP\Connector\V1\GrootboekConnector($connection);
 $inkoopGroot = \SnelstartPHP\Util\IteratorUtil::getFirstElementOrNull($grootboekConnector->findAll(
     (new \SnelstartPHP\Request\ODataRequestData())->setFilter(["Nummer eq 7002"]))
 );
 
-$inkoopboeking = new \SnelstartPHP\Model\Inkoopboeking();
+$inkoopboeking = new \SnelstartPHP\Model\V1\Inkoopboeking();
 $inkoopboeking->setLeverancier($leverancier)
     ->setFactuurdatum(new \DateTime())
     ->setFactuurnummer("inkoop-factuur-1")
     ->setFactuurbedrag(\Money\Money::EUR(1223))
     ->setBoekingsregels([
-        (new \SnelstartPHP\Model\Boekingsregel())
+        (new \SnelstartPHP\Model\V1\Boekingsregel())
             ->setBedrag(\Money\Money::EUR(1011))
             ->setOmschrijving("Omschrijving")
             ->setBtwSoort(\SnelstartPHP\Model\Type\BtwSoort::HOOG())
             ->setGrootboek($inkoopGroot)
     ])
     ->setBtw([
-        (new \SnelstartPHP\Model\Btwregel(\SnelstartPHP\Model\Type\BtwRegelSoort::INKOPENHOOG(), \Money\Money::EUR(212)))
+        (new \SnelstartPHP\Model\V1\Btwregel(\SnelstartPHP\Model\Type\BtwRegelSoort::INKOPENHOOG(), \Money\Money::EUR(212)))
     ])
 ;
 
-$boekingConnector = new \SnelstartPHP\Connector\BoekingConnector($connection);
+$boekingConnector = new \SnelstartPHP\Connector\V1\BoekingConnector($connection);
 $boekingConnector->addInkoopboeking($inkoopboeking);

@@ -5,6 +5,9 @@ PHP client library to use the Snelstart B2B API.
 
 __Note that this library is not created, or maintained, by Snelstart.__
 
+# Pre-word
+This release will support both version 1 and version 2. Version 1 is considered deprecated, as Snelstart does not activly promote it anymore. Instructions on how to upgrade will be added when the next release takes place.
+
 # Installation
 Installation is easy as 1, 2, 3 thanks to Composer.
 ```bash
@@ -25,7 +28,7 @@ $bearerToken = new \SnelstartPHP\Secure\BearerToken\ClientKeyBearerToken($client
 $accessTokenConnection = new \SnelstartPHP\Secure\AccessTokenConnection($bearerToken);
 $accessToken = $accessTokenConnection->getToken();
 
-$connection = new \SnelstartPHP\Secure\AuthenticatedConnection(
+$connection = new \SnelstartPHP\Secure\V1Connector(
     new \SnelstartPHP\Secure\ApiSubscriptionKey($primaryKey, $secondaryKey),
     $accessToken
 );

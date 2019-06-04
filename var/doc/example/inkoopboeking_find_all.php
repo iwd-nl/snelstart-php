@@ -14,12 +14,12 @@ $bearerToken = new \SnelstartPHP\Secure\BearerToken\ClientKeyBearerToken($client
 $accessTokenConnection = new \SnelstartPHP\Secure\AccessTokenConnection($bearerToken);
 $accessToken = $accessTokenConnection->getToken();
 
-$connection = new \SnelstartPHP\Secure\AuthenticatedConnection(
+$connection = new \SnelstartPHP\Secure\V1Connector(
     new \SnelstartPHP\Secure\ApiSubscriptionKey($primaryKey, $secondaryKey),
     $accessToken
 );
 
-$boekingConnector = new \SnelstartPHP\Connector\BoekingConnector($connection);
+$boekingConnector = new \SnelstartPHP\Connector\V1\BoekingConnector($connection);
 
 foreach ($boekingConnector->findInkoopfactuur(null, true) as $inkoopboeking) {
     var_dump($inkoopboeking);
