@@ -42,6 +42,8 @@ if (!class_exists(Model\Verkoopboeking::class)) {
     \class_alias(Mapper\V1\GrootboekMapper::class, Mapper\GrootboekMapper::class);
     \class_alias(Mapper\V1\LandMapper::class, Mapper\LandMapper::class);
     \class_alias(Mapper\V1\RelatieMapper::class, Mapper\RelatieMapper::class);
+    \class_alias(Model\Adres::class, Model\V1\CorrespondentieAdres::class);
+    \class_alias(Model\Adres::class, Model\V1\VestigingsAdres::class);
     \class_alias(Model\V1\Bijlage::class, Model\Bijlage::class);
     \class_alias(Model\V1\Boeking::class, Model\Boeking::class);
     \class_alias(Model\V1\Boekingsregel::class, Model\Boekingsregel::class);

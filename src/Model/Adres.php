@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-abstract class RelatieAdres extends BaseObject
+final class Adres extends BaseObject
 {
     /**
      * De volledige naam van de contactpersoon op dit adres.

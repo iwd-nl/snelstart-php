@@ -8,15 +8,11 @@
 namespace SnelstartPHP\Model\V1;
 
 use Money\Money;
+use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\EmailVersturen;
-use SnelstartPHP\Model\RelatieCorrespondentieAdres;
-use SnelstartPHP\Model\RelatieVestigingsAdres;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type as Types;
 
-/**
- * @todo Support for the property 'factuurRelatie'
- */
 final class Relatie extends SnelstartObject
 {
     /**
@@ -47,12 +43,12 @@ final class Relatie extends SnelstartObject
     private $naam;
 
     /**
-     * @var RelatieVestigingsAdres
+     * @var Adres
      */
     private $vestigingsAdres;
 
     /**
-     * @var RelatieCorrespondentieAdres
+     * @var Adres
      */
     private $correspondentieAdres;
 
@@ -304,10 +300,6 @@ final class Relatie extends SnelstartObject
         return $this->naam;
     }
 
-    /**
-     * @param string $naam
-     * @return Relatie
-     */
     public function setNaam(string $naam): self
     {
         $this->naam = $naam;
@@ -315,56 +307,35 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return RelatieVestigingsAdres
-     */
-    public function getVestigingsAdres(): RelatieVestigingsAdres
+    public function getVestigingsAdres(): Adres
     {
-        return $this->vestigingsAdres ?? new RelatieVestigingsAdres();
+        return $this->vestigingsAdres ?? new Adres();
     }
 
-    /**
-     * @param RelatieVestigingsAdres $vestigingsAdres
-     * @return Relatie
-     */
-    public function setVestigingsAdres(RelatieVestigingsAdres $vestigingsAdres): self
+    public function setVestigingsAdres(Adres $vestigingsAdres): self
     {
         $this->vestigingsAdres = $vestigingsAdres;
 
         return $this;
     }
 
-    /**
-     * @return RelatieCorrespondentieAdres
-     */
-    public function getCorrespondentieAdres(): RelatieCorrespondentieAdres
+    public function getCorrespondentieAdres(): Adres
     {
-        return $this->correspondentieAdres ?? new RelatieCorrespondentieAdres();
+        return $this->correspondentieAdres ?? new Adres();
     }
 
-    /**
-     * @param RelatieCorrespondentieAdres $correspondentieAdres
-     * @return Relatie
-     */
-    public function setCorrespondentieAdres(RelatieCorrespondentieAdres $correspondentieAdres): self
+    public function setCorrespondentieAdres(Adres $correspondentieAdres): self
     {
         $this->correspondentieAdres = $correspondentieAdres;
 
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTelefoon(): ?string
     {
         return $this->telefoon;
     }
 
-    /**
-     * @param null|string $telefoon
-     * @return Relatie
-     */
     public function setTelefoon(?string $telefoon): self
     {
         $this->telefoon = $telefoon;
@@ -372,18 +343,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getMobieleTelefoon(): ?string
     {
         return $this->mobieleTelefoon;
     }
 
-    /**
-     * @param null|string $mobieleTelefoon
-     * @return Relatie
-     */
     public function setMobieleTelefoon(?string $mobieleTelefoon): self
     {
         $this->mobieleTelefoon = $mobieleTelefoon;

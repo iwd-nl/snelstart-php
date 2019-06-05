@@ -15,9 +15,7 @@ use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\EmailVersturen;
 use SnelstartPHP\Model\Land;
-use SnelstartPHP\Model\RelatieAdres;
-use SnelstartPHP\Model\RelatieCorrespondentieAdres;
-use SnelstartPHP\Model\RelatieVestigingsAdres;
+use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Snelstart;
@@ -80,11 +78,11 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if (!empty($data["vestigingsAdres"])) {
-            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"], RelatieVestigingsAdres::class));
+            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"]));
         }
 
         if (!empty($data["correspondentieAdres"])) {
-            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"], RelatieCorrespondentieAdres::class));
+            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"]));
         }
 
         $relatie->setOfferteEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
@@ -96,31 +94,16 @@ final class RelatieMapper extends AbstractMapper
     }
 
     /**
-     * Map the response data to the model. Should extend the RelatieAdres class.
-     *
-     * @param array  $address
-     * @param string $addressClass
-     * @return RelatieAdres
+     * Map the response data to the model.
      */
-    public function mapAddressToRelatieAddress(array $address, string $addressClass): RelatieAdres
+    public function mapAddressToRelatieAddress(array $address): Adres
     {
-        /**
-         * @var \RelatieAdres $class
-         */
-        $class = new $addressClass;
-
-        if (!$class instanceof RelatieAdres) {
-            throw new \InvalidArgumentException(sprintf("Only classes that extend '%s' are allowed here.", RelatieAdres::class));
-        }
-
-        $land = Land::createFromUUID(Uuid::fromString($address["land"]["id"]));
-
-        return $class
+        return (new Adres())
             ->setContactpersoon($address["contactpersoon"])
             ->setStraat($address["straat"])
             ->setPostcode($address["postcode"])
             ->setPlaats($address["plaats"])
-            ->setLand($land);
+            ->setLand(Land::createFromUUID(Uuid::fromString($address["land"]["id"])));
     }
 
     /**
