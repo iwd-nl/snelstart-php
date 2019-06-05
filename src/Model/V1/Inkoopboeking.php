@@ -1,7 +1,8 @@
 <?php
 /**
- * @author  OptiWise Technologies B.V. <info@optiwise.nl>
+ * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
+ * @deprecated
  */
 
 namespace SnelstartPHP\Model\V1;

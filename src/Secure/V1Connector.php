@@ -1,7 +1,8 @@
 <?php
 /**
  * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
- * @project SnelstartApiReference
+ * @project SnelstartApiPHP
+ * @deprecated
  */
 
 namespace SnelstartPHP\Secure;

@@ -2,6 +2,7 @@
 /**
  * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
+ * @deprecated
  */
 
 namespace SnelstartPHP\Request\V1;
