@@ -121,6 +121,8 @@ abstract class BaseConnection implements ConnectionInterface
                 throw SnelstartApiErrorException::handleError($body);
             } else if ($response->getStatusCode() === 401) {
                 throw SnelstartApiAccessDeniedException::createFromParent($clientException);
+            } else if ($response->getStatusCode() === 403) {
+                throw new SnelstartApiAccessDeniedException($response->getReasonPhrase(), $request);
             } else if ($response->getStatusCode() === 404) {
                 $body = (string) $response->getBody();
 
