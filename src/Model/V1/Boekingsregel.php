@@ -8,6 +8,7 @@ namespace SnelstartPHP\Model\V1;
 
 use Money\Money;
 use SnelstartPHP\Model\BaseObject;
+use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\Type\BtwSoort;
 
 final class Boekingsregel extends BaseObject

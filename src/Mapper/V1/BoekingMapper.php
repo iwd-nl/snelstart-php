@@ -11,6 +11,7 @@ use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
+use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Snelstart;
@@ -148,7 +149,7 @@ final class BoekingMapper extends AbstractMapper
 
             if ($boekingsregel["kostenplaats"]) {
                 $boekingsregelObject->setKostenplaats(
-                    Model\Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
+                    Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
                 );
             }
 

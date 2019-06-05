@@ -51,7 +51,6 @@ if (!class_exists(Model\Verkoopboeking::class)) {
     \class_alias(Model\V1\IncassoMachtiging::class, Model\IncassoMachtiging::class);
     \class_alias(Model\V1\Inkoopboeking::class, Model\Inkoopboeking::class);
     \class_alias(Model\V1\InkoopboekingBijlage::class, Model\InkoopboekingBijlage::class);
-    \class_alias(Model\V1\Kostenplaats::class, Model\Kostenplaats::class);
     \class_alias(Model\V1\Relatie::class, Model\Relatie::class);
     \class_alias(Model\V1\RgsCode::class, Model\RgsCode::class);
     \class_alias(Model\V1\Verkoopboeking::class, Model\Verkoopboeking::class);
