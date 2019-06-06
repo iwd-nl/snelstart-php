@@ -6,8 +6,6 @@
 
 namespace SnelstartPHP\Model;
 
-use SnelstartPHP\Model\SnelstartObject;
-
 final class Kostenplaats extends SnelstartObject
 {
     /**
@@ -30,4 +28,46 @@ final class Kostenplaats extends SnelstartObject
      * @var int
      */
     private $nummer;
+
+    public static $editableAttributes = [
+        "omschrijving",
+        "nonactief",
+        "nummer",
+    ];
+
+    public function getOmschrijving(): ?string
+    {
+        return $this->omschrijving;
+    }
+
+    public function setOmschrijving(string $omschrijving): self
+    {
+        $this->omschrijving = $omschrijving;
+
+        return $this;
+    }
+
+    public function isNonactief(): ?bool
+    {
+        return $this->nonactief;
+    }
+
+    public function setNonactief(bool $nonactief): self
+    {
+        $this->nonactief = $nonactief;
+
+        return $this;
+    }
+
+    public function getNummer(): ?int
+    {
+        return $this->nummer;
+    }
+
+    public function setNummer(int $nummer): self
+    {
+        $this->nummer = $nummer;
+
+        return $this;
+    }
 }
