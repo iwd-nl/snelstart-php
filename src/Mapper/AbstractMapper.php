@@ -43,7 +43,7 @@ abstract class AbstractMapper
         if ($key === "id" && is_string($value)) {
             $value = Uuid::fromString($value);
             $customSet = true;
-        } else if (substr($key, -2, 2) === "On") {
+        } else if (substr($key, -2, 2) === "On" || strpos($key, "datum") !== false) {
             $value = \DateTimeImmutable::createFromFormat(Snelstart::DATETIME_FORMAT, $value);
 
             if (!$value) {
