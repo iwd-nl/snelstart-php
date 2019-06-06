@@ -50,7 +50,6 @@ if (!class_exists(Model\Verkoopboeking::class)) {
     \class_alias(Model\V1\Btwregel::class, Model\Btwregel::class);
     \class_alias(Model\V1\Dagboek::class, Model\Dagboek::class);
     \class_alias(Model\V1\Grootboek::class, Model\Grootboek::class);
-    \class_alias(Model\V1\IncassoMachtiging::class, Model\IncassoMachtiging::class);
     \class_alias(Model\V1\Inkoopboeking::class, Model\Inkoopboeking::class);
     \class_alias(Model\V1\InkoopboekingBijlage::class, Model\InkoopboekingBijlage::class);
     \class_alias(Model\V1\Relatie::class, Model\Relatie::class);

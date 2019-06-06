@@ -2,12 +2,9 @@
 /**
  * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
- * @deprecated
  */
 
-namespace SnelstartPHP\Model\V1;
-
-use SnelstartPHP\Model\SnelstartObject;
+namespace SnelstartPHP\Model;
 
 final class IncassoMachtiging extends SnelstartObject
 {

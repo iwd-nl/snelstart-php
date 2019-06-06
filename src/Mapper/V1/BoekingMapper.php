@@ -12,6 +12,7 @@ use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
+use SnelstartPHP\Model\IncassoMachtiging;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Model\Type as Type;
@@ -93,12 +94,12 @@ final class BoekingMapper extends AbstractMapper
         }
 
         if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
-            $doorlopendeIncassoMachtiging = Model\IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"]));
+            $doorlopendeIncassoMachtiging = IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"]));
             $verkoopboeking->setDoorlopendeIncassoMachtiging($doorlopendeIncassoMachtiging);
         }
 
         if (isset($data["eenmaligeIncassoMachtiging"]["datum"])) {
-            $incassomachtiging = (new Model\IncassoMachtiging())
+            $incassomachtiging = (new IncassoMachtiging())
                 ->setDatum(new \DateTime($data["eenmaligeIncassoMachtiging"]["datum"]));
 
             if ($data["eenmaligeIncassoMachtiging"]["kenmerk"] !== null) {
