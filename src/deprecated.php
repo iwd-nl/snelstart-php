@@ -5,33 +5,9 @@ use SnelstartPHP\Connector as Connector;
 use SnelstartPHP\Request as Request;
 use SnelstartPHP\Secure as Secure;
 
-// Code used to generate the alias list.
-//
-//foreach ([ "Boeking", "Echo", "Grootboek", "Land", "Relatie" ] as $connector) {
-//    echo "\\class_alias(Connector\\V1\\{$connector}Connector::class, Connector\\{$connector}Connector::class);\n";
-//}
-//
-//foreach ([ "Boeking", "Grootboek", "Land", "Relatie" ] as $mapper) {
-//    echo "\\class_alias(Mapper\\V1\\{$mapper}Mapper::class, Mapper\\{$mapper}Mapper::class);\n";
-//}
-//
-//foreach ([
-//    "Bijlage", "Boeking", "Boekingsregel", "Btwregel", "Dagboek", "EmailVersturen",
-//    "FactuurRelatie", "Grootboek", "IncassoMachtiging", "Inkoopboeking", "InkoopboekingBijlage",
-//    "Kostenplaats", "Land", "Relatie", "RelatieAdres", "RelatieCorrespondentieAdres", "RelatieVestigingsAdres",
-//    "RgsCode", "Verkoopboeking", "VerkoopboekingBijlage"
-//] as $model) {
-//    echo "\\class_alias(Model\\V1\\{$model}::class, Model\\{$model}::class);\n";
-//}
-//
-//foreach ([ "Boeking", "Echo", "Grootboek", "Land", "Relatie" ] as $request) {
-//    echo "\\class_alias(Request\\V1\\{$request}Request::class, Request\\{$request}Request::class);\n";
-//}
-
-
 if (!class_exists(Model\Verkoopboeking::class)) {
     /**
-     * @deprecated Will be deprecated in the next release.
+     * @deprecated Will be removed in the next release.
      */
     \class_alias(Connector\V1\BoekingConnector::class, Connector\BoekingConnector::class);
     \class_alias(Connector\V1\EchoConnector::class, Connector\EchoConnector::class);

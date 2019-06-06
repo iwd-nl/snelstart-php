@@ -4,10 +4,13 @@
  * @project SnelstartApiPHP
  */
 
-namespace SnelstartPHP\Model;
+namespace SnelstartPHP\Model\V2;
 
 use Money\Money;
 use SnelstartPHP\Exception\BookingNotInBalanceException;
+use SnelstartPHP\Model\Boekingsregel;
+use SnelstartPHP\Model\Btwregel;
+use SnelstartPHP\Model\SnelstartObject;
 
 abstract class Boeking extends SnelstartObject
 {
@@ -90,14 +93,9 @@ abstract class Boeking extends SnelstartObject
     protected $btw;
 
     /**
-     * @var string
+     * @var Document[]
      */
-    protected $bijlagenUri;
-
-    /**
-     * @var Bijlage[]
-     */
-    protected $bijlagen;
+    protected $documents;
 
     public static $editableAttributes = [
         "id",
@@ -239,18 +237,6 @@ abstract class Boeking extends SnelstartObject
         return $this;
     }
 
-    public function getBijlagenUri(): ?string
-    {
-        return $this->bijlagenUri;
-    }
-
-    public function setBijlagenUri(string $bijlagenUri): self
-    {
-        $this->bijlagenUri = $bijlagenUri;
-
-        return $this;
-    }
-
     public function getBtw(): array
     {
         return $this->btw ?? [];
@@ -269,9 +255,9 @@ abstract class Boeking extends SnelstartObject
         return $this;
     }
 
-    public function addBijlage(Bijlage $bijlage): self
+    public function addDocument(Document $document): self
     {
-        $this->bijlagen[] = $bijlage;
+        $this->documents[] = $document;
 
         return $this;
     }
