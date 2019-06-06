@@ -6,8 +6,6 @@
 
 namespace SnelstartPHP\Model;
 
-use SnelstartPHP\Model\SnelstartObject;
-
 final class Land extends SnelstartObject
 {
     /**

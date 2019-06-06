@@ -9,9 +9,9 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
- * @method static BtwRegelSoort GEEN()
- * @method static BtwRegelSoort CORE()
- * @method static BtwRegelSoort B2B()
+ * @method static Incassosoort GEEN()
+ * @method static Incassosoort CORE()
+ * @method static Incassosoort B2B()
  */
 final class Incassosoort extends Enum
 {
