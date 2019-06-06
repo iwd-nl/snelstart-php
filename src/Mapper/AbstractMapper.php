@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Mapper;
 
+use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model\SnelstartObject;
@@ -33,6 +34,11 @@ abstract class AbstractMapper
         }
 
         return $class;
+    }
+
+    protected function getMoney(string $money): Money
+    {
+        return new Money($money * 100, Snelstart::getCurrency());
     }
 
     protected static function setDataToModel(SnelstartObject $class, string $key, $value)

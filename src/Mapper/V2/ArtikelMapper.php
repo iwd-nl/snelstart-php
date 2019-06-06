@@ -1,20 +1,17 @@
 <?php
 /**
- * @author  OptiWise Technologies B.V. <info@optiwise.nl>
+ * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
  */
 
 namespace SnelstartPHP\Mapper\V2;
 
-use Money\Currency;
-use Money\Money;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\V2\Artikel;
 use SnelstartPHP\Model\V2\ArtikelOmzetgroep;
 use SnelstartPHP\Model\V2\SubArtikel;
-use SnelstartPHP\Snelstart;
 
 final class ArtikelMapper extends AbstractMapper
 {
@@ -39,10 +36,9 @@ final class ArtikelMapper extends AbstractMapper
          * @var $artikel Artikel
          */
         $artikel = $this->mapArrayDataToModel($artikel, $data);
-        $currency = new Currency(Snelstart::CURRENCY);
 
         if (isset($data["verkoopprijs"])) {
-            $artikel->setVerkoopprijs(new Money($data["verkoopprijs"] * 100, $currency));
+            $artikel->setVerkoopprijs($this->getMoney($data["verkoopprijs"]));
         }
 
         if (isset($data["artikelOmzetgroep"])) {

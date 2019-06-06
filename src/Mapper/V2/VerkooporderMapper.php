@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  OptiWise Technologies B.V. <info@optiwise.nl>
+ * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
  */
 
@@ -89,10 +89,5 @@ final class VerkooporderMapper extends AbstractMapper
         }
 
         return $verkooporder;
-    }
-
-    private function getMoney(string $money): Money
-    {
-        return new Money($money * 100, Snelstart::getCurrency());
     }
 }

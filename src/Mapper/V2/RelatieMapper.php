@@ -6,18 +6,11 @@
 
 namespace SnelstartPHP\Mapper\V2;
 
-use function array_map;
-use Money\Currency;
-use Money\Money;
 use Psr\Http\Message\ResponseInterface;
-use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\EmailVersturen;
-use SnelstartPHP\Model\Land;
-use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Model\V2 as Model;
-use SnelstartPHP\Snelstart;
 
 final class RelatieMapper extends AbstractMapper
 {
@@ -54,9 +47,8 @@ final class RelatieMapper extends AbstractMapper
          * @var Model\Relatie $relatie
          */
         $relatie = $this->mapArrayDataToModel($relatie, $data);
-        $currency = new Currency(Snelstart::CURRENCY);
 
-        $relatie->setRelatiesoort(array_map(function(string $relatiesoort) {
+        $relatie->setRelatiesoort(\array_map(function(string $relatiesoort) {
             return new Type\Relatiesoort($relatiesoort);
         }, $data["relatiesoort"]));
 
@@ -69,19 +61,19 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if ($data["kredietLimiet"] !== null) {
-            $relatie->setKredietLimiet(new Money($data["kredietLimiet"], $currency));
+            $relatie->setKredietLimiet($this->getMoney($data["kredietLimiet"]));
         }
 
         if ($data["factuurkorting"] !== null) {
-            $relatie->setFactuurkorting(new Money($data["factuurkorting"], $currency));
+            $relatie->setFactuurkorting($this->getMoney($data["kredietLimiet"]));
         }
 
         if (!empty($data["vestigingsAdres"])) {
-            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"]));
+            $relatie->setVestigingsAdres(AdresMapper::mapAdresToSnelstartObject($data["vestigingsAdres"]));
         }
 
         if (!empty($data["correspondentieAdres"])) {
-            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"]));
+            $relatie->setCorrespondentieAdres(AdresMapper::mapAdresToSnelstartObject($data["correspondentieAdres"]));
         }
 
         $relatie->setOfferteEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
@@ -90,19 +82,6 @@ final class RelatieMapper extends AbstractMapper
                 ->setAanmaningEmailVersturen(static::mapEmailVersturenField($data["aanmaningEmailVersturen"]));
 
         return $relatie;
-    }
-
-    /**
-     * Map the response data to the model.
-     */
-    public function mapAddressToRelatieAddress(array $address): Adres
-    {
-        return (new Adres())
-            ->setContactpersoon($address["contactpersoon"])
-            ->setStraat($address["straat"])
-            ->setPostcode($address["postcode"])
-            ->setPlaats($address["plaats"])
-            ->setLand(Land::createFromUUID(Uuid::fromString($address["land"]["id"])));
     }
 
     /**
