@@ -65,7 +65,7 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if ($data["factuurkorting"] !== null) {
-            $relatie->setFactuurkorting($this->getMoney($data["kredietLimiet"]));
+            $relatie->setFactuurkorting($this->getMoney($data["factuurkorting"]));
         }
 
         if (!empty($data["vestigingsAdres"])) {
