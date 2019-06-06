@@ -26,6 +26,7 @@
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {
+        "dg/bypass-finals": "^1.1",
         "phpstan/phpstan": "^0.10.2",
         "phpunit/phpunit": "^7.3",
         "symfony/cache": "4.2.*"
