@@ -75,7 +75,7 @@ final class RelatieConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
             $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s'))", Relatiesoort::KLANT()) ])
+            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()) ])
         );
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
