@@ -24,6 +24,15 @@ class ArtikelConnector extends BaseConnector
         }
     }
 
+    public function customFields(UuidInterface $id)
+    {
+        try {
+            return json_decode($this->connection->doRequest(ArtikelRequest::customFields($id))->getBody()->getContents());
+        } catch (SnelstartResourceNotFoundException $e) {
+            return null;
+        }
+    }
+
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();

@@ -23,5 +23,10 @@ class ArtikelRequest
         return new Request("GET", "artikelen/" . $id->toString());
     }
 
+    public static function customFields(UuidInterface $id): RequestInterface
+    {
+        return new Request("GET", "artikelen/" . $id->toString() . '/customFields');
+    }
+
 
 }
