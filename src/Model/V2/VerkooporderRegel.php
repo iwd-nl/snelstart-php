@@ -57,42 +57,27 @@ final class VerkooporderRegel extends BaseObject
         "totaal",
     ];
 
-    /**
-     * @return Artikel
-     */
     public function getArtikel(): Artikel
     {
         return $this->artikel;
     }
 
-    /**
-     * @param Artikel $artikel
-     * @return VerkooporderRegel
-     */
     public function setArtikel(Artikel $artikel): self
     {
         $this->artikel = $artikel;
 
         if ($artikel->isHydrated()) {
             $this->setStuksprijs($artikel->getVerkoopprijs());
-            $this->totaal = $artikel->getVerkoopprijs()->multiply($this->getAantal());
         }
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
     public function getOmschrijving(): ?string
     {
         return $this->omschrijving;
     }
 
-    /**
-     * @param string $omschrijving
-     * @return VerkooporderRegel
-     */
     public function setOmschrijving(string $omschrijving): self
     {
         $this->omschrijving = $omschrijving;
@@ -100,18 +85,11 @@ final class VerkooporderRegel extends BaseObject
         return $this;
     }
 
-    /**
-     * @return Money
-     */
     public function getStuksprijs(): ?Money
     {
         return $this->stuksprijs;
     }
 
-    /**
-     * @param Money $stuksprijs
-     * @return VerkooporderRegel
-     */
     public function setStuksprijs(Money $stuksprijs): self
     {
         $this->stuksprijs = $stuksprijs;
@@ -119,18 +97,11 @@ final class VerkooporderRegel extends BaseObject
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getAantal(): float
     {
         return $this->aantal;
     }
 
-    /**
-     * @param float $aantal
-     * @return VerkooporderRegel
-     */
     public function setAantal(float $aantal): self
     {
         $this->aantal = $aantal;
@@ -138,18 +109,11 @@ final class VerkooporderRegel extends BaseObject
         return $this;
     }
 
-    /**
-     * @return float
-     */
     public function getKortingsPercentage(): float
     {
         return $this->kortingsPercentage ?? 0;
     }
 
-    /**
-     * @param float $kortingsPercentage
-     * @return VerkooporderRegel
-     */
     public function setKortingsPercentage(float $kortingsPercentage): self
     {
         $this->kortingsPercentage = $kortingsPercentage;
@@ -157,21 +121,21 @@ final class VerkooporderRegel extends BaseObject
         return $this;
     }
 
-    /**
-     * @return Money
-     */
     public function getTotaal(): ?Money
     {
         return $this->totaal ?? new Money("0", Snelstart::getCurrency());
     }
 
-    /**
-     * @param Money $totaal
-     * @return VerkooporderRegel
-     */
     public function setTotaal(Money $totaal): self
     {
         $this->totaal = $totaal;
+
+        return $this;
+    }
+
+    public function calculateAndSetTotaal(): self
+    {
+        $this->totaal = $this->getStuksprijs()->multiply($this->getAantal());
 
         return $this;
     }
