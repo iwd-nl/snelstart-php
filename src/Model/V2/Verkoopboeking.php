@@ -7,7 +7,6 @@
 namespace SnelstartPHP\Model\V2;
 
 use SnelstartPHP\Model\IncassoMachtiging;
-use SnelstartPHP\Model\Relatie;
 
 final class Verkoopboeking extends Boeking
 {
