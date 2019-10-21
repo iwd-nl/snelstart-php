@@ -23,6 +23,11 @@ final class Artikel extends SnelstartObject
     private $subArtikelen = [];
 
     /**
+     * @var Prijsafspraak|null
+     */
+    private $prijsafspraak;
+
+    /**
      * @var string
      */
     private $artikelcode;
@@ -101,6 +106,18 @@ final class Artikel extends SnelstartObject
     public function addSubArtikel(SubArtikel $subArtikel): self
     {
         $this->subArtikelen[] = $subArtikel;
+
+        return $this;
+    }
+
+    public function getPrijsafspraak(): ?Prijsafspraak
+    {
+        return $this->prijsafspraak;
+    }
+
+    public function setPrijsafspraak(?Prijsafspraak $prijsafspraak): self
+    {
+        $this->prijsafspraak = $prijsafspraak;
 
         return $this;
     }
