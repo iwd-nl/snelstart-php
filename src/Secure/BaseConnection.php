@@ -189,7 +189,7 @@ abstract class BaseConnection implements ConnectionInterface
         if ($this->client === null) {
             $this->client = new Client([
                 'base_uri'  =>  $this->getEndpoint(),
-                'timeout'   =>  5,
+                'timeout'   =>  60,
             ]);
         }
 
