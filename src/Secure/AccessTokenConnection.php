@@ -72,7 +72,7 @@ final class AccessTokenConnection implements ConnectionInterface
             $this->logger->debug(sprintf("[AccessToken] Trying to obtain an access token with token type '%s'", get_class($this->bearerToken)));
         }
 
-        $request = new Request("POST", $this->getEndpoint() . "token", [
+        $request = new Request("POST", static::getEndpoint() . "token", [
             "Content-Type"      =>  "application/x-www-form-urlencoded",
         ], http_build_query($this->bearerToken->getFormParams()));
 
@@ -84,7 +84,7 @@ final class AccessTokenConnection implements ConnectionInterface
         );
     }
 
-    public function getEndpoint(): string
+    public static function getEndpoint(): string
     {
         return "https://auth.snelstart.nl/b2b/";
     }

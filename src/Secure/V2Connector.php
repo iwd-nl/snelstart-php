@@ -26,7 +26,7 @@ final class V2Connector extends BaseConnection
         $this->setAccessToken($accessToken);
     }
 
-    public function getEndpoint(): string
+    public static function getEndpoint(): string
     {
         return "https://b2bapi.snelstart.nl/v2/";
     }
