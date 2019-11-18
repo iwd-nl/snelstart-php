@@ -72,6 +72,11 @@ class Artikel extends SnelstartObject
      */
     private $prijsafspraak;
 
+    /**
+     * @var array
+     */
+    private $customFields;
+
 
     public static $editableAttributes = [
         'id',
@@ -88,6 +93,8 @@ class Artikel extends SnelstartObject
         'vrijeVoorraad',
         'prijsafspraak',
     ];
+
+
 
     /**
      * @return \DateTimeInterface|null
@@ -314,6 +321,24 @@ class Artikel extends SnelstartObject
     {
         $this->prijsafspraak = $prijsafspraak;
 
+        return $this;
+    }
+
+    /**
+     * @return null|array
+     */
+    public function getCustomFields(): ?array
+    {
+        return $this->customFields;
+    }
+
+    /**
+     * @param array|null $customFields
+     * @return Artikel
+     */
+    public function setCustomFields($customFields)
+    {
+        $this->customFields = $customFields;
         return $this;
     }
 }

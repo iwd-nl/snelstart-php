@@ -55,4 +55,12 @@ class ArtikelConnector extends BaseConnector
 
         return $iterator;
     }
+
+    public function updateArtikel(Artikel $artikel)
+    {
+        if ($artikel->getId() === null) {
+            throw new PreValidationException("Artikel should have an ID.");
+        }
+        return $this->connection->doRequest(ArtikelRequest::updateArtikel($artikel));
+    }
 }

@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\Artikel;
 
-class ArtikelRequest
+class ArtikelRequest extends BaseRequest
 {
     public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
     {
@@ -28,5 +28,10 @@ class ArtikelRequest
         return new Request("GET", "artikelen/" . $id->toString() . '/customFields');
     }
 
-
+    public static function updateArtikel(Artikel $artikel)
+    {
+        return new Request("PUT", "artikelen/" . $artikel->getId()->toString(), [
+            "Content-Type"  =>  "application/json"
+        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($artikel)));
+    }
 }

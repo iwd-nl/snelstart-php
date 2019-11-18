@@ -14,7 +14,8 @@ class ArtikelMapper extends AbstractMapper
     public static function find(ResponseInterface $response): ?Artikel
     {
         $mapper = new static($response);
-        return $mapper->mapArrayDataToModel(new Artikel(), $mapper->responseData);
+        $result = $mapper->mapArrayDataToModel(new Artikel(), $mapper->responseData);
+        return $result->setArtikelOmzetgroep($mapper->responseData['artikelOmzetgroep']);
     }
 
     public static function findAll(ResponseInterface $response): \Generator
