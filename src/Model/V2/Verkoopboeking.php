@@ -13,7 +13,7 @@ final class Verkoopboeking extends Boeking
     /**
      * De klant/debiteur aan wie de factuur is gericht.
      *
-     * @var Relatie
+     * @var Relatie|null
      */
     private $klant;
 
@@ -38,6 +38,9 @@ final class Verkoopboeking extends Boeking
      */
     private $doorlopendeIncassoMachtiging;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "klant",
         "betalingstermijn",

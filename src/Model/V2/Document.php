@@ -6,9 +6,10 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\SnelstartObject;
 
-class Document extends SnelstartObject
+final class Document extends SnelstartObject
 {
     /**
      * De inhoud van de bijlage.
@@ -16,6 +17,13 @@ class Document extends SnelstartObject
      * @var string
      */
     protected $content;
+
+    /**
+     * De public identifier van de gekoppelde parent.
+     *
+     * @var UuidInterface
+     */
+    protected $parentIdentifier;
 
     /**
      * De naam van de bijlage.
@@ -33,6 +41,7 @@ class Document extends SnelstartObject
 
     public static $editableAttributes = [
         "id",
+        "parentIdentifier",
         "content",
         "fileName",
         "readOnly",
@@ -49,6 +58,18 @@ class Document extends SnelstartObject
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getParentIdentifier(): ?UuidInterface
+    {
+        return $this->parentIdentifier;
+    }
+
+    public function setParentIdentifier(UuidInterface $parentIdentifier): self
+    {
+        $this->parentIdentifier = $parentIdentifier;
 
         return $this;
     }
@@ -77,7 +98,7 @@ class Document extends SnelstartObject
         return $this;
     }
 
-    public static function createFromFile(\SplFileObject $file): self
+    public static function createFromFile(\SplFileObject $file, UuidInterface $parentIdentifier): self
     {
         if (!$file->isReadable()) {
             throw new \InvalidArgumentException("Given file is not readable");
@@ -85,6 +106,7 @@ class Document extends SnelstartObject
 
         return (new static())
             ->setFileName($file->getFilename())
+            ->setParentIdentifier($parentIdentifier)
             ->setReadOnly(false)
             ->setContent(base64_encode($file->fread($file->getSize())));
     }

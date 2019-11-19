@@ -28,7 +28,7 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie[]
+     * @return Model\Relatie[]|iterable
      */
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
@@ -44,7 +44,10 @@ final class RelatieConnector extends BaseConnector
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
-                $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
+                $top = $ODataRequestData->getTop() ?? 0;
+                $skip = $ODataRequestData->getSkip() ?? 0;
+
+                $ODataRequestData->setSkip($top + $skip);
             }
 
             return $this->findAll($ODataRequestData, true, $iterator);
@@ -54,14 +57,14 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie[]|iterable
+     * @return Model\Relatie[]
      */
     public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
             $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()) ])
+            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
         );
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
@@ -75,7 +78,7 @@ final class RelatieConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
             $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()) ])
+            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()->getValue()) ])
         );
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);

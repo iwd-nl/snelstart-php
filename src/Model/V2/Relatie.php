@@ -23,31 +23,31 @@ final class Relatie extends SnelstartObject
 
     /**
      * @see Types\Relatiesoort
-     * @var Types\Relatiesoort[]
+     * @var Types\Relatiesoort[]|null
      */
     private $relatiesoort;
 
     /**
      * Het relatienummer
      *
-     * @var int
+     * @var int|null
      */
     private $relatiecode = 0;
 
     /**
      * De volledige naam van de relatie.
      *
-     * @var string
+     * @var string|null
      */
     private $naam;
 
     /**
-     * @var Adres
+     * @var Adres|null
      */
     private $vestigingsAdres;
 
     /**
-     * @var Adres
+     * @var Adres|null
      */
     private $correspondentieAdres;
 
@@ -145,28 +145,28 @@ final class Relatie extends SnelstartObject
     /**
      * De emailgegevens voor het versturen van offertes.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $offerteEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van bevestigingen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $bevestigingsEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van facturen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $factuurEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van aanmaningen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $aanmaningEmailVersturen;
 
@@ -202,6 +202,9 @@ final class Relatie extends SnelstartObject
      */
     private $verkoopBoekingenUri;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "id",
         "modifiedOn",
@@ -234,18 +237,11 @@ final class Relatie extends SnelstartObject
         "factuurRelatie",
     ];
 
-    /**
-     * @return \DateTimeInterface|null
-     */
     public function getModifiedOn(): ?\DateTimeInterface
     {
         return $this->modifiedOn;
     }
 
-    /**
-     * @param \DateTimeInterface|null $modifiedOn
-     * @return Relatie
-     */
     public function setModifiedOn(?\DateTimeInterface $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
@@ -254,16 +250,15 @@ final class Relatie extends SnelstartObject
     }
 
     /**
-     * @return array
+     * @return Types\Relatiesoort[]
      */
     public function getRelatiesoort(): array
     {
-        return $this->relatiesoort;
+        return $this->relatiesoort ?? [];
     }
 
     /**
-     * @param array $relatiesoort
-     * @return Relatie
+     * @param Types\Relatiesoort[] $relatiesoort
      */
     public function setRelatiesoort(array $relatiesoort): self
     {
@@ -272,18 +267,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getRelatiecode(): ?int
     {
         return $this->relatiecode;
     }
 
-    /**
-     * @param int $relatiecode
-     * @return Relatie
-     */
     public function setRelatiecode(?int $relatiecode): self
     {
         $this->relatiecode = $relatiecode;
@@ -291,18 +279,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getNaam(): string
+    public function getNaam(): ?string
     {
         return $this->naam;
     }
 
-    /**
-     * @param string $naam
-     * @return Relatie
-     */
     public function setNaam(string $naam): self
     {
         $this->naam = $naam;
@@ -334,18 +315,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getTelefoon(): ?string
     {
         return $this->telefoon;
     }
 
-    /**
-     * @param null|string $telefoon
-     * @return Relatie
-     */
     public function setTelefoon(?string $telefoon): self
     {
         $this->telefoon = $telefoon;
@@ -353,18 +327,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getMobieleTelefoon(): ?string
     {
         return $this->mobieleTelefoon;
     }
 
-    /**
-     * @param null|string $mobieleTelefoon
-     * @return Relatie
-     */
     public function setMobieleTelefoon(?string $mobieleTelefoon): self
     {
         $this->mobieleTelefoon = $mobieleTelefoon;
@@ -372,18 +339,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @param null|string $email
-     * @return Relatie
-     */
     public function setEmail(?string $email): self
     {
         $this->email = $email;
@@ -391,18 +351,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getBtwNummer(): ?string
     {
         return $this->btwNummer;
     }
 
-    /**
-     * @param null|string $btwNummer
-     * @return Relatie
-     */
     public function setBtwNummer(?string $btwNummer): self
     {
         $this->btwNummer = $btwNummer;
@@ -410,18 +363,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return Money|null
-     */
     public function getFactuurkorting(): ?Money
     {
         return $this->factuurkorting;
     }
 
-    /**
-     * @param Money|null $factuurkorting
-     * @return Relatie
-     */
     public function setFactuurkorting(?Money $factuurkorting): self
     {
         $this->factuurkorting = $factuurkorting;
@@ -429,18 +375,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return int
-     */
     public function getKrediettermijn(): int
     {
         return $this->krediettermijn;
     }
 
-    /**
-     * @param int $krediettermijn
-     * @return Relatie
-     */
     public function setKrediettermijn(?int $krediettermijn): self
     {
         $this->krediettermijn = $krediettermijn ?? $this->krediettermijn;
@@ -448,18 +387,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isBankieren(): bool
     {
         return $this->bankieren;
     }
 
-    /**
-     * @param bool $bankieren
-     * @return Relatie
-     */
     public function setBankieren(bool $bankieren): self
     {
         $this->bankieren = $bankieren;
@@ -467,18 +399,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isNonactief(): bool
     {
         return $this->nonactief;
     }
 
-    /**
-     * @param bool $nonactief
-     * @return Relatie
-     */
     public function setNonactief(bool $nonactief): self
     {
         $this->nonactief = $nonactief;
@@ -486,18 +411,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return Money|null
-     */
     public function getKredietLimiet(): ?Money
     {
         return $this->kredietLimiet;
     }
 
-    /**
-     * @param Money|null $kredietLimiet
-     * @return Relatie
-     */
     public function setKredietLimiet(?Money $kredietLimiet): self
     {
         $this->kredietLimiet = $kredietLimiet;
@@ -505,18 +423,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getMemo(): ?string
     {
         return $this->memo;
     }
 
-    /**
-     * @param null|string $memo
-     * @return Relatie
-     */
     public function setMemo(?string $memo): self
     {
         $this->memo = $memo;
@@ -524,18 +435,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getKvkNummer(): ?string
     {
         return $this->kvkNummer;
     }
 
-    /**
-     * @param null|string $kvkNummer
-     * @return Relatie
-     */
     public function setKvkNummer(?string $kvkNummer): self
     {
         $this->kvkNummer = $kvkNummer;
@@ -543,18 +447,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getWebsiteUrl(): ?string
     {
         return $this->websiteUrl;
     }
 
-    /**
-     * @param null|string $websiteUrl
-     * @return Relatie
-     */
     public function setWebsiteUrl(?string $websiteUrl): self
     {
         $this->websiteUrl = $websiteUrl;
@@ -562,18 +459,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|Types\Aanmaningsoort
-     */
     public function getAanmingsoort(): ?Types\Aanmaningsoort
     {
         return $this->aanmingsoort;
     }
 
-    /**
-     * @param null|Types\Aanmaningsoort $aanmingsoort
-     * @return Relatie
-     */
     public function setAanmingsoort(?Types\Aanmaningsoort $aanmingsoort): self
     {
         $this->aanmingsoort = $aanmingsoort;
@@ -581,18 +471,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return EmailVersturen
-     */
     public function getOfferteEmailVersturen(): EmailVersturen
     {
         return $this->offerteEmailVersturen ?? new EmailVersturen(false);
     }
 
-    /**
-     * @param EmailVersturen $offerteEmailVersturen
-     * @return Relatie
-     */
     public function setOfferteEmailVersturen(EmailVersturen $offerteEmailVersturen): self
     {
         $this->offerteEmailVersturen = $offerteEmailVersturen;
@@ -600,18 +483,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return EmailVersturen
-     */
     public function getBevestigingsEmailVersturen(): EmailVersturen
     {
         return $this->bevestigingsEmailVersturen ?? new EmailVersturen(false);
     }
 
-    /**
-     * @param EmailVersturen $bevestigingsEmailVersturen
-     * @return Relatie
-     */
     public function setBevestigingsEmailVersturen(EmailVersturen $bevestigingsEmailVersturen): self
     {
         $this->bevestigingsEmailVersturen = $bevestigingsEmailVersturen;
@@ -619,18 +495,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return EmailVersturen
-     */
     public function getFactuurEmailVersturen(): EmailVersturen
     {
         return $this->factuurEmailVersturen ?? new EmailVersturen(false);
     }
 
-    /**
-     * @param EmailVersturen $factuurEmailVersturen
-     * @return Relatie
-     */
     public function setFactuurEmailVersturen(EmailVersturen $factuurEmailVersturen): self
     {
         $this->factuurEmailVersturen = $factuurEmailVersturen;
@@ -638,18 +507,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return EmailVersturen
-     */
     public function getAanmaningEmailVersturen(): EmailVersturen
     {
         return $this->aanmaningEmailVersturen ?? new EmailVersturen(false);
     }
 
-    /**
-     * @param EmailVersturen $aanmaningEmailVersturen
-     * @return Relatie
-     */
     public function setAanmaningEmailVersturen(EmailVersturen $aanmaningEmailVersturen): self
     {
         $this->aanmaningEmailVersturen = $aanmaningEmailVersturen;
@@ -657,18 +519,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return bool
-     */
     public function isUblBestandAlsBijlage(): bool
     {
         return $this->ublBestandAlsBijlage;
     }
 
-    /**
-     * @param bool $ublBestandAlsBijlage
-     * @return Relatie
-     */
     public function setUblBestandAlsBijlage(bool $ublBestandAlsBijlage): self
     {
         $this->ublBestandAlsBijlage = $ublBestandAlsBijlage;
@@ -676,18 +531,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getIban(): ?string
     {
         return $this->iban;
     }
 
-    /**
-     * @param null|string $iban
-     * @return Relatie
-     */
     public function setIban(?string $iban): self
     {
         $this->iban = $iban;
@@ -695,18 +543,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getBic(): ?string
     {
         return $this->bic;
     }
 
-    /**
-     * @param null|string $bic
-     * @return Relatie
-     */
     public function setBic(?string $bic): self
     {
         $this->bic = $bic;
@@ -714,18 +555,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|Types\Incassosoort
-     */
     public function getIncassoSoort(): ?Types\Incassosoort
     {
         return $this->incassoSoort;
     }
 
-    /**
-     * @param null|Types\Incassosoort $incassoSoort
-     * @return Relatie
-     */
     public function setIncassoSoort(?Types\Incassosoort $incassoSoort): self
     {
         $this->incassoSoort = $incassoSoort;
@@ -733,18 +567,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getInkoopBoekingenUri(): ?string
     {
         return $this->inkoopBoekingenUri;
     }
 
-    /**
-     * @param null|string $inkoopBoekingenUri
-     * @return Relatie
-     */
     public function setInkoopBoekingenUri(?string $inkoopBoekingenUri): self
     {
         $this->inkoopBoekingenUri = $inkoopBoekingenUri;
@@ -752,18 +579,11 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return null|string
-     */
     public function getVerkoopBoekingenUri(): ?string
     {
         return $this->verkoopBoekingenUri;
     }
 
-    /**
-     * @param null|string $verkoopBoekingenUri
-     * @return Relatie
-     */
     public function setVerkoopBoekingenUri(?string $verkoopBoekingenUri): self
     {
         $this->verkoopBoekingenUri = $verkoopBoekingenUri;

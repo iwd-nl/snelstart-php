@@ -21,13 +21,13 @@ abstract class AbstractMapper
 
     public function __construct(ResponseInterface $response)
     {
-        $this->responseData = \GuzzleHttp\json_decode($response->getBody(), true);
+        $this->responseData = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
     }
 
     /**
      * Map the array data to the given class.
      */
-    protected function mapArrayDataToModel(SnelstartObject $class, array $data = [])
+    protected function mapArrayDataToModel(SnelstartObject $class, array $data = []): SnelstartObject
     {
         foreach ((empty($data) ? $this->responseData : $data) as $key => $value) {
             $class = static::setDataToModel($class, $key, $value);
@@ -41,7 +41,7 @@ abstract class AbstractMapper
         return new Money(intval($money) * 100, Snelstart::getCurrency());
     }
 
-    protected static function setDataToModel(SnelstartObject $class, string $key, $value)
+    protected static function setDataToModel(SnelstartObject $class, string $key, $value): SnelstartObject
     {
         $methodName = "set" . ucfirst($key);
         $customSet = false;

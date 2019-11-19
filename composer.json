@@ -29,7 +29,7 @@
         "dg/bypass-finals": "^1.1",
         "phpstan/phpstan": "^0.11.19",
         "phpunit/phpunit": "^8.4",
-        "symfony/cache": "4.2.*"
+        "vimeo/psalm": "^3.6"
     },
     "suggest": {
         "symfony/cache": "Caching made a little easier. Comes in handy for access tokens."

@@ -9,6 +9,7 @@ namespace SnelstartPHP\Request\V1;
 
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
+use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Request\BaseRequest;
 use SnelstartPHP\Request\ODataRequestDataInterface;
@@ -36,8 +37,12 @@ final class BoekingRequest extends BaseRequest
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
-    public static function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking)
+    public static function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): RequestInterface
     {
+        if ($inkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
         return new Request("PUT", "inkoopboekingen/" . $inkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($inkoopboeking)));
@@ -45,7 +50,11 @@ final class BoekingRequest extends BaseRequest
 
     public static function addAttachmentToInkoopboeking(Model\Inkoopboeking $inkoopboeking, Model\Bijlage $bijlage): RequestInterface
     {
-        return new Request("POST", sprintf("inkoopboekingen/%s/bijlagen", $inkoopboeking->getId()), [
+        if ($inkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        return new Request("POST", sprintf("inkoopboekingen/%s/bijlagen", $inkoopboeking->getId()->toString()), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
     }
@@ -59,6 +68,10 @@ final class BoekingRequest extends BaseRequest
 
     public static function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
     {
+        if ($verkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
         return new Request("PUT", "verkoopboekingen/" . $verkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkoopboeking)));
@@ -66,7 +79,11 @@ final class BoekingRequest extends BaseRequest
 
     public static function addAttachmentToVerkoopboeking(Model\Verkoopboeking $verkoopboeking, Model\Bijlage $bijlage): RequestInterface
     {
-        return new Request("POST", sprintf("verkoopboekingen/%s/bijlagen", $verkoopboeking->getId()), [
+        if ($verkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        return new Request("POST", sprintf("verkoopboekingen/%s/bijlagen", $verkoopboeking->getId()->toString()), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
     }

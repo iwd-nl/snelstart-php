@@ -68,6 +68,10 @@ final class AccessTokenConnection implements ConnectionInterface
 
         $this->bearerToken = $bearerToken ?? $this->bearerToken;
 
+        if ($this->bearerToken === null) {
+            throw new \LogicException("Bearer token should be set");
+        }
+
         if ($this->logger !== null) {
             $this->logger->debug(sprintf("[AccessToken] Trying to obtain an access token with token type '%s'", get_class($this->bearerToken)));
         }
@@ -79,7 +83,7 @@ final class AccessTokenConnection implements ConnectionInterface
         $response = $this->doRequest($request);
 
         return new AccessToken(
-            \GuzzleHttp\json_decode($response->getBody(), true),
+            \GuzzleHttp\json_decode($response->getBody()->getContents(), true),
             $this->bearerToken
         );
     }

@@ -14,6 +14,6 @@ final class EchoConnector extends BaseConnector
 {
     public function echo(string $input): string
     {
-        return (string) str_replace('"', "", $this->connection->doRequest(EchoRequest::echo($input))->getBody());
+        return (string) str_replace('"', "", $this->connection->doRequest(EchoRequest::echo($input))->getBody()->getContents());
     }
 }

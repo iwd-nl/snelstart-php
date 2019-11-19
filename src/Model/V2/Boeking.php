@@ -97,6 +97,9 @@ abstract class Boeking extends SnelstartObject
      */
     protected $documents;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "id",
         "boekstuk",

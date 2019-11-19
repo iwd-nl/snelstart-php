@@ -22,7 +22,7 @@ abstract class BaseRequest
      * @param string[]   $editableAttributes
      * @return array
      */
-    protected static function prepareAddOrEditRequestForSerialization(BaseObject $object, array $editableAttributes = [])
+    protected static function prepareAddOrEditRequestForSerialization(BaseObject $object, string ...$editableAttributes): array
     {
         $serialize = [];
 
@@ -67,7 +67,7 @@ abstract class BaseRequest
                     $editableSubAttributes = ["id"];
                 }
 
-                $value = self::prepareAddOrEditRequestForSerialization($value, $editableSubAttributes);
+                $value = self::prepareAddOrEditRequestForSerialization($value, ...$editableSubAttributes);
             } else if ($value instanceof BaseObject) {
                 $value = self::prepareAddOrEditRequestForSerialization($value);
             } else {

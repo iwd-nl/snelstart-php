@@ -25,7 +25,7 @@ final class BoekingConnector extends BaseConnector
         $inkoopfacturen = Mapper\BoekingMapper::findAllInkoopfacturen($this->connection->doRequest(Request\BoekingRequest::findInkoopfactuur($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($inkoopfacturen->valid()) {
+        if ($iterator instanceof \AppendIterator && $inkoopfacturen->valid()) {
             $iterator->append($inkoopfacturen);
         }
 
@@ -71,7 +71,7 @@ final class BoekingConnector extends BaseConnector
         $verkoopfacturen = Mapper\BoekingMapper::findAllVerkoopfacturen($this->connection->doRequest(Request\BoekingRequest::findVerkoopfactuur($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($verkoopfacturen->valid()) {
+        if ($iterator instanceof \AppendIterator && $verkoopfacturen->valid()) {
             $iterator->append($verkoopfacturen);
         }
 

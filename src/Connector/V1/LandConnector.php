@@ -26,7 +26,7 @@ final class LandConnector extends BaseConnector
     }
 
     /**
-     * @return Land[||iterable
+     * @return Land[]
      */
     public function findAll(): iterable
     {

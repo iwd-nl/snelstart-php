@@ -29,7 +29,7 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie|iterable
+     * @return Model\Relatie[]
      */
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
@@ -55,7 +55,7 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie[]|iterable
+     * @return Model\Relatie[]
      */
     public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
@@ -69,7 +69,7 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie[]|iterable
+     * @return Model\Relatie[]
      */
     public function findAllKlanten(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {

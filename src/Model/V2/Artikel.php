@@ -18,7 +18,7 @@ final class Artikel extends SnelstartObject
     private $isHoofdartikel;
 
     /**
-     * @var SubArtikel[]|iterable
+     * @var SubArtikel[]
      */
     private $subArtikelen = [];
 
@@ -78,6 +78,9 @@ final class Artikel extends SnelstartObject
      */
     private $vrijeVoorraad;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "artikelcode",
         "omschrijving",
@@ -96,7 +99,7 @@ final class Artikel extends SnelstartObject
     }
 
     /**
-     * @return iterable|SubArtikel[]
+     * @return SubArtikel[]
      */
     public function getSubArtikelen(): iterable
     {

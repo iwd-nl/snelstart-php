@@ -15,39 +15,42 @@ final class VerkooporderRegel extends BaseObject
     /**
      * Een container voor artikel informatie.
      *
-     * @var Artikel
+     * @var Artikel|null
      */
     private $artikel;
 
     /**
      * De omschrijving van de verkooporderregel. Indien dit veld leeg is dan wordt de omschrijving van het artikel in dit veld gezet.
      *
-     * @var string
+     * @var string|null
      */
     private $omschrijving;
 
     /**
      * Stuksprijs van het artikel.
      *
-     * @var Money
+     * @var Money|null
      */
     private $stuksprijs;
 
     /**
      * @var float
      */
-    private $aantal;
+    private $aantal = 0;
 
     /**
      * @var float
      */
-    private $kortingsPercentage;
+    private $kortingsPercentage = 0;
 
     /**
-     * @var Money
+     * @var Money|null
      */
     private $totaal;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "artikel",
         "omschrijving",
@@ -57,7 +60,7 @@ final class VerkooporderRegel extends BaseObject
         "totaal",
     ];
 
-    public function getArtikel(): Artikel
+    public function getArtikel(): ?Artikel
     {
         return $this->artikel;
     }
@@ -111,7 +114,7 @@ final class VerkooporderRegel extends BaseObject
 
     public function getKortingsPercentage(): float
     {
-        return $this->kortingsPercentage ?? 0;
+        return $this->kortingsPercentage;
     }
 
     public function setKortingsPercentage(float $kortingsPercentage): self
@@ -135,7 +138,9 @@ final class VerkooporderRegel extends BaseObject
 
     public function calculateAndSetTotaal(): self
     {
-        $this->totaal = $this->getStuksprijs()->multiply($this->getAantal());
+        if ($this->getStuksprijs() !== null) {
+            $this->totaal = $this->getStuksprijs()->multiply($this->getAantal());
+        }
 
         return $this;
     }

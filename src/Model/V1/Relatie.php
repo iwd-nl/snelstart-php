@@ -31,7 +31,7 @@ final class Relatie extends SnelstartObject
     /**
      * Het relatienummer
      *
-     * @var int
+     * @var int|null
      */
     private $relatiecode = 0;
 
@@ -276,7 +276,7 @@ final class Relatie extends SnelstartObject
     /**
      * @return int
      */
-    public function getRelatiecode(): ?int
+    public function getRelatiecode(): int
     {
         return $this->relatiecode;
     }

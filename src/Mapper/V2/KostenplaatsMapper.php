@@ -41,7 +41,7 @@ final class KostenplaatsMapper extends AbstractMapper
         return;
     }
 
-    private static function mapSimpleResponse(ResponseInterface $response): ?Kostenplaats
+    private static function mapSimpleResponse(ResponseInterface $response): Kostenplaats
     {
         $mapper = new static($response);
         return $mapper->mapArrayDataToModel(new Kostenplaats(), $mapper->responseData);

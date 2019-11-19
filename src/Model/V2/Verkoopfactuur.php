@@ -14,57 +14,60 @@ final class Verkoopfactuur extends SnelstartObject
     /**
      * De verkoopboeking bij de factuur
      *
-     * @var Verkoopboeking
+     * @var Verkoopboeking|null
      */
     private $verkoopBoeking;
 
     /**
      * Het tijdstip waarop de verkoopfactuur voor het laatst is gewijzigd.
      *
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
     private $modifiedOn;
 
     /**
      * Het openstaand saldo van de verkoopfactuur.\r\nDeze wordt alleen bij uitlezen gevuld
      *
-     * @var Money
+     * @var Money|null
      */
     private $openstaandSaldo;
 
     /**
      * Het factuurnummer.
      *
-     * @var string
+     * @var string|null
      */
     private $factuurnummer;
 
     /**
      * Het tijdstip waarop de factuur is of zal vervallen
      *
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
     private $vervalDatum;
 
     /**
-     * @var Relatie
+     * @var Relatie|null
      */
     private $relatie;
 
     /**
      * De datum waarop de factuur is aangemaakt
      *
-     * @var \DateTimeImmutable
+     * @var \DateTimeImmutable|null
      */
     private $factuurDatum;
 
     /**
      * Het totaal bedrag van de factuur
      *
-     * @var Money
+     * @var Money|null
      */
     private $factuurBedrag;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "verkoopBoeking",
         "openstaandSaldo",
@@ -75,18 +78,11 @@ final class Verkoopfactuur extends SnelstartObject
         "factuurBedrag",
     ];
 
-    /**
-     * @return Verkoopboeking
-     */
-    public function getVerkoopBoeking(): Verkoopboeking
+    public function getVerkoopBoeking(): ?Verkoopboeking
     {
         return $this->verkoopBoeking;
     }
 
-    /**
-     * @param Verkoopboeking $verkoopBoeking
-     * @return Verkoopfactuur
-     */
     public function setVerkoopBoeking(Verkoopboeking $verkoopBoeking): self
     {
         $this->verkoopBoeking = $verkoopBoeking;
@@ -94,18 +90,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getModifiedOn(): \DateTimeImmutable
+    public function getModifiedOn(): ?\DateTimeImmutable
     {
         return $this->modifiedOn;
     }
 
-    /**
-     * @param \DateTimeImmutable $modifiedOn
-     * @return Verkoopfactuur
-     */
     public function setModifiedOn(\DateTimeImmutable $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
@@ -113,18 +102,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return Money
-     */
-    public function getOpenstaandSaldo(): Money
+    public function getOpenstaandSaldo(): ?Money
     {
         return $this->openstaandSaldo;
     }
 
-    /**
-     * @param Money $openstaandSaldo
-     * @return Verkoopfactuur
-     */
     public function setOpenstaandSaldo(Money $openstaandSaldo): self
     {
         $this->openstaandSaldo = $openstaandSaldo;
@@ -132,18 +114,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getFactuurnummer(): string
+    public function getFactuurnummer(): ?string
     {
         return $this->factuurnummer;
     }
 
-    /**
-     * @param string $factuurnummer
-     * @return Verkoopfactuur
-     */
     public function setFactuurnummer(string $factuurnummer): self
     {
         $this->factuurnummer = $factuurnummer;
@@ -151,18 +126,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getVervalDatum(): \DateTimeImmutable
+    public function getVervalDatum(): ?\DateTimeImmutable
     {
         return $this->vervalDatum;
     }
 
-    /**
-     * @param \DateTimeImmutable $vervalDatum
-     * @return Verkoopfactuur
-     */
     public function setVervalDatum(\DateTimeImmutable $vervalDatum): self
     {
         $this->vervalDatum = $vervalDatum;
@@ -170,18 +138,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return Relatie
-     */
-    public function getRelatie(): Relatie
+    public function getRelatie(): ?Relatie
     {
         return $this->relatie;
     }
 
-    /**
-     * @param Relatie $relatie
-     * @return Verkoopfactuur
-     */
     public function setRelatie(Relatie $relatie): self
     {
         $this->relatie = $relatie;
@@ -189,18 +150,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable
-     */
-    public function getFactuurDatum(): \DateTimeImmutable
+    public function getFactuurDatum(): ?\DateTimeImmutable
     {
         return $this->factuurDatum;
     }
 
-    /**
-     * @param \DateTimeImmutable $factuurDatum
-     * @return Verkoopfactuur
-     */
     public function setFactuurDatum(\DateTimeImmutable $factuurDatum): self
     {
         $this->factuurDatum = $factuurDatum;
@@ -208,18 +162,11 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    /**
-     * @return Money
-     */
-    public function getFactuurBedrag(): Money
+    public function getFactuurBedrag(): ?Money
     {
         return $this->factuurBedrag;
     }
 
-    /**
-     * @param Money $factuurBedrag
-     * @return Verkoopfactuur
-     */
     public function setFactuurBedrag(Money $factuurBedrag): self
     {
         $this->factuurBedrag = $factuurBedrag;

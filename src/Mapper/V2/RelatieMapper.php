@@ -88,12 +88,11 @@ final class RelatieMapper extends AbstractMapper
      * Map all data to the EmailVersturen class (added support for subtypes).
      *
      * @param array  $emailVersturen
-     * @param string $emailVersturenClass
      * @return EmailVersturen
      */
-    public function mapEmailVersturenField(array $emailVersturen, string $emailVersturenClass = EmailVersturen::class): EmailVersturen
+    public function mapEmailVersturenField(array $emailVersturen): EmailVersturen
     {
-        return new $emailVersturenClass(
+        return new EmailVersturen(
             $emailVersturen["shouldSend"],
             $emailVersturen["email"],
             $emailVersturen["ccEmail"]

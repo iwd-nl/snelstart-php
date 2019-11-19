@@ -31,29 +31,29 @@ abstract class BaseConnection implements ConnectionInterface
     protected $subscriptionKey;
 
     /**
-     * @var LoggerInterface|null
-     */
-    private $logger;
-
-    /**
-     * @var ClientInterface|null
-     */
-    private $client;
-
-    /**
-     * @var AccessToken|null
+     * @var AccessToken
      */
     protected $accessToken;
 
     /**
-     * @var int
+     * @var LoggerInterface|null
      */
-    private $numRetries = 0;
+    protected $logger;
+
+    /**
+     * @var ClientInterface|null
+     */
+    protected $client;
 
     /**
      * Maximum amount of times to retry in case of failure like a timeout.
      */
     protected const MAX_RETRIES = 3;
+
+    /**
+     * @var int
+     */
+    private $numRetries = 0;
 
     private const SUBSCRIPTION_HEADER_NAME = "Ocp-Apim-Subscription-Key";
 
@@ -63,13 +63,13 @@ abstract class BaseConnection implements ConnectionInterface
         return $this;
     }
 
-    public function setAccessToken(AccessToken $accessToken)
+    public function setAccessToken(AccessToken $accessToken): self
     {
         $this->accessToken = $accessToken;
         return $this;
     }
 
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
         return $this;
@@ -89,7 +89,7 @@ abstract class BaseConnection implements ConnectionInterface
                 $request = $this->setOrReplaceSubscriptionKeyInRequest($request, $this->subscriptionKey->getPrimary());
             }
 
-            $this->preRequestValidation($request = $request->withHeader("Authorization", sprintf("Bearer %s", $this->accessToken)));
+            $this->preRequestValidation($request = $request->withHeader("Authorization", sprintf("Bearer %s", $this->accessToken->getAccessToken())));
             $this->numRetries++;
 
             if ($this->logger !== null) {
@@ -104,9 +104,13 @@ abstract class BaseConnection implements ConnectionInterface
 
             return $response;
         } catch (ServerException $serverException) {
-            throw new SnelstartResourceNotFoundException($serverException->getMessage(), $serverException->getCode(), $serverException->getResponse(), $serverException);
+            throw new SnelstartResourceNotFoundException($serverException->getMessage(), $serverException->getRequest(), $serverException->getResponse(), $serverException);
         } catch (ClientException $clientException) {
             $response = $clientException->getResponse();
+
+            if ($response === null) {
+                throw new \RuntimeException("We haven't received any response or whatsoever.");
+            }
 
             if ($response->getStatusCode() === 400) {
                 $jsonBody = (string) $response->getBody();
@@ -126,7 +130,7 @@ abstract class BaseConnection implements ConnectionInterface
             } else if ($response->getStatusCode() === 404) {
                 $body = (string) $response->getBody();
 
-                if (strlen($response->getBody()) > 0) {
+                if (mb_strlen($body) > 0) {
                     $body = \GuzzleHttp\json_decode($body, true);
                 }
 
@@ -159,10 +163,6 @@ abstract class BaseConnection implements ConnectionInterface
     {
         if ($this->numRetries === self::MAX_RETRIES) {
             throw new MaxRetriesReachedException(sprintf("We tried to reach Snelstart %d times without luck. Retry later.", self::MAX_RETRIES));
-        }
-
-        if ($this->accessToken === null) {
-            throw new IncompleteRequestException("Access token has to be set in order to fire a request");
         }
 
         if ($this->accessToken->isExpired()) {

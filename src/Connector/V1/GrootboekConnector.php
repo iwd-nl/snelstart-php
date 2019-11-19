@@ -32,7 +32,7 @@ final class GrootboekConnector extends BaseConnector
         $grootboeken = Mapper\GrootboekMapper::findAll($this->connection->doRequest(Request\GrootboekRequest::findAll($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($grootboeken->valid()) {
+        if ($iterator instanceof \AppendIterator && $grootboeken->valid()) {
             $iterator->append($grootboeken);
         }
 

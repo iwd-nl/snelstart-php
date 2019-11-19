@@ -43,8 +43,8 @@ final class ArtikelConnector extends BaseConnector
         if ($fetchAll && $artikelen->valid()) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
-            } else {
-                $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
+            } else if ($ODataRequestData->getSkip() !== null) {
+                $ODataRequestData->setSkip($ODataRequestData->getSkip() + ($ODataRequestData->getTop() ?? 0));
             }
 
             return $this->findAll($ODataRequestData, true, $iterator, $relatie, $aantal);

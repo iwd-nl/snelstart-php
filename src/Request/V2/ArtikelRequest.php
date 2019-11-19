@@ -25,18 +25,24 @@ final class ArtikelRequest extends BaseRequest
         return new Request("GET", sprintf("artikelen/%s/?%s", $id->toString(), $ODataRequestData->getHttpCompatibleQueryString() . '&' . static::getQueryString($relatie, $aantal)));
     }
 
-    public static function getCustomFields(UuidInterface $id)
+    public static function getCustomFields(UuidInterface $id): RequestInterface
     {
         return new Request("GET", sprintf("artikelen/%s/customFields", $id->toString()));
     }
 
     private static function getQueryString(?Relatie $relatie = null, ?int $aantal = null): string
     {
+        $relatieId = null;
+
+        if ($relatie !== null && $relatie->getId() !== null) {
+            $relatieId = $relatie->getId()->toString();
+        }
+
         return \http_build_query(array_filter([
-            "relatieId" =>  $relatie ? $relatie->getId()->toString() : null,
+            "relatieId" =>  $relatieId,
             "aantal"    =>  $aantal,
         ], static function($value) {
             return $value !== null;
-        }), null, "&", \PHP_QUERY_RFC3986);
+        }), "", "&", \PHP_QUERY_RFC3986);
     }
 }

@@ -11,21 +11,24 @@ use SnelstartPHP\Model\SnelstartObject;
 final class SubArtikel extends SnelstartObject
 {
     /**
-     * @var string
+     * @var string|null
      */
     private $artikelcode;
 
     /**
-     * @var float
+     * @var float|null
      */
     private $aantal;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "artikelcode",
         "aantal",
     ];
 
-    public function getArtikelcode(): string
+    public function getArtikelcode(): ?string
     {
         return $this->artikelcode;
     }
@@ -37,7 +40,7 @@ final class SubArtikel extends SnelstartObject
         return $this;
     }
 
-    public function getAantal(): float
+    public function getAantal(): ?float
     {
         return $this->aantal;
     }

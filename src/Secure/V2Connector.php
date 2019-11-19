@@ -16,14 +16,14 @@ final class V2Connector extends BaseConnection
         $this->subscriptionKey = $subscriptionKey;
 
         if ($client !== null) {
-            $this->setClient($client);
+            parent::setClient($client);
         }
 
         if ($logger !== null) {
-            $this->setLogger($logger);
+            parent::setLogger($logger);
         }
 
-        $this->setAccessToken($accessToken);
+        parent::setAccessToken($accessToken);
     }
 
     public static function getEndpoint(): string
