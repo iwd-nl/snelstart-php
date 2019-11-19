@@ -27,7 +27,7 @@ final class RgsCode extends BaseObject
 
     public function __construct(string $versie, string $rgsCode)
     {
-        return $this->setVersie($versie)->setRgsCode($rgsCode);
+        $this->setVersie($versie)->setRgsCode($rgsCode);
     }
 
     public function getVersie(): string

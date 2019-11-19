@@ -32,8 +32,6 @@ final class PasswordBearerToken implements BearerTokenInterface
 
         $this->username = $koppelsleutelParts[0];
         $this->password = $koppelsleutelParts[1];
-
-        return $this;
     }
 
     public function getFormParams(): array

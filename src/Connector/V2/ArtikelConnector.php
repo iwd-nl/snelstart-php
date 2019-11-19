@@ -36,7 +36,7 @@ final class ArtikelConnector extends BaseConnector
         $artikelen = Mapper\ArtikelMapper::findAll($this->connection->doRequest(Request\ArtikelRequest::findAll($ODataRequestData, $relatie, $aantal)));
         $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($artikelen->valid()) {
+        if ($iterator instanceof \AppendIterator && $artikelen->valid()) {
             $iterator->append($artikelen);
         }
 

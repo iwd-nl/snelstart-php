@@ -17,6 +17,10 @@ abstract class BaseRequest
     /**
      * Iterate over the Model objects and ask for the editable attributes. We will only serialize the editable fields
      * in this case.
+     *
+     * @param BaseObject $object
+     * @param string[]   $editableAttributes
+     * @return array
      */
     protected static function prepareAddOrEditRequestForSerialization(BaseObject $object, array $editableAttributes = [])
     {
@@ -36,7 +40,7 @@ abstract class BaseRequest
             $value = $object->{$methodName}();
 
             if ($value instanceof UuidInterface) {
-                $value = (string) $value;
+                $value = $value->toString();
             } else if ($value instanceof \DateTimeInterface) {
                 $value = $value->format(Snelstart::DATETIME_FORMAT);
             } elseif ($value instanceof Money) {

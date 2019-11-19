@@ -28,7 +28,7 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie|iterable
+     * @return Model\Relatie[]
      */
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
@@ -36,7 +36,7 @@ final class RelatieConnector extends BaseConnector
         $relaties = Mapper\RelatieMapper::findAll($this->connection->doRequest(Request\RelatieRequest::findAll($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($relaties->valid()) {
+        if ($iterator instanceof \AppendIterator && $relaties->valid()) {
             $iterator->append($relaties);
         }
 

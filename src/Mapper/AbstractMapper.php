@@ -38,7 +38,7 @@ abstract class AbstractMapper
 
     protected function getMoney(string $money): Money
     {
-        return new Money($money * 100, Snelstart::getCurrency());
+        return new Money(intval($money) * 100, Snelstart::getCurrency());
     }
 
     protected static function setDataToModel(SnelstartObject $class, string $key, $value)

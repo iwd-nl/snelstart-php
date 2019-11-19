@@ -16,8 +16,6 @@ final class ClientKeyBearerToken implements BearerTokenInterface
     public function __construct(string $clientKey)
     {
         $this->clientKey = $clientKey;
-
-        return $this;
     }
 
     public function getFormParams(): array

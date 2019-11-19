@@ -9,6 +9,7 @@ namespace SnelstartPHP\Request\V2;
 use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
+use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Request\BaseRequest;
 
@@ -33,6 +34,10 @@ final class KostenplaatsRequest extends BaseRequest
 
     public static function update(Kostenplaats $kostenplaats): RequestInterface
     {
+        if ($kostenplaats->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
         return new Request("PUT", "kostenplaatsen/" . $kostenplaats->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($kostenplaats)));
@@ -40,6 +45,10 @@ final class KostenplaatsRequest extends BaseRequest
 
     public static function delete(Kostenplaats $kostenplaats): RequestInterface
     {
+        if ($kostenplaats->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
         return new Request("PUT", "kostenplaatsen/" . $kostenplaats->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ]);

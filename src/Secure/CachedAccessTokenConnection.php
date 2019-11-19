@@ -23,7 +23,7 @@ final class CachedAccessTokenConnection
     private $cacheItemPool;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     private $logger;
 

@@ -36,7 +36,7 @@ final class ArtikelMapper extends AbstractMapper
     public function mapResponseToArtikelInstance(Artikel $artikel, array $data): Artikel
     {
         /**
-         * @var $artikel Artikel
+         * @var Artikel $artikel
          */
         $artikel = $this->mapArrayDataToModel($artikel, $data);
 

@@ -425,10 +425,6 @@ final class Verkooporder extends SnelstartObject
         return $this->regels;
     }
 
-    /**
-     * @param iterable|VerkooporderRegel[] $regels
-     * @return Verkooporder
-     */
     public function setRegels(VerkooporderRegel ...$regels): self
     {
         $this->regels = $regels;
