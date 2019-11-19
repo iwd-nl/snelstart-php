@@ -11,18 +11,18 @@ use GuzzleHttp\Psr7\Request;
 use Psr\Http\Message\RequestInterface;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Request\BaseRequest;
-use SnelstartPHP\Request\ODataRequestData;
+use SnelstartPHP\Request\ODataRequestDataInterface;
 
 final class BoekingRequest extends BaseRequest
 {
-    public static function findInkoopfactuur(ODataRequestData $ODataRequestData): RequestInterface
+    public static function findInkoopfactuur(ODataRequestDataInterface $ODataRequestData): RequestInterface
     {
         return new Request("GET", "inkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
             "Content-Type"  =>  "application/json"
         ]);
     }
 
-    public static function findVerkoopfactuur(ODataRequestData $ODataRequestData): RequestInterface
+    public static function findVerkoopfactuur(ODataRequestDataInterface $ODataRequestData): RequestInterface
     {
         return new Request("GET", "verkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
             "Content-Type"  =>  "application/json"

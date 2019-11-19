@@ -13,11 +13,11 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Request\BaseRequest;
-use SnelstartPHP\Request\ODataRequestData;
+use SnelstartPHP\Request\ODataRequestDataInterface;
 
 final class GrootboekRequest extends BaseRequest
 {
-    public static function findAll(ODataRequestData $ODataRequestData): RequestInterface
+    public static function findAll(ODataRequestDataInterface $ODataRequestData): RequestInterface
     {
         return new Request("GET", "grootboeken?" . $ODataRequestData->getHttpCompatibleQueryString());
     }

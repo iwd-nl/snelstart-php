@@ -5,6 +5,8 @@
 - AuthenticatedConnection: Version bump van v1 to v2.
 - VCS: Dropped the 'v' for versions.
 - BC-BREAK: Added final to all classes.
+- BC-BREAK: Requests now depend on ODataRequestDataInterface instead of ODataRequestData
 
 ## BC-BREAK
 - Added final to all classes
+- Requests now depend on ODataRequestDataInterface instead of ODataRequestData

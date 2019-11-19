@@ -11,16 +11,16 @@ use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\V2\Relatie;
 use SnelstartPHP\Request\BaseRequest;
-use SnelstartPHP\Request\ODataRequestData;
+use SnelstartPHP\Request\ODataRequestDataInterface;
 
 final class ArtikelRequest extends BaseRequest
 {
-    public static function findAll(ODataRequestData $ODataRequestData, ?Relatie $relatie = null, ?int $aantal = null): RequestInterface
+    public static function findAll(ODataRequestDataInterface $ODataRequestData, ?Relatie $relatie = null, ?int $aantal = null): RequestInterface
     {
         return new Request("GET", "artikelen?" . $ODataRequestData->getHttpCompatibleQueryString() . '&' . static::getQueryString($relatie, $aantal));
     }
 
-    public static function find(UuidInterface $id, ODataRequestData $ODataRequestData, ?Relatie $relatie = null, ?int $aantal = null): RequestInterface
+    public static function find(UuidInterface $id, ODataRequestDataInterface $ODataRequestData, ?Relatie $relatie = null, ?int $aantal = null): RequestInterface
     {
         return new Request("GET", sprintf("artikelen/%s/?%s", $id->toString(), $ODataRequestData->getHttpCompatibleQueryString() . '&' . static::getQueryString($relatie, $aantal)));
     }
