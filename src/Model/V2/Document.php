@@ -37,14 +37,13 @@ final class Document extends SnelstartObject
      *
      * @var bool
      */
-    protected $readOnly = true;
+    protected $readOnly;
 
     public static $editableAttributes = [
         "id",
         "parentIdentifier",
         "content",
         "fileName",
-        "readOnly",
     ];
 
     public function getContent(): ?string
@@ -86,7 +85,7 @@ final class Document extends SnelstartObject
         return $this;
     }
 
-    public function isReadOnly(): bool
+    public function isReadOnly(): ?bool
     {
         return $this->readOnly;
     }
