@@ -46,7 +46,7 @@ For an example see ``var/doc/example/inkoopboeking_add.php``
 Not all resources are currently implemented. Feel free to create a pull request.
 
 # Links
-- [https://b2bapi-developer.snelstart.nl/]
+- [SnelStart B2B-API](https://b2bapi-developer.snelstart.nl/)
 
 # Authors
-- [IntoWebDevelopment](https://intowebdevelopment.nl/]
+- [IntoWebDevelopment](https://intowebdevelopment.nl/)
