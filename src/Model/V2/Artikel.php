@@ -47,7 +47,17 @@ final class Artikel extends SnelstartObject
     /**
      * @var Money
      */
+    private $inkoopprijs;
+
+    /**
+     * @var Money
+     */
     private $verkoopprijs;
+
+    /**
+     * @var string
+     */
+    private $eenheid;
 
     /**
      * @var \DateTimeInterface
@@ -85,7 +95,9 @@ final class Artikel extends SnelstartObject
         "artikelcode",
         "omschrijving",
         "artikelOmzetgroep",
+        "inkoopprijs",
         "verkoopprijs",
+        "eenheid",
         "modifiedOn",
         "isNonActief",
         "voorraadControle",
@@ -233,6 +245,33 @@ final class Artikel extends SnelstartObject
     public function setVrijeVoorraad(float $vrijeVoorraad): self
     {
         $this->vrijeVoorraad = $vrijeVoorraad;
+
+        return $this;
+    }
+
+    public function getInkoopprijs(): Money
+    {
+        return $this->inkoopprijs;
+    }
+
+    public function setInkoopprijs(Money $inkoopprijs): Artikel
+    {
+        $this->inkoopprijs = $inkoopprijs;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEenheid(): string
+    {
+        return $this->eenheid;
+    }
+
+    public function setEenheid(string $eenheid): Artikel
+    {
+        $this->eenheid = $eenheid;
 
         return $this;
     }
