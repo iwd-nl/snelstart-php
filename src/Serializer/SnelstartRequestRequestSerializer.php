@@ -22,4 +22,17 @@ final class SnelstartRequestRequestSerializer implements RequestSerializerInterf
     {
         return Snelstart::getMoneyFormatter()->format($money);
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function scalarValue($value)
+    {
+        return $value;
+    }
+
+    public function arrayValue(array $value): array
+    {
+        return $value;
+    }
 }

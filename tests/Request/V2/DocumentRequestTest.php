@@ -15,12 +15,19 @@ use SnelstartPHP\Request\V2\DocumentRequest;
 
 class DocumentRequestTest extends TestCase
 {
+    private $documentRequest;
+
+    public function setUp(): void
+    {
+        $this->documentRequest = new DocumentRequest();
+    }
+
     public function testFind()
     {
         $uuid = Uuid::uuid4();
         $expected = new Request("GET", "documenten/" . $uuid->toString());
 
-        $this->assertEquals($expected, DocumentRequest::find($uuid));
+        $this->assertEquals($expected, $this->documentRequest->find($uuid));
     }
 
     public function testFindByDocumentTypeAndParentIdentifier()
@@ -31,7 +38,7 @@ class DocumentRequestTest extends TestCase
             $documentType = new DocumentType($value);
             $expectedRequest = new Request("GET", "documenten/" . $documentType->getValue() . "/" . $uuid->toString());
 
-            $this->assertEquals($expectedRequest, DocumentRequest::findByDocumentTypeAndParentIdentifier($documentType, $uuid));
+            $this->assertEquals($expectedRequest, $this->documentRequest->findByDocumentTypeAndParentIdentifier($documentType, $uuid));
         }
     }
 
@@ -48,7 +55,7 @@ class DocumentRequestTest extends TestCase
 
         foreach ($methods as $method => $argument) {
             $this->expectException(PreValidationException::class);
-            call_user_func([ DocumentRequest::class, $method ], $document, $argument);
+            call_user_func([ $this->documentRequest, $method ], $document, $argument);
         }
     }
 
@@ -68,7 +75,7 @@ class DocumentRequestTest extends TestCase
             "fileName"          =>  null,
         ]));
 
-        $request = DocumentRequest::addInkoopBoekingDocument($document, $inkoopboeking);
+        $request = $this->documentRequest->addInkoopBoekingDocument($document, $inkoopboeking);
 
         $this->assertEquals($expected->getUri(), $request->getUri());
         $this->assertJsonStringEqualsJsonString($expected->getBody()->getContents(), $request->getBody()->getContents());
@@ -90,7 +97,7 @@ class DocumentRequestTest extends TestCase
             "fileName"          =>  null,
         ]));
 
-        $request = DocumentRequest::addVerkoopBoekingDocument($document, $verkoopboeking);
+        $request = $this->documentRequest->addVerkoopBoekingDocument($document, $verkoopboeking);
 
         $this->assertEquals($expected->getUri(), $request->getUri());
         $this->assertJsonStringEqualsJsonString($expected->getBody()->getContents(), $request->getBody()->getContents());
@@ -112,7 +119,7 @@ class DocumentRequestTest extends TestCase
             "fileName"          =>  null,
         ]));
 
-        $request = DocumentRequest::addRelatieDocument($document, $relatie);
+        $request = $this->documentRequest->addRelatieDocument($document, $relatie);
 
         $this->assertEquals($expected->getUri(), $request->getUri());
         $this->assertJsonStringEqualsJsonString($expected->getBody()->getContents(), $request->getBody()->getContents());
@@ -130,7 +137,7 @@ class DocumentRequestTest extends TestCase
             "content"           =>  null,
             "fileName"          =>  null,
         ]));
-        $request = DocumentRequest::updateDocument($document);
+        $request = $this->documentRequest->updateDocument($document);
 
         $this->assertEquals($expected->getUri(), $request->getUri());
         $this->assertJsonStringEqualsJsonString($expected->getBody()->getContents(), $request->getBody()->getContents());
@@ -143,7 +150,7 @@ class DocumentRequestTest extends TestCase
         $expected = new Request("DELETE", "documenten/" . $document->getId()->toString(), [
             "Content-Type"  =>  "application/json"
         ]);
-        $request = DocumentRequest::deleteDocument($document);
+        $request = $this->documentRequest->deleteDocument($document);
 
         $this->assertEquals($expected->getUri(), $request->getUri());
         $this->assertEmpty($request->getBody()->getContents());

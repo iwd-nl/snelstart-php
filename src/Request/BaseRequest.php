@@ -67,11 +67,14 @@ abstract class BaseRequest
                 $value = $this->serializer->moneyFormatToString($value);
             } else if ($editableAttributeName === "id" && $value === null) {
                 // Whenever 'id' equals null skip it.
+                $this->serializer->scalarValue($value);
                 continue;
             } else if ($value instanceof \JsonSerializable || is_scalar($value) || $value === null) {
                 // We accept simple values.
+                $value = $this->serializer->scalarValue($value);
             } else if (is_array($value)) {
-                // Apply recursion by reference...
+                // If our value is an array and contains anything that is an instance of 'BaseObject'
+                // Try to serialize that again. Please note that this is done by reference.
                 foreach ($value as &$subValue) {
                     if ($subValue instanceof BaseObject) {
                         $subValue = $this->prepareAddOrEditRequestForSerialization($subValue);
@@ -79,6 +82,7 @@ abstract class BaseRequest
                 }
 
                 // Else do nothing.
+                $value = $this->serializer->arrayValue($value);
             } else if ($value instanceof SnelstartObject) {
                 $editableSubAttributes = [];
 

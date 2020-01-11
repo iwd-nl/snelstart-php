@@ -9,14 +9,22 @@ use PHPUnit\Framework\TestCase;
 
 class LandRequestTest extends TestCase
 {
+    private $landRequest;
+
+    public function setUp(): void
+    {
+        $this->landRequest = new LandRequest();
+    }
+
     public function testFindAll()
     {
-        $this->assertEquals(new Request("GET", "landen"), LandRequest::findAll());
+        $landRequest = new LandRequest();
+        $this->assertEquals(new Request("GET", "landen"), $this->landRequest->findAll());
     }
 
     public function testFindById()
     {
         $id = Uuid::uuid4();
-        $this->assertEquals(new Request("GET", "landen/" . $id->toString()), LandRequest::find($id));
+        $this->assertEquals(new Request("GET", "landen/" . $id->toString()), $this->landRequest->find($id));
     }
 }
