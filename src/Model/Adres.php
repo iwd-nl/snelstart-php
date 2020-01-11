@@ -44,6 +44,9 @@ final class Adres extends BaseObject
      */
     protected $land;
 
+    /**
+     * @var string[]
+     */
     public static $editableAttributes = [
         "contactpersoon",
         "straat",

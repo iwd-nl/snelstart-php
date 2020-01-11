@@ -6,8 +6,6 @@
 
 namespace SnelstartPHP\Model\V2;
 
-use SnelstartPHP\Model\Relatie;
-
 final class Inkoopboeking extends Boeking
 {
     /**

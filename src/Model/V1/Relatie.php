@@ -43,12 +43,12 @@ final class Relatie extends SnelstartObject
     private $naam;
 
     /**
-     * @var Adres
+     * @var Adres|null
      */
     private $vestigingsAdres;
 
     /**
-     * @var Adres
+     * @var Adres|null
      */
     private $correspondentieAdres;
 
@@ -146,28 +146,28 @@ final class Relatie extends SnelstartObject
     /**
      * De emailgegevens voor het versturen van offertes.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $offerteEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van bevestigingen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $bevestigingsEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van facturen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $factuurEmailVersturen;
 
     /**
      * De emailgegevens voor het versturen van aanmaningen.
      *
-     * @var EmailVersturen
+     * @var EmailVersturen|null
      */
     private $aanmaningEmailVersturen;
 
@@ -276,7 +276,7 @@ final class Relatie extends SnelstartObject
     /**
      * @return int
      */
-    public function getRelatiecode(): int
+    public function getRelatiecode(): ?int
     {
         return $this->relatiecode;
     }

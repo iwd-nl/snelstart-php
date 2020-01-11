@@ -26,7 +26,7 @@ final class GrootboekMapper extends AbstractMapper
         return (new static($response))->mapManyResultsToSubMappers();
     }
 
-    public function mapResultToGrootboekModel(Model\Grootboek $grootboek, array $data = []): Model\Grootboek
+    protected function mapResultToGrootboekModel(Model\Grootboek $grootboek, array $data = []): Model\Grootboek
     {
         $data = empty($data) ? $this->responseData : $data;
         /**
@@ -42,14 +42,12 @@ final class GrootboekMapper extends AbstractMapper
             $grootboek->setGrootboekfunctie(new Grootboekfunctie($data["grootboekfunctie"]));
         }
 
-        $rgsCodes = \array_map(function(array $rgsCode) {
+        return $grootboek->setRgsCode(\array_map(static function(array $rgsCode) {
             return new Model\RgsCode($rgsCode["versie"], $rgsCode["rgsCode"]);
-        }, $data["rgsCode"] ?? []);
-
-        return $grootboek->setRgsCode($rgsCodes);
+        }, $data["rgsCode"] ?? []));
     }
 
-    protected function mapManyResultsToSubMappers()
+    protected function mapManyResultsToSubMappers(): \Generator
     {
         foreach ($this->responseData as $grootboekData) {
             yield $this->mapResultToGrootboekModel(new Model\Grootboek(), $grootboekData);

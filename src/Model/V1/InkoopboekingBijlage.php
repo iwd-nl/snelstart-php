@@ -12,7 +12,7 @@ use Ramsey\Uuid\UuidInterface;
 final class InkoopboekingBijlage extends Bijlage
 {
     /**
-     * @var UuidInterface
+     * @var UuidInterface|null
      */
     private $inkoopBoekingId;
 
