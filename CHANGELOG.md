@@ -8,5 +8,6 @@
 - BC-BREAK: Requests now depend on ODataRequestDataInterface instead of ODataRequestData
 
 ## BC-BREAK
+- All requests needs to be initialized instead of being static
 - Added final to all classes
 - Requests now depend on ODataRequestDataInterface instead of ODataRequestData

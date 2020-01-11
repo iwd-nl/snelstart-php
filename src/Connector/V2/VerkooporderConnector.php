@@ -20,6 +20,9 @@ final class VerkooporderConnector extends BaseConnector
             throw new PreValidationException("Verkooporder ID should be null");
         }
 
-        return VerkooporderMapper::add($this->connection->doRequest(VerkooporderRequest::add($verkooporder)));
+        $verkooporderMapper = new VerkooporderMapper();
+        $verkooporderRequst = new VerkooporderRequest();
+
+        return $verkooporderMapper->add($this->connection->doRequest($verkooporderRequst->add($verkooporder)));
     }
 }

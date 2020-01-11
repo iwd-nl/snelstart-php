@@ -19,7 +19,10 @@ final class KostenplaatsConnector extends BaseConnector
     public function find(UuidInterface $id): ?Kostenplaats
     {
         try {
-            return Mapper\KostenplaatsMapper::find($this->connection->doRequest(Request\KostenplaatsRequest::find($id)));
+            $request = new Request\KostenplaatsRequest();
+            $mapper = new Mapper\KostenplaatsMapper();
+
+            return $mapper->find($this->connection->doRequest($request->find($id)));
         } catch (SnelstartResourceNotFoundException $e) {
             return null;
         }
@@ -30,7 +33,7 @@ final class KostenplaatsConnector extends BaseConnector
      */
     public function findAll(): iterable
     {
-        return Mapper\KostenplaatsMapper::findAll($this->connection->doRequest(Request\KostenplaatsRequest::findAll()));
+        return (new Mapper\KostenplaatsMapper())->findAll($this->connection->doRequest((new Request\KostenplaatsRequest())->findAll()));
     }
 
     public function add(Kostenplaats $kostenplaats): Kostenplaats
@@ -39,7 +42,7 @@ final class KostenplaatsConnector extends BaseConnector
             throw PreValidationException::unexpectedIdException();
         }
 
-        return Mapper\KostenplaatsMapper::add($this->connection->doRequest(Request\KostenplaatsRequest::add($kostenplaats)));
+        return (new Mapper\KostenplaatsMapper())->add($this->connection->doRequest((new Request\KostenplaatsRequest())->add($kostenplaats)));
     }
 
     public function update(Kostenplaats $kostenplaats): Kostenplaats
@@ -48,7 +51,7 @@ final class KostenplaatsConnector extends BaseConnector
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return Mapper\KostenplaatsMapper::update($this->connection->doRequest(Request\KostenplaatsRequest::update($kostenplaats)));
+        return (new Mapper\KostenplaatsMapper())->update($this->connection->doRequest((new Request\KostenplaatsRequest())->update($kostenplaats)));
     }
 
     public function delete(Kostenplaats $kostenplaats): void
@@ -57,6 +60,6 @@ final class KostenplaatsConnector extends BaseConnector
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        Mapper\KostenplaatsMapper::delete($this->connection->doRequest(Request\KostenplaatsRequest::delete($kostenplaats)));
+        (new Mapper\KostenplaatsMapper())->delete($this->connection->doRequest((new Request\KostenplaatsRequest())->delete($kostenplaats)));
     }
 }

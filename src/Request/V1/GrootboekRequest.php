@@ -31,7 +31,7 @@ final class GrootboekRequest extends BaseRequest
     {
         return new Request("POST", "grootboeken", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($grootboek)));
+        ], \GuzzleHttp\json_encode((new static())->prepareAddOrEditRequestForSerialization($grootboek)));
     }
 
     public static function update(Model\Grootboek $grootboek): RequestInterface
@@ -42,6 +42,6 @@ final class GrootboekRequest extends BaseRequest
 
         return new Request("PUT", "grootboeken/" . $grootboek->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($grootboek)));
+        ], \GuzzleHttp\json_encode((new static())->prepareAddOrEditRequestForSerialization($grootboek)));
     }
 }

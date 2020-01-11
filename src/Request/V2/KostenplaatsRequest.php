@@ -15,24 +15,24 @@ use SnelstartPHP\Request\BaseRequest;
 
 final class KostenplaatsRequest extends BaseRequest
 {
-    public static function findAll(): RequestInterface
+    public function findAll(): RequestInterface
     {
         return new Request("GET", "kostenplaatsen");
     }
 
-    public static function find(UuidInterface $id): RequestInterface
+    public function find(UuidInterface $id): RequestInterface
     {
         return new Request("GET", "kostenplaatsen/" . $id->toString());
     }
 
-    public static function add(Kostenplaats $kostenplaats): RequestInterface
+    public function add(Kostenplaats $kostenplaats): RequestInterface
     {
         return new Request("POST", "kostenplaatsen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($kostenplaats)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($kostenplaats)));
     }
 
-    public static function update(Kostenplaats $kostenplaats): RequestInterface
+    public function update(Kostenplaats $kostenplaats): RequestInterface
     {
         if ($kostenplaats->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -40,10 +40,10 @@ final class KostenplaatsRequest extends BaseRequest
 
         return new Request("PUT", "kostenplaatsen/" . $kostenplaats->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($kostenplaats)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($kostenplaats)));
     }
 
-    public static function delete(Kostenplaats $kostenplaats): RequestInterface
+    public function delete(Kostenplaats $kostenplaats): RequestInterface
     {
         if ($kostenplaats->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();

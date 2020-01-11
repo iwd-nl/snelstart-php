@@ -31,7 +31,7 @@ final class RelatieRequest extends BaseRequest
     {
         return new Request("POST", "relaties", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
+        ], \GuzzleHttp\json_encode((new static())->prepareAddOrEditRequestForSerialization($relatie)));
     }
 
     public static function update(Model\Relatie $relatie): RequestInterface
@@ -42,6 +42,6 @@ final class RelatieRequest extends BaseRequest
 
         return new Request("PUT", "relaties/" . $relatie->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
+        ], \GuzzleHttp\json_encode((new static())->prepareAddOrEditRequestForSerialization($relatie)));
     }
 }

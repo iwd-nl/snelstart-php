@@ -18,23 +18,25 @@ use SnelstartPHP\Model\V2\SubArtikel;
 
 final class ArtikelMapper extends AbstractMapper
 {
-    public static function find(ResponseInterface $response): ?Artikel
+    public function find(ResponseInterface $response): ?Artikel
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToArtikelInstance(new Artikel(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->mapResponseToArtikelInstance(new Artikel());
     }
 
-    public static function findAll(ResponseInterface $response): \Generator
+    public function findAll(ResponseInterface $response): \Generator
     {
-        $mapper = new static($response);
+        $this->setResponseData($response);
 
-        foreach ($mapper->responseData as $data) {
-            yield $mapper->mapResponseToArtikelInstance(new Artikel(), $data);
+        foreach ($this->responseData as $data) {
+            yield $this->mapResponseToArtikelInstance(new Artikel(), $data);
         }
     }
 
-    public function mapResponseToArtikelInstance(Artikel $artikel, array $data): Artikel
+    protected function mapResponseToArtikelInstance(Artikel $artikel, array $data = []): Artikel
     {
+        $data = empty($data) ? $this->responseData : $data;
+
         /**
          * @var Artikel $artikel
          */
@@ -46,6 +48,10 @@ final class ArtikelMapper extends AbstractMapper
 
         if (isset($data["verkoopprijs"])) {
             $artikel->setVerkoopprijs($this->getMoney($data["verkoopprijs"]));
+        }
+
+        if (isset($data["inkoopprijs"])) {
+            $artikel->setInkoopprijs($this->getMoney($data["inkoopprijs"]));
         }
 
         if (isset($data["artikelOmzetgroep"])) {
@@ -62,7 +68,7 @@ final class ArtikelMapper extends AbstractMapper
         return $artikel;
     }
 
-    public function mapPrijsAfspraakToArtikelInstance(array $data): Prijsafspraak
+    protected function mapPrijsAfspraakToArtikelInstance(array $data): Prijsafspraak
     {
         $prijsafspraak = new Prijsafspraak();
 

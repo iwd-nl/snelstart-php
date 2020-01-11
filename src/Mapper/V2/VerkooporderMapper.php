@@ -23,14 +23,22 @@ use SnelstartPHP\Snelstart;
 
 final class VerkooporderMapper extends AbstractMapper
 {
-    public static function add(ResponseInterface $response): Verkooporder
+    public function add(ResponseInterface $response): Verkooporder
     {
-        $mapper = new static($response);
-        return $mapper->map(new Verkooporder(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->map(new Verkooporder());
     }
 
-    public function map(Verkooporder $verkooporder, array $data): Verkooporder
+    public function delete(ResponseInterface $response): void
     {
+
+    }
+
+    public function map(Verkooporder $verkooporder, array $data = []): Verkooporder
+    {
+        $data = empty($data) ? $this->responseData : $data;
+        $adresMapper = new AdresMapper();
+
         /**
          * @var Verkooporder $verkooporder
          */
@@ -43,18 +51,17 @@ final class VerkooporderMapper extends AbstractMapper
         }
 
         if ($data["afleveradres"] !== null) {
-            $verkooporder->setAfleveradres(AdresMapper::mapAdresToSnelstartObject($data["afleveradres"]));
+            $verkooporder->setAfleveradres($adresMapper->mapAdresToSnelstartObject($data["afleveradres"]));
         }
 
         if ($data["factuuradres"] !== null) {
-            $verkooporder->setFactuuradres(AdresMapper::mapAdresToSnelstartObject($data["factuuradres"]));
+            $verkooporder->setFactuuradres($adresMapper->mapAdresToSnelstartObject($data["factuuradres"]));
         }
 
         if ($data["kostenplaats"] !== null) {
             $verkooporder->setKostenplaats(Kostenplaats::createFromUUID(Uuid::fromString($data["kostenplaats"]["id"])));
         }
 
-        // regels
         $regels = array_map(function(array $data) {
             return (new VerkooporderRegel())
                 ->setArtikel(Artikel::createFromUUID(Uuid::fromString($data["artikel"]["id"])))

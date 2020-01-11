@@ -7,13 +7,27 @@
 namespace SnelstartPHP\Mapper\V2;
 
 use Ramsey\Uuid\Uuid;
+use SnelstartPHP\Exception\InvalidMapperDataException;
+use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\Land;
 
-final class AdresMapper
+final class AdresMapper extends AbstractMapper
 {
-    public static function mapAdresToSnelstartObject(array $data): Adres
+    /**
+     * @param array $data
+     * @throws InvalidMapperDataException
+     * @return Adres
+     */
+    public function mapAdresToSnelstartObject(array $data): Adres
     {
+        $mandatoryParameters = [ "contactpersoon", "straat", "postcode", "plaats", "land" ];
+        $diff = array_diff(array_keys($data), $mandatoryParameters);
+
+        if (count($diff) > 0) {
+            throw InvalidMapperDataException::mandatoryKeysAreMissing($diff);
+        }
+
         return (new Adres())
             ->setContactpersoon($data["contactpersoon"])
             ->setStraat($data["straat"])

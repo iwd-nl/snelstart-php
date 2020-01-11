@@ -12,38 +12,36 @@ use SnelstartPHP\Model\Kostenplaats;
 
 final class KostenplaatsMapper extends AbstractMapper
 {
-    public static function find(ResponseInterface $response): ?Kostenplaats
+    public function find(ResponseInterface $response): ?Kostenplaats
     {
-        return static::mapSimpleResponse($response);
+        return $this->mapSimpleResponse($response);
     }
 
-    public static function findAll(ResponseInterface $response): \Generator
+    public function findAll(ResponseInterface $response): \Generator
     {
-        $mapper = new static($response);
-
-        foreach ($mapper->responseData as $kostenplaats) {
-            yield $mapper->mapArrayDataToModel(new Kostenplaats(), $kostenplaats);
+        foreach ($this->setResponseData($response)->responseData as $kostenplaats) {
+            yield $this->mapArrayDataToModel(new Kostenplaats(), $kostenplaats);
         }
     }
 
-    public static function add(ResponseInterface $response): Kostenplaats
+    public function add(ResponseInterface $response): Kostenplaats
     {
-        return static::mapSimpleResponse($response);
+        return $this->mapSimpleResponse($response);
     }
 
-    public static function update(ResponseInterface $response): Kostenplaats
+    public function update(ResponseInterface $response): Kostenplaats
     {
-        return static::mapSimpleResponse($response);
+        return $this->mapSimpleResponse($response);
     }
 
-    public static function delete(ResponseInterface $response): void
+    public function delete(ResponseInterface $response): void
     {
         return;
     }
 
-    private static function mapSimpleResponse(ResponseInterface $response): Kostenplaats
+    private function mapSimpleResponse(ResponseInterface $response): Kostenplaats
     {
-        $mapper = new static($response);
-        return $mapper->mapArrayDataToModel(new Kostenplaats(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->mapArrayDataToModel(new Kostenplaats());
     }
 }

@@ -15,44 +15,44 @@ use SnelstartPHP\Request\BaseRequest;
 
 final class DocumentRequest extends BaseRequest
 {
-    public static function find(UuidInterface $id): RequestInterface
+    public function find(UuidInterface $id): RequestInterface
     {
         return new Request("GET", "documenten/" . $id->toString());
     }
 
-    public static function findByDocumentTypeAndParentIdentifier(DocumentType $documentType, UuidInterface $parentIdentifier): RequestInterface
+    public function findByDocumentTypeAndParentIdentifier(DocumentType $documentType, UuidInterface $parentIdentifier): RequestInterface
     {
         return new Request("GET", sprintf("documenten/%s/%s", $documentType->getValue(), $parentIdentifier->toString()));
     }
 
-    public static function addVerkoopBoekingDocument(Document $document, Verkoopboeking $verkoopboeking): RequestInterface
+    public function addVerkoopBoekingDocument(Document $document, Verkoopboeking $verkoopboeking): RequestInterface
     {
         if ($verkoopboeking->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return self::fromDocumentType($document->setParentIdentifier($verkoopboeking->getId()), DocumentType::VERKOOPBOEKINGEN());
+        return $this->fromDocumentType($document->setParentIdentifier($verkoopboeking->getId()), DocumentType::VERKOOPBOEKINGEN());
     }
 
-    public static function addInkoopBoekingDocument(Document $document, Inkoopboeking $inkoopboeking): RequestInterface
+    public function addInkoopBoekingDocument(Document $document, Inkoopboeking $inkoopboeking): RequestInterface
     {
         if ($inkoopboeking->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return self::fromDocumentType($document->setParentIdentifier($inkoopboeking->getId()), DocumentType::INKOOPBOEKINGEN());
+        return $this->fromDocumentType($document->setParentIdentifier($inkoopboeking->getId()), DocumentType::INKOOPBOEKINGEN());
     }
 
-    public static function addRelatieDocument(Document $document, Relatie $relatie): RequestInterface
+    public function addRelatieDocument(Document $document, Relatie $relatie): RequestInterface
     {
         if ($relatie->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return self::fromDocumentType($document->setParentIdentifier($relatie->getId()), DocumentType::RELATIES());
+        return $this->fromDocumentType($document->setParentIdentifier($relatie->getId()), DocumentType::RELATIES());
     }
 
-    public static function updateDocument(Document $document): RequestInterface
+    public function updateDocument(Document $document): RequestInterface
     {
         if ($document->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -60,10 +60,10 @@ final class DocumentRequest extends BaseRequest
 
         return new Request("PUT", "documenten/" . $document->getId()->toString(), [
             "Content-Type"  =>  "application/json",
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($document)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 
-    public static function deleteDocument(Document $document): RequestInterface
+    public function deleteDocument(Document $document): RequestInterface
     {
         if ($document->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -72,10 +72,10 @@ final class DocumentRequest extends BaseRequest
         return new Request("DELETE", "documenten/" . $document->getId()->toString());
     }
 
-    private static function fromDocumentType(Document $document, DocumentType $documentType): RequestInterface
+    protected function fromDocumentType(Document $document, DocumentType $documentType): RequestInterface
     {
         return new Request("POST", sprintf("documenten/%s", $documentType->getValue()), [
             "Content-Type" =>   "application/json",
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($document)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 }

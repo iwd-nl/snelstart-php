@@ -18,10 +18,12 @@ final class ArtikelConnector extends BaseConnector
 {
     public function find(UuidInterface $id, ?ODataRequestData $ODataRequestData = null, ?Model\Relatie $relatie = null, ?int $aantal = null): ?Model\Artikel
     {
+        $artikelRequest = new Request\ArtikelRequest();
+        $artikelMapper = new Mapper\ArtikelMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
 
         try {
-            return Mapper\ArtikelMapper::find($this->connection->doRequest(Request\ArtikelRequest::find($id, $ODataRequestData, $relatie, $aantal)));
+            return $artikelMapper->find($this->connection->doRequest($artikelRequest->find($id, $ODataRequestData, $relatie, $aantal)));
         } catch (SnelstartResourceNotFoundException $e) {
             return null;
         }
@@ -32,8 +34,10 @@ final class ArtikelConnector extends BaseConnector
      */
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null, ?Model\Relatie $relatie = null, ?int $aantal = null): iterable
     {
+        $artikelRequest = new Request\ArtikelRequest();
+        $artikelMapper = new Mapper\ArtikelMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $artikelen = Mapper\ArtikelMapper::findAll($this->connection->doRequest(Request\ArtikelRequest::findAll($ODataRequestData, $relatie, $aantal)));
+        $artikelen = $artikelMapper->findAll($this->connection->doRequest($artikelRequest->findAll($ODataRequestData, $relatie, $aantal)));
         $iterator = $previousResults ?? new \AppendIterator();
 
         if ($iterator instanceof \AppendIterator && $artikelen->valid()) {
@@ -43,8 +47,8 @@ final class ArtikelConnector extends BaseConnector
         if ($fetchAll && $artikelen->valid()) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
-            } else if ($ODataRequestData->getSkip() !== null) {
-                $ODataRequestData->setSkip($ODataRequestData->getSkip() + ($ODataRequestData->getTop() ?? 0));
+            } else {
+                $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
             return $this->findAll($ODataRequestData, true, $iterator, $relatie, $aantal);

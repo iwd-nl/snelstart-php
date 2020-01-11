@@ -34,7 +34,7 @@ final class BoekingRequest extends BaseRequest
     {
         return new Request("POST", "inkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public static function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): RequestInterface
@@ -45,7 +45,7 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "inkoopboekingen/" . $inkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public static function addAttachmentToInkoopboeking(Model\Inkoopboeking $inkoopboeking, Model\Bijlage $bijlage): RequestInterface
@@ -56,14 +56,14 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("POST", sprintf("inkoopboekingen/%s/bijlagen", $inkoopboeking->getId()->toString()), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($bijlage)));
     }
 
     public static function addVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
     {
         return new Request("POST", "verkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     public static function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
@@ -74,7 +74,7 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "verkoopboekingen/" . $verkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     public static function addAttachmentToVerkoopboeking(Model\Verkoopboeking $verkoopboeking, Model\Bijlage $bijlage): RequestInterface
@@ -85,6 +85,11 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("POST", sprintf("verkoopboekingen/%s/bijlagen", $verkoopboeking->getId()->toString()), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($bijlage)));
+        ], \GuzzleHttp\json_encode(self::getInstance()->prepareAddOrEditRequestForSerialization($bijlage)));
+    }
+    
+    private static function getInstance(): self
+    {
+        return new self();
     }
 }

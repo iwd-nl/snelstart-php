@@ -14,6 +14,7 @@ use SnelstartPHP\Mapper\V2 as Mapper;
 use SnelstartPHP\Model\V2 as Model;
 use SnelstartPHP\Model\Type\Relatiesoort;
 use SnelstartPHP\Request\ODataRequestData;
+use SnelstartPHP\Request\ODataRequestDataInterface;
 use SnelstartPHP\Request\V2 as Request;
 
 final class RelatieConnector extends BaseConnector
@@ -21,7 +22,10 @@ final class RelatieConnector extends BaseConnector
     public function find(UuidInterface $id): ?Model\Relatie
     {
         try {
-            return Mapper\RelatieMapper::find($this->connection->doRequest(Request\RelatieRequest::find($id)));
+            $mapper = new Mapper\RelatieMapper();
+            $request = new Request\RelatieRequest();
+
+            return $mapper->find($this->connection->doRequest($request->find($id)));
         } catch (SnelstartResourceNotFoundException $e) {
             return null;
         }
@@ -29,12 +33,16 @@ final class RelatieConnector extends BaseConnector
 
     /**
      * @return Model\Relatie[]|iterable
+     * @psalm-return iterable<int, Model\Relatie>
      */
-    public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
+    public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $relaties = Mapper\RelatieMapper::findAll($this->connection->doRequest(Request\RelatieRequest::findAll($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
+
+        $mapper = new Mapper\RelatieMapper();
+        $request = new Request\RelatieRequest();
+        $relaties = $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
 
         if ($iterator instanceof \AppendIterator && $relaties->valid()) {
             $iterator->append($relaties);
@@ -44,10 +52,7 @@ final class RelatieConnector extends BaseConnector
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
-                $top = $ODataRequestData->getTop() ?? 0;
-                $skip = $ODataRequestData->getSkip() ?? 0;
-
-                $ODataRequestData->setSkip($top + $skip);
+                $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
             return $this->findAll($ODataRequestData, true, $iterator);
@@ -58,28 +63,34 @@ final class RelatieConnector extends BaseConnector
 
     /**
      * @return Model\Relatie[]
+     * @psalm-return iterable<int, Model\Relatie>
      */
-    public function findAllLeveranciers(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
+    public function findAllLeveranciers(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $ODataRequestData->setFilter(\array_merge(
-            $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
-        );
+        if ($ODataRequestData === null) {
+            $ODataRequestData = new ODataRequestData();
+            $ODataRequestData->setFilter(\array_merge(
+                $ODataRequestData->getFilter(),
+                [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
+            );
+        }
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     /**
      * @return Model\Relatie[]|iterable
+     * @psalm-return iterable<int, Model\Relatie>
      */
-    public function findAllKlanten(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
+    public function findAllKlanten(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $ODataRequestData->setFilter(\array_merge(
-            $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()->getValue()) ])
-        );
+        if ($ODataRequestData === null) {
+            $ODataRequestData = new ODataRequestData();
+            $ODataRequestData->setFilter(\array_merge(
+                $ODataRequestData->getFilter(),
+                [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()->getValue()) ])
+            );
+        }
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
@@ -87,18 +98,24 @@ final class RelatieConnector extends BaseConnector
     public function add(Model\Relatie $relatie): Model\Relatie
     {
         if ($relatie->getId() !== null) {
-            throw new PreValidationException("The ID of this relation should be null.");
+            throw PreValidationException::unexpectedIdException();
         }
 
-        return Mapper\RelatieMapper::add($this->connection->doRequest(Request\RelatieRequest::add($relatie)));
+        $mapper = new Mapper\RelatieMapper();
+        $request = new Request\RelatieRequest();
+
+        return $mapper->add($this->connection->doRequest($request->add($relatie)));
     }
 
     public function update(Model\Relatie $relatie): Model\Relatie
     {
         if ($relatie->getId() === null) {
-            throw new PreValidationException("All relations should have an ID.");
+            throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return Mapper\RelatieMapper::update($this->connection->doRequest(Request\RelatieRequest::update($relatie)));
+        $mapper = new Mapper\RelatieMapper();
+        $request = new Request\RelatieRequest();
+
+        return $mapper->update($this->connection->doRequest($request->update($relatie)));
     }
 }

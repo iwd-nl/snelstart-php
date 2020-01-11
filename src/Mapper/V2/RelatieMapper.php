@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Mapper\V2;
 
+use function \array_map;
 use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\EmailVersturen;
@@ -14,27 +15,28 @@ use SnelstartPHP\Model\V2 as Model;
 
 final class RelatieMapper extends AbstractMapper
 {
-    public static function find(ResponseInterface $response): ?Model\Relatie
+    public function find(ResponseInterface $response): ?Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->mapResponseToRelatieModel(new Model\Relatie());
     }
 
-    public static function findAll(ResponseInterface $response): \Generator
+    public function findAll(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers();
+        $this->setResponseData($response);
+        return $this->mapManyResultsToSubMappers();
     }
 
-    public static function add(ResponseInterface $response): Model\Relatie
+    public function add(ResponseInterface $response): Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->mapResponseToRelatieModel(new Model\Relatie());
     }
 
-    public static function update(ResponseInterface $response): Model\Relatie
+    public function update(ResponseInterface $response): Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        $this->setResponseData($response);
+        return $this->mapResponseToRelatieModel(new Model\Relatie());
     }
 
     /**
@@ -47,8 +49,9 @@ final class RelatieMapper extends AbstractMapper
          * @var Model\Relatie $relatie
          */
         $relatie = $this->mapArrayDataToModel($relatie, $data);
+        $adresMapper = new AdresMapper();
 
-        $relatie->setRelatiesoort(\array_map(function(string $relatiesoort) {
+        $relatie->setRelatiesoort(... array_map(static function(string $relatiesoort) {
             return new Type\Relatiesoort($relatiesoort);
         }, $data["relatiesoort"]));
 
@@ -69,17 +72,17 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if (!empty($data["vestigingsAdres"])) {
-            $relatie->setVestigingsAdres(AdresMapper::mapAdresToSnelstartObject($data["vestigingsAdres"]));
+            $relatie->setVestigingsAdres($adresMapper->mapAdresToSnelstartObject($data["vestigingsAdres"]));
         }
 
         if (!empty($data["correspondentieAdres"])) {
-            $relatie->setCorrespondentieAdres(AdresMapper::mapAdresToSnelstartObject($data["correspondentieAdres"]));
+            $relatie->setCorrespondentieAdres($adresMapper->mapAdresToSnelstartObject($data["correspondentieAdres"]));
         }
 
-        $relatie->setOfferteEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
-                ->setBevestigingsEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
-                ->setFactuurEmailVersturen(static::mapEmailVersturenField($data["factuurEmailVersturen"]))
-                ->setAanmaningEmailVersturen(static::mapEmailVersturenField($data["aanmaningEmailVersturen"]));
+        $relatie->setOfferteEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))
+                ->setBevestigingsEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))
+                ->setFactuurEmailVersturen($this->mapEmailVersturenField($data["factuurEmailVersturen"]))
+                ->setAanmaningEmailVersturen($this->mapEmailVersturenField($data["aanmaningEmailVersturen"]));
 
         return $relatie;
     }

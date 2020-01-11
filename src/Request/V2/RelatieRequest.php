@@ -16,24 +16,24 @@ use SnelstartPHP\Request\ODataRequestDataInterface;
 
 final class RelatieRequest extends BaseRequest
 {
-    public static function findAll(ODataRequestDataInterface $ODataRequestData): RequestInterface
+    public function findAll(ODataRequestDataInterface $ODataRequestData): RequestInterface
     {
         return new Request("GET", "relaties?" . $ODataRequestData->getHttpCompatibleQueryString());
     }
 
-    public static function find(UuidInterface $id): RequestInterface
+    public function find(UuidInterface $id): RequestInterface
     {
         return new Request("GET", "relaties/" . $id->toString());
     }
 
-    public static function add(Model\Relatie $relatie): RequestInterface
+    public function add(Model\Relatie $relatie): RequestInterface
     {
         return new Request("POST", "relaties", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($relatie)));
     }
 
-    public static function update(Model\Relatie $relatie): RequestInterface
+    public function update(Model\Relatie $relatie): RequestInterface
     {
         if ($relatie->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -41,6 +41,6 @@ final class RelatieRequest extends BaseRequest
 
         return new Request("PUT", "relaties/" . $relatie->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode(self::prepareAddOrEditRequestForSerialization($relatie)));
+        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($relatie)));
     }
 }
