@@ -33,10 +33,12 @@ final class AccessTokenConnection implements ConnectionInterface
      */
     private $bearerToken;
 
-    public function __construct(?BearerTokenInterface $bearerToken = null, ?ClientInterface $client = null, ?LoggerInterface $logger = null)
+    public function __construct(BearerTokenInterface $bearerToken, ?ClientInterface $client = null, ?LoggerInterface $logger = null)
     {
-        $this->client = $client;
         $this->bearerToken = $bearerToken;
+        $this->client = $client ?? new Client([
+            "base_uri"  =>  static::getEndpoint(),
+        ]);
         $this->logger = $logger;
     }
 
@@ -48,7 +50,7 @@ final class AccessTokenConnection implements ConnectionInterface
     public function doRequest(RequestInterface $request): ResponseInterface
     {
         try {
-            return $this->getClient()->send($request);
+            return $this->client->send($request);
         } catch (BadResponseException $badResponseException) {
             throw SnelstartApiAccessDeniedException::createFromParent($badResponseException);
         }
@@ -57,20 +59,11 @@ final class AccessTokenConnection implements ConnectionInterface
     /**
      * Will throw an exception if we get anything other than a success.
      *
-     * @throws \InvalidArgumentException
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getToken(?BearerTokenInterface $bearerToken = null): AccessToken
     {
-        if ($bearerToken === null && $this->bearerToken === null) {
-            throw new \InvalidArgumentException("You have to define the type of bearer token to use.");
-        }
-
         $this->bearerToken = $bearerToken ?? $this->bearerToken;
-
-        if ($this->bearerToken === null) {
-            throw new \LogicException("Bearer token should be set");
-        }
 
         if ($this->logger !== null) {
             $this->logger->debug(sprintf("[AccessToken] Trying to obtain an access token with token type '%s'", get_class($this->bearerToken)));
@@ -91,14 +84,5 @@ final class AccessTokenConnection implements ConnectionInterface
     public static function getEndpoint(): string
     {
         return "https://auth.snelstart.nl/b2b/";
-    }
-
-    private function getClient(): ClientInterface
-    {
-        if ($this->client === null) {
-            return $this->client = new Client();
-        }
-
-        return $this->client;
     }
 }
