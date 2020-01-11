@@ -8,8 +8,6 @@ namespace SnelstartPHP\Model\V2;
 
 use Money\Money;
 use SnelstartPHP\Exception\BookingNotInBalanceException;
-use SnelstartPHP\Model\Boekingsregel;
-use SnelstartPHP\Model\Btwregel;
 use SnelstartPHP\Model\SnelstartObject;
 
 abstract class Boeking extends SnelstartObject
@@ -95,7 +93,7 @@ abstract class Boeking extends SnelstartObject
     /**
      * @var Document[]
      */
-    protected $documents;
+    protected $documents = [];
 
     /**
      * @var string[]
@@ -112,6 +110,7 @@ abstract class Boeking extends SnelstartObject
         "boekingsregels",
         "vervalDatum",
         "btw",
+        "documents",
     ];
 
     public function getModifiedOn(): ?\DateTimeInterface
@@ -227,14 +226,8 @@ abstract class Boeking extends SnelstartObject
         return $this->boekingsregels;
     }
 
-    public function setBoekingsregels(array $boekingsregels): self
+    public function setBoekingsregels(Boekingsregel ...$boekingsregels): self
     {
-        foreach ($boekingsregels as $boekingsregel) {
-            if (!$boekingsregel instanceof Boekingsregel) {
-                throw new \InvalidArgumentException(sprintf("Should be a type of '%s'", Boekingsregel::class));
-            }
-        }
-
         $this->boekingsregels = $boekingsregels;
 
         return $this;
@@ -245,17 +238,16 @@ abstract class Boeking extends SnelstartObject
         return $this->btw ?? [];
     }
 
-    public function setBtw(array $btw): self
+    public function setBtw(Btwregel ...$btw): self
     {
-        foreach ($btw as $btwRegel) {
-            if (!$btwRegel instanceof Btwregel) {
-                throw new \InvalidArgumentException(sprintf("Should be a type of '%s'", Btwregel::class));
-            }
-        }
-
         $this->btw = $btw;
 
         return $this;
+    }
+
+    public function getDocuments(): array
+    {
+        return $this->documents;
     }
 
     public function addDocument(Document $document): self

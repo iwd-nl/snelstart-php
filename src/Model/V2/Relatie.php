@@ -260,7 +260,7 @@ final class Relatie extends SnelstartObject
     /**
      * @param Types\Relatiesoort[] $relatiesoort
      */
-    public function setRelatiesoort(array $relatiesoort): self
+    public function setRelatiesoort(Types\Relatiesoort ...$relatiesoort): self
     {
         $this->relatiesoort = $relatiesoort;
 
