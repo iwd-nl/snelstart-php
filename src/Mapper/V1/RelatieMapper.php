@@ -24,25 +24,22 @@ final class RelatieMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        return self::fromResponse($response)->mapResponseToRelatieModel(new Model\Relatie());
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers();
+        return self::fromResponse($response)->mapManyResultsToSubMappers();
     }
 
     public static function add(ResponseInterface $response): Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        return self::fromResponse($response)->mapResponseToRelatieModel(new Model\Relatie());
     }
 
     public static function update(ResponseInterface $response): Model\Relatie
     {
-        $mapper = new static($response);
-        return $mapper->mapResponseToRelatieModel(new Model\Relatie(), $mapper->responseData);
+        return self::fromResponse($response)->mapResponseToRelatieModel(new Model\Relatie());
     }
 
     /**
@@ -55,7 +52,6 @@ final class RelatieMapper extends AbstractMapper
          * @var Model\Relatie $relatie
          */
         $relatie = $this->mapArrayDataToModel($relatie, $data);
-        $currency = new Currency(Snelstart::CURRENCY);
 
         $relatie->setRelatiesoort(array_map(function(string $relatiesoort) {
             return new Type\Relatiesoort($relatiesoort);
@@ -70,25 +66,25 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if ($data["kredietLimiet"] !== null) {
-            $relatie->setKredietLimiet(new Money($data["kredietLimiet"], $currency));
+            $relatie->setKredietLimiet($this->getMoney($data["kredietLimiet"]));
         }
 
         if ($data["factuurkorting"] !== null) {
-            $relatie->setFactuurkorting(new Money($data["factuurkorting"], $currency));
+            $relatie->setFactuurkorting($this->getMoney($data["factuurkorting"]));
         }
 
         if (!empty($data["vestigingsAdres"])) {
-            $relatie->setVestigingsAdres(static::mapAddressToRelatieAddress($data["vestigingsAdres"]));
+            $relatie->setVestigingsAdres($this->mapAddressToRelatieAddress($data["vestigingsAdres"]));
         }
 
         if (!empty($data["correspondentieAdres"])) {
-            $relatie->setCorrespondentieAdres(static::mapAddressToRelatieAddress($data["correspondentieAdres"]));
+            $relatie->setCorrespondentieAdres($this->mapAddressToRelatieAddress($data["correspondentieAdres"]));
         }
 
-        $relatie->setOfferteEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
-                ->setBevestigingsEmailVersturen(static::mapEmailVersturenField($data["offerteEmailVersturen"]))
-                ->setFactuurEmailVersturen(static::mapEmailVersturenField($data["factuurEmailVersturen"]))
-                ->setAanmaningEmailVersturen(static::mapEmailVersturenField($data["aanmaningEmailVersturen"]));
+        $relatie->setOfferteEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))
+                ->setBevestigingsEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))
+                ->setFactuurEmailVersturen($this->mapEmailVersturenField($data["factuurEmailVersturen"]))
+                ->setAanmaningEmailVersturen($this->mapEmailVersturenField($data["aanmaningEmailVersturen"]));
 
         return $relatie;
     }

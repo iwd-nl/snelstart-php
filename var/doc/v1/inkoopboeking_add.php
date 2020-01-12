@@ -30,9 +30,13 @@ foreach ($leverancierConnector->findAllLeveranciers() as $leverancier) {
 }
 
 $grootboekConnector = new \SnelstartPHP\Connector\V1\GrootboekConnector($connection);
-$inkoopGroot = \SnelstartPHP\Util\IteratorUtil::getFirstElementOrNull($grootboekConnector->findAll(
+$inkoopGroot = iterator_to_array($grootboekConnector->findAll(
     (new \SnelstartPHP\Request\ODataRequestData())->setFilter(["Nummer eq 7002"]))
-);
+)[0] ?? null;
+
+if ($inkoopGroot === null) {
+    throw new \Exception("Not found");
+}
 
 $inkoopboeking = new \SnelstartPHP\Model\V1\Inkoopboeking();
 $inkoopboeking->setLeverancier($leverancier)

@@ -51,7 +51,6 @@ final class Boekingsregel extends BaseObject
     private $btwSoort;
 
     public static $editableAttributes = [
-        "id",
         "omschrijving",
         "grootboek",
         "kostenplaats",

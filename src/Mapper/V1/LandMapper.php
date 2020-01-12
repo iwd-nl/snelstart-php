@@ -13,15 +13,14 @@ use SnelstartPHP\Model\Land;
 
 final class LandMapper extends AbstractMapper
 {
-    public static function find(ResponseInterface $response): ?Land
+    public static function find(ResponseInterface $response): Land
     {
-        $mapper = new static($response);
-        return $mapper->mapArrayDataToModel(new Land(), $mapper->responseData);
+        return self::fromResponse($response)->mapArrayDataToModel(new Land());
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        $mapper = new static($response);
+        $mapper = self::fromResponse($response);
 
         foreach ($mapper->responseData as $landData) {
             yield $mapper->mapArrayDataToModel(new Land(), $landData);

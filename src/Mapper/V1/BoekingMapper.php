@@ -22,30 +22,27 @@ final class BoekingMapper extends AbstractMapper
 {
     public static function findAllInkoopfacturen(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
+        return self::fromResponse($response)->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
     }
 
     public static function findAllVerkoopfacturen(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
+        return self::fromResponse($response)->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
     }
 
     public static function addInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
     {
-        $mapper = new static($response);
-        return $mapper->mapInkoopboekingResult(new Model\Inkoopboeking(), $mapper->responseData);
+        return self::fromResponse($response)->mapInkoopboekingResult(new Model\Inkoopboeking());
     }
 
     public static function addVerkoopboeking(ResponseInterface $response): Model\Verkoopboeking
     {
-        $mapper = new static($response);
-        return $mapper->mapVerkoopboekingResult(new Model\Verkoopboeking(), $mapper->responseData);
+        return self::fromResponse($response)->mapVerkoopboekingResult(new Model\Verkoopboeking());
     }
 
     public static function addBijlage(ResponseInterface $response, string $className): Model\Bijlage
     {
-        $mapper = new static($response);
-        return $mapper->mapBijlageResult(new $className, $mapper->responseData);
+        return self::fromResponse($response)->mapBijlageResult(new $className);
     }
 
     public function mapBijlageResult(Model\Bijlage $bijlage, array $data = []): Model\Bijlage
@@ -138,7 +135,7 @@ final class BoekingMapper extends AbstractMapper
         }
 
         if (isset($data["factuurBedrag"])) {
-            $boeking->setFactuurbedrag(new Money($data["factuurBedrag"] * 100, new Currency("EUR")));
+            $boeking->setFactuurbedrag($this->getMoney($data["factuurBedrag"]));
         }
 
         $boekingsregels = [];
@@ -146,7 +143,7 @@ final class BoekingMapper extends AbstractMapper
             $boekingsregelObject = (new Model\Boekingsregel())
                 ->setOmschrijving($boekingsregel["omschrijving"])
                 ->setGrootboek(Model\Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"])))
-                ->setBedrag(Snelstart::getMoneyParser()->parse((string) $boekingsregel["bedrag"], Snelstart::getCurrency()))
+                ->setBedrag($this->getMoney($boekingsregel["bedrag"]))
                 ->setBtwSoort(new Type\BtwSoort($boekingsregel["btwSoort"]));
 
             if ($boekingsregel["kostenplaats"]) {
@@ -164,7 +161,7 @@ final class BoekingMapper extends AbstractMapper
         foreach ($data["btw"] ?? [] as $btw) {
             $btwRegels[] = new Model\Btwregel(
                 new Type\BtwRegelSoort($btw["btwSoort"]),
-                Snelstart::getMoneyParser()->parse((string) $btw["btwBedrag"], Snelstart::getCurrency())
+                $this->getMoney($btw["btwBedrag"])
             );
         }
 

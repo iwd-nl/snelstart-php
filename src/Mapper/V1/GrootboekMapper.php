@@ -17,13 +17,12 @@ final class GrootboekMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Model\Grootboek
     {
-        $mapper = new static($response);
-        return $mapper->mapResultToGrootboekModel(new Model\Grootboek(), $mapper->responseData);
+        return self::fromResponse($response)->mapResultToGrootboekModel(new Model\Grootboek());
     }
 
     public static function findAll(ResponseInterface $response): \Generator
     {
-        return (new static($response))->mapManyResultsToSubMappers();
+        return self::fromResponse($response)->mapManyResultsToSubMappers();
     }
 
     protected function mapResultToGrootboekModel(Model\Grootboek $grootboek, array $data = []): Model\Grootboek
