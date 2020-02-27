@@ -16,7 +16,7 @@
     "require": {
         "php": ">=7.2",
         "ext-json": "*",
-        "ext-mbstring":  "*",
+        "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^6.3",
         "moneyphp/money": "^3.0",
         "myclabs/php-enum": "^1.6",
@@ -32,7 +32,7 @@
         "vimeo/psalm": "^3.6"
     },
     "suggest": {
-        "symfony/cache": "Caching made a little easier. Comes in handy for access tokens."
+        "psr/cache": "Caching made a little easier. Useful for access tokens."
     },
     "config": {
         "sort-packages": true
