@@ -11,6 +11,10 @@
         <directory name="src" />
         <ignoreFiles>
             <directory name="vendor" />
+            <directory name="src/Connector/V1"/>
+            <directory name="src/Mapper/V1"/>
+            <directory name="src/Model/V1"/>
+            <directory name="src/Request/V1"/>
         </ignoreFiles>
     </projectFiles>
 
@@ -38,7 +42,7 @@
         <MisplacedRequiredParam errorLevel="info" />
 
         <PropertyNotSetInConstructor errorLevel="info" />
-        <MissingConstructor errorLevel="info" />
+        <MissingConstructor errorLevel="suppress" />
         <MissingClosureParamType errorLevel="info" />
         <MissingParamType errorLevel="info" />
 
