@@ -19,7 +19,7 @@ use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 final class AccessTokenConnection implements ConnectionInterface
 {
     /**
-     * @var ClientInterface|null
+     * @var ClientInterface
      */
     private $client;
 
@@ -29,7 +29,7 @@ final class AccessTokenConnection implements ConnectionInterface
     private $logger;
 
     /**
-     * @var BearerTokenInterface|null
+     * @var BearerTokenInterface
      */
     private $bearerToken;
 

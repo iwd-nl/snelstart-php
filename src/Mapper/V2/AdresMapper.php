@@ -25,7 +25,7 @@ final class AdresMapper extends AbstractMapper
         $diff = array_diff(array_keys($data), $mandatoryParameters);
 
         if (count($diff) > 0) {
-            throw InvalidMapperDataException::mandatoryKeysAreMissing($diff);
+            throw InvalidMapperDataException::mandatoryKeysAreMissing(...$diff);
         }
 
         return (new Adres())

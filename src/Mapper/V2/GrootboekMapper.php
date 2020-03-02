@@ -45,9 +45,13 @@ final class GrootboekMapper extends AbstractMapper
             $grootboek->setGrootboekfunctie(new Grootboekfunctie($data["grootboekfunctie"]));
         }
 
-        return $grootboek->setRgsCode(... array_map(static function(array $rgsCode) {
-            return new Model\RgsCode($rgsCode["versie"], $rgsCode["rgsCode"]);
-        }, $data["rgsCode"] ?? []));
+        if (isset($data["rgsCode"])) {
+            $grootboek->setRgsCode(... \array_map(static function(array $rgsCode) {
+                return new Model\RgsCode($rgsCode["versie"], $rgsCode["rgsCode"]);
+            }, $data["rgsCode"]));
+        }
+
+        return $grootboek;
     }
 
     protected function mapManyResultsToSubMappers(): \Generator

@@ -68,10 +68,13 @@ final class RelatieConnector extends BaseConnector
     public function findAllLeveranciers(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $ODataRequestData->setFilter(\array_merge(
-            $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
-        );
+
+        if (\method_exists($ODataRequestData, "setFilter")) {
+            $ODataRequestData->setFilter(\array_merge(
+                    $ODataRequestData->getFilter(),
+                    [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
+            );
+        }
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
@@ -83,10 +86,13 @@ final class RelatieConnector extends BaseConnector
     public function findAllKlanten(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $ODataRequestData->setFilter(\array_merge(
-            $ODataRequestData->getFilter(),
-            [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()->getValue()) ])
-        );
+
+        if (\method_exists($ODataRequestData, "setFilter")) {
+            $ODataRequestData->setFilter(\array_merge(
+                $ODataRequestData->getFilter(),
+                [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::KLANT()->getValue()) ])
+            );
+        }
 
         return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
