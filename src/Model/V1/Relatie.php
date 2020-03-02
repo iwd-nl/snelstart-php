@@ -13,6 +13,9 @@ use SnelstartPHP\Model\EmailVersturen;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type as Types;
 
+/**
+ * @deprecated
+ */
 final class Relatie extends SnelstartObject
 {
     /**

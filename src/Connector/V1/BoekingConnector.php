@@ -14,6 +14,9 @@ use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Request\ODataRequestData;
 use SnelstartPHP\Request\V1 as Request;
 
+/**
+ * @deprecated
+ */
 final class BoekingConnector extends BaseConnector
 {
     /**

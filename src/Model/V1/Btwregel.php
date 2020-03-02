@@ -11,6 +11,9 @@ use Money\Money;
 use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\Type\BtwRegelSoort;
 
+/**
+ * @deprecated
+ */
 final class Btwregel extends BaseObject
 {
     /**

@@ -9,6 +9,9 @@ namespace SnelstartPHP\Model\V1;
 
 use SnelstartPHP\Model\IncassoMachtiging;
 
+/**
+ * @deprecated
+ */
 final class Verkoopboeking extends Boeking
 {
     /**

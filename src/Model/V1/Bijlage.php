@@ -9,6 +9,9 @@ namespace SnelstartPHP\Model\V1;
 
 use SnelstartPHP\Model\SnelstartObject;
 
+/**
+ * @deprecated
+ */
 abstract class Bijlage extends SnelstartObject
 {
     /**

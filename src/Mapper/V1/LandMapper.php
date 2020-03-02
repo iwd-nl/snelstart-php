@@ -11,6 +11,9 @@ use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\Land;
 
+/**
+ * @deprecated
+ */
 final class LandMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): Land

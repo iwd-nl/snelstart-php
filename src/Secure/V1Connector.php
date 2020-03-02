@@ -10,6 +10,9 @@ namespace SnelstartPHP\Secure;
 use GuzzleHttp\ClientInterface;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @deprecated
+ */
 final class V1Connector extends BaseConnection
 {
     public function __construct(ApiSubscriptionKey $subscriptionKey, AccessToken $accessToken, ?LoggerInterface $logger = null, ?ClientInterface $client = null)

@@ -13,6 +13,9 @@ use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Model\Type\Grootboekfunctie;
 use SnelstartPHP\Model\Type\Rekeningcode;
 
+/**
+ * @deprecated
+ */
 final class GrootboekMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Model\Grootboek

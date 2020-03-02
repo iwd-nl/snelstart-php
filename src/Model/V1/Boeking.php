@@ -11,6 +11,9 @@ use Money\Money;
 use SnelstartPHP\Exception\BookingNotInBalanceException;
 use SnelstartPHP\Model\SnelstartObject;
 
+/**
+ * @deprecated
+ */
 abstract class Boeking extends SnelstartObject
 {
     /**

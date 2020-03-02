@@ -18,6 +18,9 @@ use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Snelstart;
 
+/**
+ * @deprecated
+ */
 final class BoekingMapper extends AbstractMapper
 {
     public static function findAllInkoopfacturen(ResponseInterface $response): \Generator

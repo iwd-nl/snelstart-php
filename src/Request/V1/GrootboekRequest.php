@@ -15,6 +15,9 @@ use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Request\BaseRequest;
 use SnelstartPHP\Request\ODataRequestDataInterface;
 
+/**
+ * @deprecated
+ */
 final class GrootboekRequest extends BaseRequest
 {
     public static function findAll(ODataRequestDataInterface $ODataRequestData): RequestInterface

@@ -11,6 +11,9 @@ use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type\Grootboekfunctie;
 use SnelstartPHP\Model\Type\Rekeningcode;
 
+/**
+ * @deprecated
+ */
 final class Grootboek extends SnelstartObject
 {
     /**

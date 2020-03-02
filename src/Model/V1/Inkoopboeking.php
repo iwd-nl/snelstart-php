@@ -7,6 +7,9 @@
 
 namespace SnelstartPHP\Model\V1;
 
+/**
+ * @deprecated
+ */
 class Inkoopboeking extends Boeking
 {
     /**

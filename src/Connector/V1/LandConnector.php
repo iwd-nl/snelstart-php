@@ -14,6 +14,9 @@ use SnelstartPHP\Mapper\V1\LandMapper;
 use SnelstartPHP\Model\Land;
 use SnelstartPHP\Request\V1\LandRequest;
 
+/**
+ * @deprecated
+ */
 final class LandConnector extends BaseConnector
 {
     public function find(UuidInterface $id): ?\SnelstartPHP\Model\Land

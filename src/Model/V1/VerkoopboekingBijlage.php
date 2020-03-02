@@ -9,6 +9,9 @@ namespace SnelstartPHP\Model\V1;
 
 use Ramsey\Uuid\UuidInterface;
 
+/**
+ * @deprecated
+ */
 final class VerkoopboekingBijlage extends Bijlage
 {
     /**

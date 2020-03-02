@@ -12,6 +12,9 @@ use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\Type\BtwSoort;
 
+/**
+ * @deprecated
+ */
 final class Boekingsregel extends BaseObject
 {
     /**

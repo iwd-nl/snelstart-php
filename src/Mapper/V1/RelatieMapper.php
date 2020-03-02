@@ -20,6 +20,9 @@ use SnelstartPHP\Model\Type as Type;
 use SnelstartPHP\Model\V1 as Model;
 use SnelstartPHP\Snelstart;
 
+/**
+ * @deprecated
+ */
 final class RelatieMapper extends AbstractMapper
 {
     public static function find(ResponseInterface $response): ?Model\Relatie
