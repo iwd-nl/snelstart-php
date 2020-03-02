@@ -157,16 +157,16 @@ final class BoekingMapper extends AbstractMapper
             }
 
             return $boekingsregelObject;
-        }, $data["boekingsregels"]));
+        }, $data["boekingsregels"] ?? []));
 
         $boeking->setBtw(...array_map(function(array $btw): Model\Btwregel {
             return new Model\Btwregel(
                 new Type\BtwRegelSoort($btw["btwSoort"]),
                 $this->getMoney($btw["btwBedrag"])
             );
-        }, $data["btw"]));
+        }, $data["btw"] ?? []));
 
-        foreach ($data["documents"] as $document) {
+        foreach ($data["documents"] ?? [] as $document) {
             $boeking->addDocument($this->mapDocumentResult($document));
         }
 
