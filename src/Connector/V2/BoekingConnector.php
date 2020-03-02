@@ -38,11 +38,11 @@ final class BoekingConnector extends BaseConnector
      */
     public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
-        $boekingRequest = new Request\BoekingRequest();
+        $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
 
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $inkoopfacturen = $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($boekingRequest->findInkoopfactuur($ODataRequestData)));
+        $inkoopfacturen = $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
         if ($iterator instanceof \AppendIterator && $inkoopfacturen->valid()) {
@@ -107,11 +107,11 @@ final class BoekingConnector extends BaseConnector
      */
     public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
-        $boekingRequest = new Request\BoekingRequest();
+        $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
 
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $verkoopfacturen = $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($boekingRequest->findVerkoopfactuur($ODataRequestData)));
+        $verkoopfacturen = $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
         if ($iterator instanceof \AppendIterator && $verkoopfacturen->valid()) {

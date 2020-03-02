@@ -8,24 +8,9 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V2 as Model;
 use SnelstartPHP\Request\BaseRequest;
-use SnelstartPHP\Request\ODataRequestDataInterface;
 
 final class BoekingRequest extends BaseRequest
 {
-    public function findInkoopfactuur(ODataRequestDataInterface $ODataRequestData): RequestInterface
-    {
-        return new Request("GET", "inkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
-            "Content-Type"  =>  "application/json"
-        ]);
-    }
-
-    public function findVerkoopfactuur(ODataRequestDataInterface $ODataRequestData): RequestInterface
-    {
-        return new Request("GET", "verkoopfacturen?" . $ODataRequestData->getHttpCompatibleQueryString(), [
-            "Content-Type"  =>  "application/json"
-        ]);
-    }
-
     public function findInkoopboeking(UuidInterface $uuid): RequestInterface
     {
         return new Request("GET", "inkoopboekingen/" . $uuid->toString());
