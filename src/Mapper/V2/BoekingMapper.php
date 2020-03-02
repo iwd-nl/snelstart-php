@@ -147,11 +147,15 @@ final class BoekingMapper extends AbstractMapper
             $boeking->setBoekingsregels(...array_map(function(array $boekingsregel): Model\Boekingsregel {
                 $boekingsregelObject = (new Model\Boekingsregel())
                     ->setOmschrijving($boekingsregel["omschrijving"])
-                    ->setGrootboek(Model\Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"])))
                     ->setBedrag($this->getMoney($boekingsregel["bedrag"]))
                     ->setBtwSoort(new Type\BtwSoort($boekingsregel["btwSoort"]));
 
-                if ($boekingsregel["kostenplaats"]) {
+                if (isset($boekingsregel["grootboek"])) {
+                    $boekingsregelObject
+                        ->setGrootboek(Model\Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"])));
+                }
+
+                if (isset($boekingsregel["kostenplaats"])) {
                     $boekingsregelObject->setKostenplaats(
                         Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
                     );
