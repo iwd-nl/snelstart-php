@@ -144,7 +144,7 @@ final class Relatie extends SnelstartObject
      * @see Types\Aanmaningsoort
      * @var Types\Aanmaningsoort|null
      */
-    private $aanmingsoort;
+    private $aanmaningsoort;
 
     /**
      * De emailgegevens voor het versturen van offertes.
@@ -235,7 +235,6 @@ final class Relatie extends SnelstartObject
         "iban",
         "bic",
         "incassoSoort",
-        "factuurRelatie",
     ];
 
     /**
@@ -551,18 +550,18 @@ final class Relatie extends SnelstartObject
     /**
      * @return null|Types\Aanmaningsoort
      */
-    public function getAanmingsoort(): ?Types\Aanmaningsoort
+    public function getAanmaningsoort(): ?Types\Aanmaningsoort
     {
-        return $this->aanmingsoort;
+        return $this->aanmaningsoort;
     }
 
     /**
-     * @param null|Types\Aanmaningsoort $aanmingsoort
+     * @param null|Types\Aanmaningsoort $aanmaningsoort
      * @return Relatie
      */
-    public function setAanmingsoort(?Types\Aanmaningsoort $aanmingsoort): self
+    public function setAanmaningsoort(?Types\Aanmaningsoort $aanmaningsoort): self
     {
-        $this->aanmingsoort = $aanmingsoort;
+        $this->aanmaningsoort = $aanmaningsoort;
 
         return $this;
     }

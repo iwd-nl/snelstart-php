@@ -6,6 +6,8 @@
 
 namespace SnelstartPHP\Mapper\V2;
 
+use Ramsey\Uuid\Uuid;
+use SnelstartPHP\Model\FactuurRelatie;
 use function \array_map;
 use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Mapper\AbstractMapper;
@@ -60,7 +62,7 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if (!empty($data["aanmaningSoort"])) {
-            $relatie->setAanmingsoort(new Type\Aanmaningsoort($data["aanmaningSoort"]));
+            $relatie->setAanmaningsoort(new Type\Aanmaningsoort($data["aanmaningSoort"]));
         }
 
         if ($data["kredietLimiet"] !== null) {
@@ -77,6 +79,14 @@ final class RelatieMapper extends AbstractMapper
 
         if (!empty($data["correspondentieAdres"])) {
             $relatie->setCorrespondentieAdres($adresMapper->mapAdresToSnelstartObject($data["correspondentieAdres"]));
+        }
+
+        if (isset($data["factuurRelatie"]["id"])) {
+            $relatie->setFactuurRelatie(
+                (new FactuurRelatie())
+                    ->setId(Uuid::fromString($data["factuurRelatie"]["id"]))
+                    ->setUri($data["factuurRelatie"]["uri"])
+            );
         }
 
         $relatie->setOfferteEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))

@@ -9,6 +9,7 @@ namespace SnelstartPHP\Model\V2;
 use Money\Money;
 use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\EmailVersturen;
+use SnelstartPHP\Model\FactuurRelatie;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type as Types;
 
@@ -140,7 +141,7 @@ final class Relatie extends SnelstartObject
      * @see Types\Aanmaningsoort
      * @var Types\Aanmaningsoort|null
      */
-    private $aanmingsoort;
+    private $aanmaningsoort;
 
     /**
      * De emailgegevens voor het versturen van offertes.
@@ -201,6 +202,11 @@ final class Relatie extends SnelstartObject
      * @var string|null
      */
     private $verkoopBoekingenUri;
+
+    /**
+     * @var FactuurRelatie|null
+     */
+    private $factuurRelatie;
 
     /**
      * @var string[]
@@ -459,14 +465,14 @@ final class Relatie extends SnelstartObject
         return $this;
     }
 
-    public function getAanmingsoort(): ?Types\Aanmaningsoort
+    public function getAanmaningsoort(): ?Types\Aanmaningsoort
     {
-        return $this->aanmingsoort;
+        return $this->aanmaningsoort;
     }
 
-    public function setAanmingsoort(?Types\Aanmaningsoort $aanmingsoort): self
+    public function setAanmaningsoort(?Types\Aanmaningsoort $aanmaningsoort): self
     {
-        $this->aanmingsoort = $aanmingsoort;
+        $this->aanmaningsoort = $aanmaningsoort;
 
         return $this;
     }
@@ -587,6 +593,18 @@ final class Relatie extends SnelstartObject
     public function setVerkoopBoekingenUri(?string $verkoopBoekingenUri): self
     {
         $this->verkoopBoekingenUri = $verkoopBoekingenUri;
+
+        return $this;
+    }
+
+    public function getFactuurRelatie(): ?FactuurRelatie
+    {
+        return $this->factuurRelatie;
+    }
+
+    public function setFactuurRelatie(?FactuurRelatie $factuurRelatie): self
+    {
+        $this->factuurRelatie = $factuurRelatie;
 
         return $this;
     }

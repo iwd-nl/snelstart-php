@@ -65,7 +65,7 @@ final class RelatieMapper extends AbstractMapper
         }
 
         if (!empty($data["aanmaningSoort"])) {
-            $relatie->setAanmingsoort(new Type\Aanmaningsoort($data["aanmaningSoort"]));
+            $relatie->setAanmaningsoort(new Type\Aanmaningsoort($data["aanmaningSoort"]));
         }
 
         if ($data["kredietLimiet"] !== null) {
