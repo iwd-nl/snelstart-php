@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class EmailVersturen extends BaseObject
+final class EmailVersturen extends BaseObject
 {
     /**
      * Geeft aan (lezen/schrijven) of er email moet worden verstuurd.

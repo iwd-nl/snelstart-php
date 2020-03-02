@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Exception;
 
-class BookingNotInBalanceException extends \RuntimeException
+final class BookingNotInBalanceException extends \RuntimeException
 {
 
 }

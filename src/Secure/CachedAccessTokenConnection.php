@@ -10,7 +10,7 @@ use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
-class CachedAccessTokenConnection
+final class CachedAccessTokenConnection
 {
     /**
      * @var AccessTokenConnection
@@ -23,7 +23,7 @@ class CachedAccessTokenConnection
     private $cacheItemPool;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     private $logger;
 

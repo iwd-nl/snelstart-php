@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Secure\BearerToken;
 
-class ClientKeyBearerToken implements BearerTokenInterface
+final class ClientKeyBearerToken implements BearerTokenInterface
 {
     /**
      * @var string
@@ -16,8 +16,6 @@ class ClientKeyBearerToken implements BearerTokenInterface
     public function __construct(string $clientKey)
     {
         $this->clientKey = $clientKey;
-
-        return $this;
     }
 
     public function getFormParams(): array

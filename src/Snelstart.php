@@ -15,8 +15,14 @@ use Money\Parser\DecimalMoneyParser;
 
 final class Snelstart
 {
+    /**
+     * @var MoneyFormatter|null
+     */
     private static $moneyFormatter;
 
+    /**
+     * @var MoneyParser|null
+     */
     private static $moneyParser;
 
     // Example: 2018-08-07T06:24:48.12
