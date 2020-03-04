@@ -92,6 +92,11 @@ abstract class AbstractMapper
     {
         $this->responseData = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
 
+        // Always make sure that we are dealing with arrays even when the response is empty (201 created for example).
+        if ($this->responseData === null) {
+            $this->responseData = [];
+        }
+
         return $this;
     }
 
