@@ -93,6 +93,8 @@ final class BoekingMapper extends AbstractMapper
 
         if (isset($data["klant"])) {
             $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
+        } else if (isset($data["relatie"])) {
+            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
         }
 
         if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
