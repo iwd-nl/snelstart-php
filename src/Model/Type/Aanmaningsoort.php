@@ -13,7 +13,7 @@ use MyCLabs\Enum\Enum;
  * @method static Aanmaningsoort ONDERNEMING()
  * @method static Aanmaningsoort CONSUMENT()
  */
-class Aanmaningsoort extends Enum
+final class Aanmaningsoort extends Enum
 {
     private const NEE           =   'Nee';
     private const ONDERNEMING   =   'Onderneming';

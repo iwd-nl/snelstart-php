@@ -1,6 +1,6 @@
 <?php
 /**
- * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
+ * @author  OptiWise Technologies B.V. <info@optiwise.nl>
  * @project SnelstartApiPHP
  */
 
@@ -18,14 +18,14 @@ use MyCLabs\Enum\Enum;
  * @method static ProcesStatus CONTANTBON()
  * @method static ProcesStatus FACTUUR()
  */
-class ProcesStatus extends Enum
+final class ProcesStatus extends Enum
 {
-    private const ORDER       = "Order";
-    private const OFFERTE     = "Offerte";
-    private const BEVESTIGING = "Bevestiging";
-    private const WERKBON     = "Werkbon";
-    private const PAKBON      = "Pakbon";
-    private const AFHAALBON   = "Afhaalbon";
-    private const CONTANTBON  = "Contantbon";
-    private const FACTUUR     = "Factuur";
+    private const ORDER = 'Order';
+    private const OFFERTE = 'Offerte';
+    private const BEVESTIGING = 'Bevestiging';
+    private const WERKBON = 'Werkbon';
+    private const PAKBON = 'Pakbon';
+    private const AFHAALBON = 'Afhaalbon';
+    private const CONTANTBON = 'Contantbon';
+    private const FACTUUR = 'Factuur';
 }

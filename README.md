@@ -5,6 +5,9 @@ PHP client library to use the Snelstart B2B API.
 
 __Note that this library is not created, or maintained, by Snelstart.__
 
+# Pre-word
+This release will support both version 1 and version 2. Version 1 is considered deprecated, as Snelstart does not activly promote it anymore. Instructions on how to upgrade will be added when the next release takes place.
+
 # Installation
 Installation is easy as 1, 2, 3 thanks to Composer.
 ```bash
@@ -25,28 +28,25 @@ $bearerToken = new \SnelstartPHP\Secure\BearerToken\ClientKeyBearerToken($client
 $accessTokenConnection = new \SnelstartPHP\Secure\AccessTokenConnection($bearerToken);
 $accessToken = $accessTokenConnection->getToken();
 
-$connection = new \SnelstartPHP\Secure\AuthenticatedConnection(
+$connection = new \SnelstartPHP\Secure\V2Connector(
     new \SnelstartPHP\Secure\ApiSubscriptionKey($primaryKey, $secondaryKey),
     $accessToken
 );
 ```
 
-_Please note that there is also a class named `SnelstartPHP\Secure\CachedAccessTokenConnection` for once you are done with developing. This will automatically take care of renewing expired access tokens. _
+_Please note that there is also a class named `SnelstartPHP\Secure\CachedAccessTokenConnection` for when you are done with developing. This will automatically take care of renewing expired access tokens. _
 
 ### Check if you are really authenticated
 We implemented the `EchoConnector` to test to see if you are authenticated.
 
 ## Fetch data
-For an example see ``var/doc/example/inkoopboeking_find_all.php``
+For an example see ``var/doc/v2/inkoopboeking_find_all.php``
 
 ## Add data
-For an example see ``var/doc/example/inkoopboeking_add.php``
+For an example see ``var/doc/v2/inkoopboeking_add.php``
 
 ## Supported resources
 Not all resources are currently implemented. Feel free to create a pull request.
 
 # Links
 - [https://b2bapi-developer.snelstart.nl/]
-
-# Authors
-- [IntoWebDevelopment](https://intowebdevelopment.nl/]

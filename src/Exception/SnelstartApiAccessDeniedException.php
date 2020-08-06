@@ -8,14 +8,14 @@ namespace SnelstartPHP\Exception;
 
 use GuzzleHttp\Exception\BadResponseException;
 
-class SnelstartApiAccessDeniedException extends BadResponseException
+final class SnelstartApiAccessDeniedException extends BadResponseException
 {
-    static public function createFromParent(BadResponseException $e): self
+    public static function createFromParent(BadResponseException $e): self
     {
         try {
-            throw new self($body["error"] ?? $e->getMessage(), $e->getRequest(), $e->getResponse(), $e, $e->getHandlerContext());
+            return new self($body["error"] ?? $e->getMessage(), $e->getRequest(), $e->getResponse(), $e, $e->getHandlerContext());
         } catch (\InvalidArgumentException $exception) {
-            throw new self($e->getMessage(), $e->getRequest(), $e->getResponse(), $e, $e->getHandlerContext());
+            return new self($e->getMessage(), $e->getRequest(), $e->getResponse(), $e, $e->getHandlerContext());
         }
     }
 }

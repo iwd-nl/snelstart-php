@@ -9,7 +9,7 @@ namespace SnelstartPHP\Request;
 
 use SnelstartPHP\Snelstart;
 
-class ODataRequestData
+final class ODataRequestData implements ODataRequestDataInterface
 {
     /**
      * @var array
@@ -22,14 +22,14 @@ class ODataRequestData
     private $apply = [];
 
     /**
-     * @var int|null
+     * @var int
      */
-    private $top = Snelstart::MAX_RESULTS;
+    private $top;
 
     /**
-     * @var int|null
+     * @var int
      */
-    private $skip = 0;
+    private $skip;
 
     /**
      * @var string
@@ -45,6 +45,12 @@ class ODataRequestData
      * Use 'and' when combining multiple filters.
      */
     public const FILTER_MODE_AND = "and";
+
+    public function __construct()
+    {
+        $this->top = Snelstart::MAX_RESULTS;
+        $this->skip = 0;
+    }
 
     public function getFilter(): array
     {
@@ -76,24 +82,24 @@ class ODataRequestData
         return $this;
     }
 
-    public function getTop(): ?int
+    public function getTop(): int
     {
         return $this->top;
     }
 
-    public function setTop(?int $top): self
+    public function setTop(int $top): ODataRequestDataInterface
     {
         $this->top = $top;
 
         return $this;
     }
 
-    public function getSkip(): ?int
+    public function getSkip(): int
     {
         return $this->skip;
     }
 
-    public function setSkip(?int $skip): self
+    public function setSkip(int $skip): ODataRequestDataInterface
     {
         $this->skip = $skip;
 
@@ -124,6 +130,6 @@ class ODataRequestData
             return "";
         }
 
-        return \http_build_query($collection, null, "&", \PHP_QUERY_RFC3986);
+        return \http_build_query($collection, "", "&", \PHP_QUERY_RFC3986);
     }
 }

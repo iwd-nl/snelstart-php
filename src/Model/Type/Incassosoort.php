@@ -9,11 +9,11 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
- * @method static BtwRegelSoort GEEN()
- * @method static BtwRegelSoort CORE()
- * @method static BtwRegelSoort B2B()
+ * @method static Incassosoort GEEN()
+ * @method static Incassosoort CORE()
+ * @method static Incassosoort B2B()
  */
-class Incassosoort extends Enum
+final class Incassosoort extends Enum
 {
     private const GEEN  = 'Geen';
     private const CORE  = 'Core';

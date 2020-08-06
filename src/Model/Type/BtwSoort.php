@@ -14,7 +14,7 @@ use MyCLabs\Enum\Enum;
  * @method static BtwSoort HOOG()
  * @method static BtwSoort OVERIG()
  */
-class BtwSoort extends Enum
+final class BtwSoort extends Enum
 {
     private const GEEN      = 'Geen';
     private const LAAG      = 'Laag';

@@ -6,7 +6,7 @@
 
 namespace SnelstartPHP\Model;
 
-class Land extends SnelstartObject
+final class Land extends SnelstartObject
 {
     /**
      * De naam van het land.

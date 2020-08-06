@@ -7,7 +7,7 @@
 
 namespace SnelstartPHP\Secure\BearerToken;
 
-class PasswordBearerToken implements BearerTokenInterface
+final class PasswordBearerToken implements BearerTokenInterface
 {
     /**
      * @var string
@@ -32,8 +32,6 @@ class PasswordBearerToken implements BearerTokenInterface
 
         $this->username = $koppelsleutelParts[0];
         $this->password = $koppelsleutelParts[1];
-
-        return $this;
     }
 
     public function getFormParams(): array

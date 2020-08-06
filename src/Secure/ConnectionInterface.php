@@ -13,5 +13,5 @@ interface ConnectionInterface
 {
     public function doRequest(RequestInterface $request): ResponseInterface;
 
-    public function getEndpoint();
+    public static function getEndpoint(): string;
 }

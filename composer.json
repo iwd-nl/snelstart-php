@@ -14,8 +14,9 @@
         }
     ],
     "require": {
-        "php": ">=7.1",
+        "php": ">=7.2",
         "ext-json": "*",
+        "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^6.3",
         "moneyphp/money": "^3.0",
         "myclabs/php-enum": "^1.6",
@@ -25,16 +26,19 @@
         "ramsey/uuid": "^3.8"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.10.2",
-        "phpunit/phpunit": "^7.3"
+        "dg/bypass-finals": "^1.1",
+        "phpstan/phpstan": "^0.11.19",
+        "phpunit/phpunit": "^8.4",
+        "vimeo/psalm": "^3.6"
     },
     "suggest": {
-        "symfony/cache": "Caching made a little easier. Comes in handy for access tokens."
+        "psr/cache": "Caching made a little easier. Useful for access tokens."
     },
     "config": {
         "sort-packages": true
     },
     "autoload": {
+        "files": [ "src/deprecated.php" ],
         "psr-4": {
             "SnelstartPHP\\": "src/"
         }
@@ -42,6 +46,9 @@
     "autoload-dev": {
         "classmap": [
             "tests/"
-        ]
+        ],
+        "psr-4": {
+            "SnelstartPHP\\Tests\\": "tests/"
+        }
     }
 }

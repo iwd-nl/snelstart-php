@@ -1,14 +1,19 @@
 <?xml version="1.0"?>
 <phpunit
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.3/phpunit.xsd"
+        xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
         backupGlobals="false"
         beStrictAboutOutputDuringTests="true"
         colors="true"
+        bootstrap="./vendor/autoload.php"
         convertErrorsToExceptions="true"
         convertNoticesToExceptions="true"
         convertWarningsToExceptions="true"
 >
+    <extensions>
+        <extension class="BypassFinalHook"/>
+    </extensions>
+
     <testsuites>
         <testsuite name="Snelstart">
             <directory suffix=".php">./tests/</directory>

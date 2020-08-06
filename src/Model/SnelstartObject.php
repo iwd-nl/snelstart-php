@@ -58,6 +58,33 @@ abstract class SnelstartObject extends BaseObject
     }
 
     /**
+     * Check if one or more of the editable properties are not null. It is usually a good indicator if an entity
+     * has been properly hydrated.
+     */
+    public function isHydrated(): bool
+    {
+        $hydrated = false;
+
+        foreach (static::getEditableAttributes() as $editableAttribute) {
+            try {
+                /** @psalm-suppress RedundantCondition */
+                if ($editableAttribute !== "id" && $editableAttribute !== "url" && !$hydrated) {
+                    $possibleMethodNames = [ "get{$editableAttribute}", $editableAttribute ];
+
+                    foreach ($possibleMethodNames as $possibleMethodName) {
+                        if (method_exists($this, $possibleMethodName) && ($hydrated = $this->{$possibleMethodName}() !== null)) {
+                            return true;
+                        }
+                    }
+                }
+            } catch (\TypeError $e) {
+            }
+        }
+
+        return $hydrated;
+    }
+
+    /**
      * Create an object with the given UUID (handy if you already stored the UUID somewhere).
      *
      * @return static

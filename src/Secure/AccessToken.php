@@ -8,7 +8,7 @@ namespace SnelstartPHP\Secure;
 
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
-class AccessToken implements \JsonSerializable
+final class AccessToken implements \JsonSerializable
 {
     /**
      * @var string
@@ -43,7 +43,7 @@ class AccessToken implements \JsonSerializable
         $this->bearerToken = $bearerToken;
         $this->accessToken = $options['access_token'];
         $this->tokenType = $options['token_type'] ?? 'bearer';
-        $this->expires = $options['expires_in'] !== 0 ? time() + $options['expires_in'] : 0;
+        $this->expires = $options['expires_in'] !== 0 ? time() + intval($options['expires_in']) : 0;
     }
 
     public function getExpiresIn(): int
@@ -54,6 +54,11 @@ class AccessToken implements \JsonSerializable
     public function isExpired(): bool
     {
         return $this->getExpiresIn() < 1;
+    }
+
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
     }
 
     public function getBearerToken(): BearerTokenInterface
@@ -78,6 +83,6 @@ class AccessToken implements \JsonSerializable
 
     public function __toString(): string
     {
-        return $this->accessToken;
+        return $this->getAccessToken();
     }
 }
