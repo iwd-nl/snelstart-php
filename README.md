@@ -11,7 +11,7 @@ This release will support both version 1 and version 2. Version 1 is considered 
 # Installation
 Installation is easy as 1, 2, 3 thanks to Composer.
 ```bash
-composer require iwd-nl/snelstart-php
+composer require doitonlinemedia/snelstart-php
 ```
 
 # Usage
