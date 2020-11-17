@@ -13,7 +13,7 @@ use SnelstartPHP\Model\SnelstartObject;
 final class Artikel extends SnelstartObject
 {
     /**
-     * @var bool
+     * @var bool|null
      */
     private $isHoofdartikel;
 
@@ -105,7 +105,7 @@ final class Artikel extends SnelstartObject
         "vrijeVoorraad",
     ];
 
-    public function isHoofdartikel(): bool
+    public function isHoofdartikel(): ?bool
     {
         return $this->isHoofdartikel;
     }
