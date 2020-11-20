@@ -9,6 +9,8 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
+ * @psalm-immutable
+ *
  * @method static Aanmaningsoort NEE()
  * @method static Aanmaningsoort ONDERNEMING()
  * @method static Aanmaningsoort CONSUMENT()

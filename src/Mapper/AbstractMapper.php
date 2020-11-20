@@ -22,7 +22,7 @@ abstract class AbstractMapper
     /**
      * @deprecated This will be deprecated starting from April 1st 2020
      */
-    public function __construct(?ResponseInterface $response = null)
+    final public function __construct(?ResponseInterface $response = null)
     {
         if ($response !== null) {
             @trigger_error("This will be deprecated starting from April 1st 2020", \E_USER_DEPRECATED);

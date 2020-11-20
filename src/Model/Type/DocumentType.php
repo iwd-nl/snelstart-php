@@ -9,6 +9,8 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
+ * @psalm-immutable
+ *
  * @method static DocumentType INKOOPBOEKINGEN()
  * @method static DocumentType VERKOOPBOEKINGEN()
  * @method static DocumentType RELATIES()

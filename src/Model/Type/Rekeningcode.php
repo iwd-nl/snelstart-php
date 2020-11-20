@@ -9,6 +9,8 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
+ * @psalm-immutable
+ *
  * @method static Rekeningcode BALANS()
  * @method static Rekeningcode WINSTENVERLIES()
  */

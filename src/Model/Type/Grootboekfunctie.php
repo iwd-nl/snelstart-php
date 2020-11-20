@@ -8,6 +8,8 @@ namespace SnelstartPHP\Model\Type;
 use MyCLabs\Enum\Enum;
 
 /**
+ * @psalm-immutable
+ *
  * @method static Grootboekfunctie DIVERSEN()
  * @method static Grootboekfunctie DAGBOEKKAS()
  * @method static Grootboekfunctie DAGBOEKBANK()
