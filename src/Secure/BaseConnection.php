@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
+use SnelstartPHP\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -114,7 +115,7 @@ abstract class BaseConnection implements ConnectionInterface
 
             if ($response->getStatusCode() === 400) {
                 $jsonBody = (string) $response->getBody();
-                $body = \GuzzleHttp\json_decode($jsonBody, true);
+                $body = Utils::jsonDecode($jsonBody, true);
 
                 if ($this->logger !== null) {
                     $this->logger->error("[Connection] " . $jsonBody, [

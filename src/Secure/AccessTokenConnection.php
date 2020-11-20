@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Psr7\Request;
+use SnelstartPHP\Utils;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
@@ -76,7 +77,7 @@ final class AccessTokenConnection implements ConnectionInterface
         $response = $this->doRequest($request);
 
         return new AccessToken(
-            \GuzzleHttp\json_decode($response->getBody()->getContents(), true),
+            Utils::jsonDecode($response->getBody()->getContents(), true),
             $this->bearerToken
         );
     }

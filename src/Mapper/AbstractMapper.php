@@ -11,6 +11,7 @@ use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Snelstart;
+use SnelstartPHP\Utils;
 
 abstract class AbstractMapper
 {
@@ -90,7 +91,7 @@ abstract class AbstractMapper
 
     protected function setResponseData(ResponseInterface $response): self
     {
-        $this->responseData = \GuzzleHttp\json_decode($response->getBody()->getContents(), true);
+        $this->responseData = Utils::jsonDecode($response->getBody()->getContents(), true);
 
         // Always make sure that we are dealing with arrays even when the response is empty (201 created for example).
         if ($this->responseData === null) {
