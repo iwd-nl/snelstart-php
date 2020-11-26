@@ -8,8 +8,7 @@ php:
 - nightly
 
 env:
-    - GUZZLE_VERSION=^6.3
-    - UUID_VERSION=^3.8
+    - GUZZLE_VERSION=^6.3 UUID_VERSION=^3.8
 
 matrix:
     fast_finish: true
