@@ -17,21 +17,15 @@ matrix:
     - php: nightly
     include:
         - php: 7.2
-          env:
-              - GUZZLE_VERSION=^7.0
-              - UUID_VERSION=^4.0
+          env: GUZZLE_VERSION=^7.0 UUID_VERSION=^4.0
+        - php: 7.2
+          env: GUZZLE_VERSION=^7.0 UUID_VERSION=^4.0
         - php: 7.3
-          env:
-              - GUZZLE_VERSION=^7.0
-              - UUID_VERSION=^4.0
+          env: GUZZLE_VERSION=^7.0 UUID_VERSION=^4.0
         - php: 7.4
-          env:
-              - GUZZLE_VERSION=^7.0
-              - UUID_VERSION=^4.0
+          env: GUZZLE_VERSION=^7.0 UUID_VERSION=^4.0
         - php: nightly
-          env:
-              - GUZZLE_VERSION=^7.0
-              - UUID_VERSION=^4.0
+          env: GUZZLE_VERSION=^7.0 UUID_VERSION=^4.0
 
 sudo: false
 
