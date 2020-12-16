@@ -8,6 +8,7 @@ namespace SnelstartPHP\Mapper\V2;
 
 use Ramsey\Uuid\Uuid;
 use SnelstartPHP\Model\FactuurRelatie;
+use SnelstartPHP\Model\NaamWaarde;
 use function \array_map;
 use Psr\Http\Message\ResponseInterface;
 use SnelstartPHP\Mapper\AbstractMapper;
@@ -87,6 +88,17 @@ final class RelatieMapper extends AbstractMapper
                     ->setId(Uuid::fromString($data["factuurRelatie"]["id"]))
                     ->setUri($data["factuurRelatie"]["uri"])
             );
+        }
+
+        if (isset($data["extraVeldenKlant"])) {
+            $extraVeldenKlant = array_map(static function(array $extraVeldKlant): NaamWaarde {
+                return (new NaamWaarde())
+                    ->setNaam($extraVeldKlant["naam"])
+                    ->setWaarde($extraVeldKlant["waarde"])
+                ;
+            }, $data["extraVeldenKlant"]);
+
+            $relatie->setExtraVeldenKlant(... $extraVeldenKlant);
         }
 
         $relatie->setOfferteEmailVersturen($this->mapEmailVersturenField($data["offerteEmailVersturen"]))

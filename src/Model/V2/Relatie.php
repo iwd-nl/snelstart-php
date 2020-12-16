@@ -10,6 +10,7 @@ use Money\Money;
 use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\EmailVersturen;
 use SnelstartPHP\Model\FactuurRelatie;
+use SnelstartPHP\Model\NaamWaarde;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type as Types;
 
@@ -209,6 +210,11 @@ final class Relatie extends SnelstartObject
     private $factuurRelatie;
 
     /**
+     * @var NaamWaarde[]
+     */
+    private $extraVeldenKlant;
+
+    /**
      * @var string[]
      */
     public static $editableAttributes = [
@@ -241,6 +247,7 @@ final class Relatie extends SnelstartObject
         "bic",
         "incassoSoort",
         "factuurRelatie",
+        "extraVeldenKlant",
     ];
 
     public function getModifiedOn(): ?\DateTimeInterface
@@ -605,6 +612,18 @@ final class Relatie extends SnelstartObject
     public function setFactuurRelatie(?FactuurRelatie $factuurRelatie): self
     {
         $this->factuurRelatie = $factuurRelatie;
+
+        return $this;
+    }
+
+    public function getExtraVeldenKlant(): array
+    {
+        return $this->extraVeldenKlant ?? [];
+    }
+
+    public function setExtraVeldenKlant(NaamWaarde ... $extraVeldenKlant): self
+    {
+        $this->extraVeldenKlant = $extraVeldenKlant;
 
         return $this;
     }
