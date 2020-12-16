@@ -1,3 +1,6 @@
+# 2.0.4
+- Added support for NaamWaarde fields (please see Model\Relatie) for more information.
+
 # 2.0
 - Renamed AuthenticatedConnection to V1Connector.
 - Added the V2Connector.
