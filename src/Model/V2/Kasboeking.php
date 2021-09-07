@@ -3,6 +3,7 @@
 namespace SnelstartPHP\Model\V2;
 
 use Money\Money;
+use SnelstartPHP\Exception\BookingNotInBalanceException;
 
 class Kasboeking extends Boeking
 {
@@ -16,21 +17,21 @@ class Kasboeking extends Boeking
      * @var KasBoekingsregel[]
      * @see KasBoekingsregel
      */
-    protected $grootboekBoekingsRegels;
+    protected $grootboekBoekingsRegels = [];
     /**
-     * Container met gegevens voor een boekingsreegel met een inkoopboeking
+     * Container met gegevens voor een boekingsregel met een inkoopboeking
      * @var KasBoekingsregel[]
      * @see KasBoekingsregel
      */
-    protected $inkoopboekingBoekingsRegels;
+    protected $inkoopboekingBoekingsRegels = [];
     /**
-     * Container met gegevens voor een boekingsreegel met een inkoopboeking
+     * Container met gegevens voor een boekingsregel met een inkoopboeking
      * @var KasBoekingsregel[]
      * @see KasBoekingsregel
      */
-    protected $verkoopboekingBoekingsRegels;
+    protected $verkoopboekingBoekingsRegels = [];
     /**
-     * Container met gegevens voor een boekingsreegel met een inkoopboeking
+     * Container met gegevens voor een boekingsregel met een inkoopboeking
      * @var BtwBoekingsregel[]
      * @see BtwBoekingsregel
      */
@@ -84,7 +85,7 @@ class Kasboeking extends Boeking
     /**
      * @return KasBoekingsregel[]
      */
-    public function getGrootboekBoekingsRegels(): ?array
+    public function getGrootboekBoekingsRegels(): array
     {
         return $this->grootboekBoekingsRegels;
     }
@@ -102,7 +103,7 @@ class Kasboeking extends Boeking
     /**
      * @return KasBoekingsregel[]
      */
-    public function getInkoopboekingBoekingsRegels():  ?array
+    public function getInkoopboekingBoekingsRegels():  array
     {
         return $this->inkoopboekingBoekingsRegels;
     }
@@ -120,7 +121,7 @@ class Kasboeking extends Boeking
     /**
      * @return KasBoekingsregel[]
      */
-    public function getVerkoopboekingBoekingsRegels():  ?array
+    public function getVerkoopboekingBoekingsRegels():  array
     {
         return $this->verkoopboekingBoekingsRegels;
     }
@@ -207,4 +208,26 @@ class Kasboeking extends Boeking
         return $this;
     }
 
+    public function assertInBalance(): void
+    {
+        $bedragOntvangen = $this->getBedragOntvangen();
+        $bedragUitgegeven = $this->getBedragUitgegeven();
+
+        foreach ($this->getGrootboekBoekingsRegels() as $boekingsregel) {
+            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
+            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+        }
+        foreach ($this->getInkoopboekingBoekingsRegels() as $boekingsregel) {
+            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
+            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+        }
+        foreach ($this->getVerkoopboekingBoekingsRegels() as $boekingsregel) {
+            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
+            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+        }
+
+        if (!$bedragOntvangen->isZero() || !$bedragUitgegeven->isZero()) {
+            throw new BookingNotInBalanceException();
+        }
+    }
 }

@@ -167,7 +167,7 @@ final class BoekingConnector extends BaseConnector
             throw PreValidationException::unexpectedIdException();
         }
 
-        // $kasboeking->assertInBalance(); // todo
+        $kasboeking->assertInBalance();
 
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
