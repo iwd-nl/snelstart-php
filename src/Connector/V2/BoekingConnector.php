@@ -160,4 +160,18 @@ final class BoekingConnector extends BaseConnector
 
         return $documentMapper->add($this->connection->doRequest($documentRequest->addVerkoopBoekingDocument($document, $verkoopboeking)));
     }
+
+    public function addKaskoopboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    {
+        if ($kasboeking->getId() !== null) {
+            throw PreValidationException::unexpectedIdException();
+        }
+
+        // $kasboeking->assertInBalance(); // todo
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->addKasboeking($this->connection->doRequest($boekingRequest->addKasboeking($kasboeking)));
+    }
 }

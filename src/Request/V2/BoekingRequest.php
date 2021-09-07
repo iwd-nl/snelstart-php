@@ -21,6 +21,11 @@ final class BoekingRequest extends BaseRequest
         return new Request("GET", "verkoopboekingen/" . $uuid->toString());
     }
 
+    public function findKaskoopboeking(UuidInterface $uuid): RequestInterface
+    {
+        return new Request("GET", "kasboekingen/" . $uuid->toString());
+    }
+
     public function addInkoopboeking(Model\Inkoopboeking $inkoopboeking): RequestInterface
     {
         return new Request("POST", "inkoopboekingen", [
@@ -57,6 +62,24 @@ final class BoekingRequest extends BaseRequest
         ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
+    public function addKasboeking(Model\Kasboeking $kasboeking): RequestInterface
+    {
+        $normalized = $this->prepareAddOrEditRequestForSerialization($kasboeking);
+        return new Request("POST", "kasboekingen", [
+            "Content-Type"  =>  "application/json"
+        ],                 \GuzzleHttp\json_encode($normalized));
+    }
+
+    public function updateKaskoopboeking(Model\Kasboeking $kasboeking): RequestInterface
+    {
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        return new Request("PUT", "kasboekingen/" . $kasboeking->getId()->toString(), [
+            "Content-Type"  =>  "application/json"
+        ],                 \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($kasboeking)));
+    }
     /**
      * @deprecated Please see DocumentRequest
      */

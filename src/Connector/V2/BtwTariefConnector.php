@@ -12,9 +12,9 @@ use SnelstartPHP\Request\V2\BtwTariefRequest;
 final class BtwTariefConnector extends BaseConnector
 {
     /**
-     * @return BtwTarief[]
+     * @return \Generator
      */
-    public function findAll(): iterable
+    public function findAll(): \Generator
     {
         $btwTariefRequest = new BtwTariefRequest();
         $btwTariefMapper = new BtwTariefMapper();
