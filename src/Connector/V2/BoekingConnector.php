@@ -83,6 +83,18 @@ final class BoekingConnector extends BaseConnector
         return $documentMapper->add($this->connection->doRequest($documentRequest->addInkoopBoekingDocument($document, $inkoopboeking)));
     }
 
+    public function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): Model\Inkoopboeking
+    {
+        if ($inkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateInkoopboeking($this->connection->doRequest($boekingRequest->updateInkoopboeking($inkoopboeking)));
+    }
+
     public function findVerkoopboeking(UuidInterface $uuid): ?Model\Verkoopboeking
     {
         $boekingRequest = new Request\BoekingRequest();
