@@ -47,7 +47,7 @@ final class KostenplaatsConnector extends BaseConnector
 
     public function update(Kostenplaats $kostenplaats): Kostenplaats
     {
-        if ($kostenplaats->getId() !== null) {
+        if ($kostenplaats->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
         }
 
