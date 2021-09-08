@@ -6,6 +6,8 @@
 
 namespace SnelstartPHP\Secure;
 
+use DateTime;
+use DateTimeZone;
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
 final class AccessToken implements \JsonSerializable
@@ -43,17 +45,25 @@ final class AccessToken implements \JsonSerializable
         $this->bearerToken = $bearerToken;
         $this->accessToken = $options['access_token'];
         $this->tokenType = $options['token_type'] ?? 'bearer';
-        $this->expires = $options['expires_in'] !== 0 ? time() + intval($options['expires_in']) : 0;
+        $this->expires = $options['expires_in'] !== 0
+            ? $this->getCurrentUtcTimestamp() + (int) $options['expires_in']
+            : 0;
+    }
+
+    private function getCurrentUtcTimestamp(): int
+    {
+        return (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
     }
 
     public function getExpiresIn(): int
     {
-        return $this->expires - time();
+        return $this->expires - $this->getCurrentUtcTimestamp();
     }
 
     public function isExpired(): bool
     {
-        return $this->getExpiresIn() < 1;
+        // Add a margin of 20 seconds to account for server timing differences.
+        return $this->getExpiresIn() < 20;
     }
 
     public function getAccessToken(): string
