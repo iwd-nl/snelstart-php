@@ -80,7 +80,7 @@ abstract class Boeking extends SnelstartObject
      * @see Boekingsregel
      * @var Boekingsregel[]
      */
-    protected $boekingsregels;
+    protected $boekingsregels = [];
 
     /**
      * De af te dragen btw van de boeking per btw-tarief
