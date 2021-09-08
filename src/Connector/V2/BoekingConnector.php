@@ -63,8 +63,6 @@ final class BoekingConnector extends BaseConnector
             throw PreValidationException::unexpectedIdException();
         }
 
-        $inkoopboeking->assertInBalance();
-
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
 
@@ -138,8 +136,6 @@ final class BoekingConnector extends BaseConnector
         if ($verkoopboeking->getId() !== null) {
             throw PreValidationException::unexpectedIdException();
         }
-
-        $verkoopboeking->assertInBalance();
 
         if ($verkoopboeking->getVervaldatum() !== null && $verkoopboeking->getBetalingstermijn() === null) {
             $verkoopboeking->setBetalingstermijn((int) (new \DateTime())->diff($verkoopboeking->getVervaldatum())->format("%a"));
