@@ -268,7 +268,7 @@ abstract class Boeking extends SnelstartObject
             $targetAmount->subtract($boekingsregel->getBedrag());
         }
 
-        if ($targetAmount->isZero()) {
+        if (!$targetAmount->isZero()) {
             throw new BookingNotInBalanceException();
         }
     }
