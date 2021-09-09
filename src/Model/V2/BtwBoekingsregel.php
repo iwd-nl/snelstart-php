@@ -31,6 +31,12 @@ class BtwBoekingsregel extends BaseObject
      */
     private $credit;
 
+    public static $editableAttributes = [
+        'debet',
+        'credit',
+        'type',
+        'tarief'
+    ];
     /**
      * @return BtwSoort
      */
