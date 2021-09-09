@@ -58,7 +58,7 @@ class BtwBoekingsregel extends BaseObject
     /**
      * @return BtwBoekingsregelType
      */
-    public function getType(): BtwBoekingsregelType
+    public function getType(): ?BtwBoekingsregelType
     {
         return $this->type;
     }
