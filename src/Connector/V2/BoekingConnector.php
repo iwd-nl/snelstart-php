@@ -93,6 +93,18 @@ final class BoekingConnector extends BaseConnector
         return $boekingMapper->updateInkoopboeking($this->connection->doRequest($boekingRequest->updateInkoopboeking($inkoopboeking)));
     }
 
+    public function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): Model\Verkoopboeking
+    {
+        if ($verkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateVerkoopboeking($this->connection->doRequest($boekingRequest->updateVerkoopboeking($verkoopboeking)));
+    }
+
     public function findVerkoopboeking(UuidInterface $uuid): ?Model\Verkoopboeking
     {
         $boekingRequest = new Request\BoekingRequest();
@@ -115,7 +127,7 @@ final class BoekingConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $hasItems = false;
 
-        foreach ($boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
+        foreach ($boekingMapper->findAllVerkoopfacturen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
             $hasItems = true;
             yield $verkoopboeking;
         }
