@@ -210,23 +210,28 @@ class Kasboeking extends Boeking
 
     public function assertInBalance(): void
     {
-        $bedragOntvangen = $this->getBedragOntvangen();
-        $bedragUitgegeven = $this->getBedragUitgegeven();
+        $totalCredit = $this->getBedragOntvangen();
+        $totalDebet = $this->getBedragUitgegeven();
 
         foreach ($this->getGrootboekBoekingsRegels() as $boekingsregel) {
-            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
-            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+            $totalCredit = $totalCredit->subtract($boekingsregel->getCredit());
+            $totalDebet = $totalDebet->subtract($boekingsregel->getDebet());
         }
         foreach ($this->getInkoopboekingBoekingsRegels() as $boekingsregel) {
-            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
-            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+            $totalCredit = $totalCredit->subtract($boekingsregel->getCredit());
+            $totalDebet = $totalDebet->subtract($boekingsregel->getDebet());
         }
         foreach ($this->getVerkoopboekingBoekingsRegels() as $boekingsregel) {
-            $bedragOntvangen = $bedragOntvangen->subtract($boekingsregel->getCredit());
-            $bedragUitgegeven = $bedragUitgegeven->subtract($boekingsregel->getDebet());
+            $totalCredit = $totalCredit->subtract($boekingsregel->getCredit());
+            $totalDebet = $totalDebet->subtract($boekingsregel->getDebet());
+        }
+        foreach ($this->getBtwBoekingsregels() as $boekingsregel) {
+            $totalCredit = $totalCredit->subtract($boekingsregel->getCredit());
+            $totalDebet = $totalDebet->subtract($boekingsregel->getDebet());
         }
 
-        if (!$bedragOntvangen->isZero() || !$bedragUitgegeven->isZero()) {
+        $diff = $totalDebet->subtract($totalCredit);
+        if (!$diff->isZero()) {
             throw new BookingNotInBalanceException();
         }
     }
