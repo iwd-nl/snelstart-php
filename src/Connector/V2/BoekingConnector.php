@@ -177,8 +177,8 @@ final class BoekingConnector extends BaseConnector
 
     public function updateKaskoopboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
     {
-        if ($kasboeking->getId() !== null) {
-            throw PreValidationException::unexpectedIdException();
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
         }
 
         $kasboeking->assertInBalance();
@@ -191,8 +191,8 @@ final class BoekingConnector extends BaseConnector
 
     public function deleteKaskoopboeking(Model\Kasboeking $kasboeking): void
     {
-        if ($kasboeking->getId() !== null) {
-            throw PreValidationException::unexpectedIdException();
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
         }
 
         $boekingRequest = new Request\BoekingRequest();
