@@ -67,7 +67,7 @@ class Kasboeking extends Boeking
     /**
      * @return \DateTimeInterface|null
      */
-    public function getDatum(): ?\DateTimeInterface
+    public function getDatum(): \DateTimeInterface
     {
         return $this->datum;
     }
@@ -76,7 +76,7 @@ class Kasboeking extends Boeking
      * @param \DateTimeInterface|null $datum
      * @return Kasboeking
      */
-    public function setDatum(?\DateTimeInterface $datum)
+    public function setDatum(\DateTimeInterface $datum)
     {
         $this->datum = $datum;
         return $this;
@@ -157,7 +157,7 @@ class Kasboeking extends Boeking
     /**
      * @return Money
      */
-    public function getBedragUitgegeven(): ?Money
+    public function getBedragUitgegeven(): Money
     {
         return $this->bedragUitgegeven;
     }
@@ -175,7 +175,7 @@ class Kasboeking extends Boeking
     /**
      * @return Money
      */
-    public function getBedragOntvangen(): ?Money
+    public function getBedragOntvangen(): Money
     {
         return $this->bedragOntvangen;
     }
@@ -193,7 +193,7 @@ class Kasboeking extends Boeking
     /**
      * @return Dagboek
      */
-    public function getDagboek(): ?Dagboek
+    public function getDagboek(): Dagboek
     {
         return $this->dagboek;
     }
