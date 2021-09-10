@@ -172,6 +172,31 @@ final class BoekingConnector extends BaseConnector
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
 
-        return $boekingMapper->addKasboeking($this->connection->doRequest($boekingRequest->addKasboeking($kasboeking)));
+        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->addKasboeking($kasboeking)));
+    }
+
+    public function updateKaskoopboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    {
+        if ($kasboeking->getId() !== null) {
+            throw PreValidationException::unexpectedIdException();
+        }
+
+        $kasboeking->assertInBalance();
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->updateKaskoopboeking($kasboeking)));
+    }
+
+    public function deleteKaskoopboeking(Model\Kasboeking $kasboeking): void
+    {
+        if ($kasboeking->getId() !== null) {
+            throw PreValidationException::unexpectedIdException();
+        }
+
+        $boekingRequest = new Request\BoekingRequest();
+
+        $this->connection->doRequest($boekingRequest->deleteKaskoopboeking($kasboeking));
     }
 }

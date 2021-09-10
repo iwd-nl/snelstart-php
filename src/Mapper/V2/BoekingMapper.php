@@ -54,7 +54,7 @@ final class BoekingMapper extends AbstractMapper
         return $this->mapVerkoopboekingResult(new Model\Verkoopboeking());
     }
 
-    public function addKasboeking(ResponseInterface $response): Model\Kasboeking
+    public function mapKasboeking(ResponseInterface $response): Model\Kasboeking
     {
         $this->setResponseData($response);
         return $this->mapKasboekingResult(new Model\Kasboeking());

@@ -80,6 +80,16 @@ final class BoekingRequest extends BaseRequest
             "Content-Type"  =>  "application/json"
         ],                 \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($kasboeking)));
     }
+    public function deleteKaskoopboeking(Model\Kasboeking $kasboeking): RequestInterface
+    {
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        return new Request("DELETE", "kasboekingen/" . $kasboeking->getId()->toString(), [
+            "Content-Type"  =>  "application/json",'{}'
+        ]);
+    }
     /**
      * @deprecated Please see DocumentRequest
      */
