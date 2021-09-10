@@ -143,7 +143,7 @@ final class KasBoekingsregel extends BaseObject
     /**
      * @return Money
      */
-    public function getDebet(): ?Money
+    public function getDebet(): Money
     {
         return $this->debet;
     }
@@ -161,7 +161,7 @@ final class KasBoekingsregel extends BaseObject
     /**
      * @return Money
      */
-    public function getCredit(): ?Money
+    public function getCredit(): Money
     {
         return $this->credit;
     }
