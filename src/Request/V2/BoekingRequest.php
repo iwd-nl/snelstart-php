@@ -86,9 +86,7 @@ final class BoekingRequest extends BaseRequest
             throw PreValidationException::shouldHaveAnIdException();
         }
 
-        return new Request("DELETE", "kasboekingen/" . $kasboeking->getId()->toString(), [
-            "Content-Type"  =>  "application/json",'{}'
-        ]);
+        return new Request("DELETE", "kasboekingen/" . $kasboeking->getId()->toString());
     }
     /**
      * @deprecated Please see DocumentRequest
