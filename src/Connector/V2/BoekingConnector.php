@@ -161,7 +161,18 @@ final class BoekingConnector extends BaseConnector
         return $documentMapper->add($this->connection->doRequest($documentRequest->addVerkoopBoekingDocument($document, $verkoopboeking)));
     }
 
-    public function addKaskoopboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    public function findKasboeking(UuidInterface $uuid): ?Model\Kasboeking
+    {
+        $boekingRequest = new Request\BoekingRequest();
+        $boekingMapper = new Mapper\BoekingMapper();
+
+        try {
+            return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->findKasboeking($uuid)));
+        } catch (SnelstartResourceNotFoundException $e) {
+            return null;
+        }
+    }
+    public function addKasboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
     {
         if ($kasboeking->getId() !== null) {
             throw PreValidationException::unexpectedIdException();
@@ -175,7 +186,7 @@ final class BoekingConnector extends BaseConnector
         return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->addKasboeking($kasboeking)));
     }
 
-    public function updateKaskoopboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    public function updateKasboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
     {
         if ($kasboeking->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -186,10 +197,10 @@ final class BoekingConnector extends BaseConnector
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
 
-        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->updateKaskoopboeking($kasboeking)));
+        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->updateKasboeking($kasboeking)));
     }
 
-    public function deleteKaskoopboeking(Model\Kasboeking $kasboeking): void
+    public function deleteKasboeking(Model\Kasboeking $kasboeking): void
     {
         if ($kasboeking->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
@@ -197,6 +208,6 @@ final class BoekingConnector extends BaseConnector
 
         $boekingRequest = new Request\BoekingRequest();
 
-        $this->connection->doRequest($boekingRequest->deleteKaskoopboeking($kasboeking));
+        $this->connection->doRequest($boekingRequest->deleteKasboeking($kasboeking));
     }
 }
