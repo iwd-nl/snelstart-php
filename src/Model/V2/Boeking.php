@@ -6,8 +6,6 @@
 
 namespace SnelstartPHP\Model\V2;
 
-use Money\Money;
-use SnelstartPHP\Exception\BookingNotInBalanceException;
 use SnelstartPHP\Model\SnelstartObject;
 
 abstract class Boeking extends SnelstartObject

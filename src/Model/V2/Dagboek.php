@@ -3,7 +3,6 @@
 namespace SnelstartPHP\Model\V2;
 
 use Ramsey\Uuid\UuidInterface;
-use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type\DagboekSoort;
 
