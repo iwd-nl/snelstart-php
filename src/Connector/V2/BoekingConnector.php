@@ -41,7 +41,7 @@ final class BoekingConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $hasItems = false;
 
-        foreach ($boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
+        foreach ($boekingMapper->findAllInkoopfacturen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
             $hasItems = true;
             yield $inkoopboeking;
         }

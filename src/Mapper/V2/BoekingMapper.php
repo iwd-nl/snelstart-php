@@ -37,6 +37,12 @@ final class BoekingMapper extends AbstractMapper
         yield from $this->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
     }
 
+    public function findAllInkoopfacturen(ResponseInterface $response): \Generator
+    {
+        $this->setResponseData($response);
+        return $this->mapManyResultsToSubMappers(Model\Inkoopfactuur::class);
+    }
+
     public function findAllVerkoopboekingen(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
@@ -164,6 +170,36 @@ final class BoekingMapper extends AbstractMapper
         return $verkoopfactuur;
     }
 
+    protected function mapInkoopfactuurResult(Model\Inkoopfactuur $inkoopfactuur, array $data = []): Model\Inkoopfactuur
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        // This maps "id", "uri", "modifiedOn" and "factuurnummer".
+        $inkoopfactuur = $this->mapArrayDataToModel($inkoopfactuur, $data);
+
+        if (isset($data['relatie'])) {
+            $inkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
+        }
+        if (isset($data['inkoopBoeking'])) {
+            $inkoopfactuur->setInkoopboeking(Model\Inkoopboeking::createFromUUID(Uuid::fromString($data['inkoopBoeking']['id'])));
+        }
+
+        if (isset($data['factuurDatum'])) {
+            $inkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
+        }
+        if (isset($data['factuurBedrag'])) {
+            $inkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
+        }
+        if (isset($data['openstaandSaldo'])) {
+            $inkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
+        }
+        if (isset($data['vervalDatum'])) {
+            $inkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+        }
+
+        return $inkoopfactuur;
+    }
+
     protected function mapBoekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
     {
         $data = empty($data) ? $this->responseData : $data;
@@ -242,6 +278,8 @@ final class BoekingMapper extends AbstractMapper
                 yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Verkoopfactuur::class) {
                 yield $this->mapVerkoopfactuurResult(new $className, $boekingData);
+            } else if ($className === Model\Inkoopfactuur::class) {
+                yield $this->mapInkoopfactuurResult(new $className, $boekingData);
             }
         }
     }
