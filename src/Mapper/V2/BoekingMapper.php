@@ -42,6 +42,12 @@ final class BoekingMapper extends AbstractMapper
         return $this->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
     }
 
+    public function findAllVerkoopfacturen(ResponseInterface $response): \Generator
+    {
+        $this->setResponseData($response);
+        return $this->mapManyResultsToSubMappers(Model\Verkoopfactuur::class);
+    }
+
     public function addInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
     {
         $this->setResponseData($response);
@@ -280,7 +286,7 @@ final class BoekingMapper extends AbstractMapper
             if ($className === Model\Inkoopboeking::class) {
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Verkoopfactuur::class) {
-				yield $this->mapVerkoopFactuurResult(new $className, $boekingData);
+				yield $this->mapVerkoopfactuurResult(new $className, $boekingData);
 			} else if ($className === Model\Verkoopboeking::class) {
                 yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Kasboeking::class) {
