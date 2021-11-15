@@ -101,17 +101,20 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Verkoopboeking
+     * @template T as Model\Verkoopfactuur
      * @psalm-return \Iterator<T>
      * @return Model\Verkoopboeking[]|iterable
      */
-    public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
-    {
+    public function findVerkoopfacturen(
+        ?ODataRequestDataInterface $ODataRequestData = null,
+        bool $fetchAll = false,
+        ?\Iterator $previousResults = null
+    ): iterable {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
 
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $verkoopfacturen = $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
+        $verkoopfacturen = $boekingMapper->findAllVerkoopfacturen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
         $iterator = $previousResults ?? new \AppendIterator();
 
         if ($iterator instanceof \AppendIterator && $verkoopfacturen->valid()) {
@@ -119,7 +122,7 @@ final class BoekingConnector extends BaseConnector
         }
 
         if ($fetchAll && $verkoopfacturen->valid()) {
-            if ($previousResults === null) {
+            if($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());

@@ -87,6 +87,7 @@ final class BoekingMapper extends AbstractMapper
 
         return $inkoopboeking;
     }
+
     protected function mapKasboekingResult(Model\Kasboeking $kasboeking, array $data = []): Model\Kasboeking
     {
         $data = empty($data) ? $this->responseData : $data;
@@ -102,15 +103,15 @@ final class BoekingMapper extends AbstractMapper
         }
 
         if (isset($data["grootboekBoekingsRegels"])) {
-            $kasboeking->setGrootboekBoekingsRegels(...$this->mapKasboeakingregels($data["grootboekBoekingsRegels"]));
+            $kasboeking->setGrootboekBoekingsRegels(...$this->mapKasboekingregels($data["grootboekBoekingsRegels"]));
         }
 
         if (isset($data["inkoopboekingBoekingsRegels"])) {
-            $kasboeking->setInkoopboekingBoekingsRegels(...$this->mapKasboeakingregels($data["inkoopboekingBoekingsRegels"]));
+            $kasboeking->setInkoopboekingBoekingsRegels(...$this->mapKasboekingregels($data["inkoopboekingBoekingsRegels"]));
         }
 
         if (isset($data["verkoopboekingBoekingsRegels"])) {
-            $kasboeking->setVerkoopboekingBoekingsRegels(...$this->mapKasboeakingregels($data["verkoopboekingBoekingsRegels"]));
+            $kasboeking->setVerkoopboekingBoekingsRegels(...$this->mapKasboekingregels($data["verkoopboekingBoekingsRegels"]));
         }
 
         if (isset($data["btwBoekingsregels"])) {
@@ -163,6 +164,49 @@ final class BoekingMapper extends AbstractMapper
 
         return $verkoopboeking;
     }
+
+	/**
+	 * @param Model\Verkoopfactuur $verkoopfactuur
+	 * @param array $data
+	 *
+	 * @return Model\Verkoopfactuur
+	 * @throws \Exception
+	 */
+	protected function mapVerkoopfactuurResult(Model\Verkoopfactuur $verkoopfactuur, array $data = []): Model\Verkoopfactuur
+	{
+		$data = empty($data) ? $this->responseData : $data;
+
+		/**
+		 * @var Model\Verkoopfactuur $verkoopfactuur
+		 */
+		$verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
+
+		if (isset($data["modifiedOn"])) {
+			$verkoopfactuur->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
+		}
+
+		if (isset($data["factuurDatum"])) {
+			$verkoopfactuur->setFactuurdatum(new \DateTimeImmutable($data["factuurDatum"]));
+		}
+
+		if (isset($data["vervalDatum"])) {
+			$verkoopfactuur->setVervaldatum(new \DateTimeImmutable($data["vervalDatum"]));
+		}
+
+		if (isset($data["factuurBedrag"])) {
+			$verkoopfactuur->setFactuurbedrag($this->getMoney($data["factuurBedrag"]));
+		}
+
+		if (isset($data["openstaandSaldo"])) {
+			$verkoopfactuur->setOpenstaandSaldo($this->getMoney($data["openstaandSaldo"]));
+		}
+
+		if (isset($data["relatie"])) {
+			$verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
+		}
+
+		return $verkoopfactuur;
+	}
 
     protected function mapKoopboekingResult(Model\Koopboeking $boeking, array $data = []): Model\Koopboeking
     {
@@ -235,7 +279,9 @@ final class BoekingMapper extends AbstractMapper
         foreach ($this->responseData as $boekingData) {
             if ($className === Model\Inkoopboeking::class) {
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
-            } else if ($className === Model\Verkoopboeking::class) {
+            } else if ($className === Model\Verkoopfactuur::class) {
+				yield $this->mapVerkoopFactuurResult(new $className, $boekingData);
+			} else if ($className === Model\Verkoopboeking::class) {
                 yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Kasboeking::class) {
                 yield $this->mapKasboekingResult(new $className, $boekingData);
@@ -243,7 +289,7 @@ final class BoekingMapper extends AbstractMapper
         }
     }
 
-    protected function mapKasboeakingregels(array $boekingsregels): array
+    protected function mapKasboekingregels(array $boekingsregels): array
     {
         return array_map(function (array $boekingsregel): Model\KasBoekingsregel {
             $boekingsregelObject = (new Model\KasBoekingsregel())
