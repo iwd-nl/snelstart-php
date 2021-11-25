@@ -232,7 +232,7 @@ class Kasboeking extends Boeking
 
         $diff = $totalDebet->subtract($totalCredit);
         if (!$diff->isZero()) {
-            throw new BookingNotInBalanceException();
+            throw new BookingNotInBalanceException('Kasboeking not in balance');
         }
     }
 }

@@ -158,15 +158,16 @@ abstract class Koopboeking extends Boeking
     {
         $targetAmount = $this->getFactuurbedrag();
 
-        /**
-         * @var Boekingsregel $boekingsregel
-         */
         foreach ($this->getBoekingsregels() as $boekingsregel) {
-            $targetAmount->subtract($boekingsregel->getBedrag());
+            $targetAmount = $targetAmount->subtract($boekingsregel->getBedrag());
         }
 
-        if ($targetAmount->isZero()) {
-            throw new BookingNotInBalanceException();
+        foreach ($this->getBtw() as $btw) {
+            $targetAmount = $targetAmount->subtract($btw->getBtwBedrag());
+        }
+
+        if (!$targetAmount->isZero()) {
+            throw new BookingNotInBalanceException('Koopboeking not in balance');
         }
     }
 }
