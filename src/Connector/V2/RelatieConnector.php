@@ -31,6 +31,14 @@ final class RelatieConnector extends BaseConnector
         }
     }
 
+    public function findDoorlopendeIncassoMachtigingen(UuidInterface $id): array
+    {
+        $mapper = new Mapper\Relatie\DoorlopendeIncassoMachtigingMapper();
+        $request = new Request\RelatieRequest();
+
+        return iterator_to_array($mapper->findByRelatie($this->connection->doRequest($request->findDoorlopendeIncassoMachtigingen($id))));
+    }
+
     /**
      * @return Model\Relatie[]|iterable
      * @psalm-return iterable<int, Model\Relatie>
