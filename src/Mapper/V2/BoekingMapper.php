@@ -187,6 +187,10 @@ final class BoekingMapper extends AbstractMapper
 		 */
 		$verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
 
+        if (isset($data["verkoopBoeking"])) {
+            $verkoopfactuur->setVerkoopBoeking(Model\Verkoopboeking::createFromUUID(Uuid::fromString($data["verkoopBoeking"]["id"])));
+        }
+
 		if (isset($data["modifiedOn"])) {
 			$verkoopfactuur->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
 		}
