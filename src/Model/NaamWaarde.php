@@ -32,7 +32,7 @@ final class NaamWaarde extends BaseObject
         return $this;
     }
 
-    public function getWaarde(): string
+    public function getWaarde(): ?string
     {
         return $this->waarde;
     }
