@@ -173,6 +173,20 @@ final class Relatie extends SnelstartObject
     private $aanmaningEmailVersturen;
 
     /**
+     * De emailgegevens voor het versturen van offerte aanvragen.
+     *
+     * @var EmailVersturen|null
+     */
+    private $offerteAanvraagEmailVersturen;
+
+    /**
+     * De emailgegevens voor het versturen van bestellingen.
+     *
+     * @var EmailVersturen|null
+     */
+    private $bestellingEmailVersturen;
+
+    /**
      * Een vlag dat aangeeft of een UBL-bestand als bijlage bij een email moet worden toegevoegd bij het versturen van facturen.
      *
      * @var bool
@@ -242,6 +256,8 @@ final class Relatie extends SnelstartObject
         "bevestigingsEmailVersturen",
         "factuurEmailVersturen",
         "aanmaningEmailVersturen",
+        "offerteAanvraagEmailVersturen",
+        "bestellingEmailVersturen",
         "ublBestandAlsBijlage",
         "iban",
         "bic",
@@ -528,6 +544,30 @@ final class Relatie extends SnelstartObject
     public function setAanmaningEmailVersturen(EmailVersturen $aanmaningEmailVersturen): self
     {
         $this->aanmaningEmailVersturen = $aanmaningEmailVersturen;
+
+        return $this;
+    }
+
+    public function getOfferteAanvraagEmailVersturen(): EmailVersturen
+    {
+        return $this->offerteAanvraagEmailVersturen ?? new EmailVersturen(false);
+    }
+
+    public function setOfferteAanvraagEmailVersturen(EmailVersturen $offerteAanvraagEmailVersturen): self
+    {
+        $this->offerteAanvraagEmailVersturen = $offerteAanvraagEmailVersturen;
+
+        return $this;
+    }
+
+    public function getBestellingEmailVersturen(): EmailVersturen
+    {
+        return $this->bestellingEmailVersturen ?? new EmailVersturen(false);
+    }
+
+    public function setBestellingEmailVersturen(EmailVersturen $bestellingEmailVersturen): self
+    {
+        $this->bestellingEmailVersturen = $bestellingEmailVersturen;
 
         return $this;
     }
