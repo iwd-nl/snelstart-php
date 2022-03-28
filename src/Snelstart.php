@@ -29,7 +29,7 @@ final class Snelstart
     public const DATETIME_FORMAT = "Y-m-d\TH:i:s.u";
 
     // Maximum results that will be returned on GET operations
-    public const MAX_RESULTS = 500;
+    public const MAX_RESULTS = 25;
 
     // Only supports EUR
     public const CURRENCY = 'EUR';
