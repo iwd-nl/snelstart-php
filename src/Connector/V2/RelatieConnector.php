@@ -40,33 +40,25 @@ final class RelatieConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Relatie[]|iterable
-     * @psalm-return iterable<int, Model\Relatie>
+     * @return iterable<Model\Relatie>
      */
     public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $iterator = $previousResults ?? new \AppendIterator();
-
         $mapper = new Mapper\RelatieMapper();
         $request = new Request\RelatieRequest();
-        $relaties = $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
 
-        if ($iterator instanceof \AppendIterator && $relaties->valid()) {
-            $iterator->append($relaties);
-        }
+        yield from $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
 
-        if ($fetchAll && $relaties->valid()) {
+        if ($fetchAll) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findAll($ODataRequestData, true, $iterator);
+            yield from $this->findAll($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     /**
@@ -79,12 +71,12 @@ final class RelatieConnector extends BaseConnector
 
         if (\method_exists($ODataRequestData, "setFilter")) {
             $ODataRequestData->setFilter(\array_merge(
-                    $ODataRequestData->getFilter(),
-                    [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
+                $ODataRequestData->getFilter(),
+                [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
             );
         }
 
-        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
+        yield from $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     /**
@@ -102,7 +94,7 @@ final class RelatieConnector extends BaseConnector
             );
         }
 
-        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
+        yield from $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     public function add(Model\Relatie $relatie): Model\Relatie

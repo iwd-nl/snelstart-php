@@ -27,7 +27,7 @@ final class RelatieMapper extends AbstractMapper
     public function findAll(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-        return $this->mapManyResultsToSubMappers();
+        yield from $this->mapManyResultsToSubMappers();
     }
 
     public function add(ResponseInterface $response): Model\Relatie

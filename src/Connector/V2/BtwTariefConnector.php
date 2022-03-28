@@ -12,15 +12,13 @@ use SnelstartPHP\Request\V2\BtwTariefRequest;
 final class BtwTariefConnector extends BaseConnector
 {
     /**
-     * @return BtwTarief[]
+     * @return iterable<BtwTarief>
      */
     public function findAll(): iterable
     {
         $btwTariefRequest = new BtwTariefRequest();
         $btwTariefMapper = new BtwTariefMapper();
 
-        $response = $this->connection->doRequest($btwTariefRequest->findAll());
-
-        return $btwTariefMapper->findAll($response);
+        yield from $btwTariefMapper->findAll($this->connection->doRequest($btwTariefRequest->findAll()));
     }
 }

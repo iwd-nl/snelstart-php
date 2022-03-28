@@ -33,13 +33,13 @@ final class BoekingMapper extends AbstractMapper
     public function findAllInkoopboekingen(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-        return $this->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
+        yield from $this->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
     }
 
     public function findAllVerkoopboekingen(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-        return $this->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
+        yield from $this->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
     }
 
     public function addInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
@@ -57,13 +57,7 @@ final class BoekingMapper extends AbstractMapper
     protected function mapDocumentResult(array $data = []): Model\Document
     {
         $data = empty($data) ? $this->responseData : $data;
-
-        /**
-         * @var Model\Document $document
-         */
-        $document = $this->mapArrayDataToModel(new Model\Document(), $data);
-
-        return $document;
+        return $this->mapArrayDataToModel(new Model\Document(), $data);
     }
 
     protected function mapInkoopboekingResult(Model\Inkoopboeking $inkoopboeking, array $data = []): Model\Inkoopboeking

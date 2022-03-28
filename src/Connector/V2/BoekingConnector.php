@@ -34,30 +34,23 @@ final class BoekingConnector extends BaseConnector
     /**
      * @return iterable<Model\Inkoopboeking>
      */
-    public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
+    public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
-
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $inkoopfacturen = $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData)));
-        $iterator = $previousResults ?? new \AppendIterator();
 
-        if ($iterator instanceof \AppendIterator && $inkoopfacturen->valid()) {
-            $iterator->append($inkoopfacturen);
-        }
+        yield from $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData)));
 
-        if ($fetchAll && $inkoopfacturen->valid()) {
+        if ($fetchAll) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findInkoopfacturen($ODataRequestData, true, $iterator);
+            yield from $this->findInkoopfacturen($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     public function addInkoopboeking(Model\Inkoopboeking $inkoopboeking): Model\Inkoopboeking
@@ -101,30 +94,23 @@ final class BoekingConnector extends BaseConnector
     /**
      * @return iterable<Model\Verkoopboeking>
      */
-    public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
+    public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
 
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $verkoopfacturen = $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
-        $iterator = $previousResults ?? new \AppendIterator();
+        yield from $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
 
-        if ($iterator instanceof \AppendIterator && $verkoopfacturen->valid()) {
-            $iterator->append($verkoopfacturen);
-        }
-
-        if ($fetchAll && $verkoopfacturen->valid()) {
+        if ($fetchAll) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findVerkoopfacturen($ODataRequestData, true, $iterator);
+            yield from $this->findVerkoopfacturen($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     public function addVerkoopboeking(Model\Verkoopboeking $verkoopboeking): Model\Verkoopboeking
