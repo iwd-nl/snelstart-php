@@ -32,9 +32,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Inkoopboeking
-     * @psalm-return \Iterator<T>
-     * @return Model\Inkoopboeking[]|iterable
+     * @return iterable<Model\Inkoopboeking>
      */
     public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {
@@ -101,9 +99,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Verkoopboeking
-     * @psalm-return \Iterator<T>
-     * @return Model\Verkoopboeking[]|iterable
+     * @return iterable<Model\Verkoopboeking>
      */
     public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
     {

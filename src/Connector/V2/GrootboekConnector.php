@@ -33,8 +33,7 @@ final class GrootboekConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Grootboek
-     * @psalm-return \Iterator<T>
+     * @return iterable<Model\Grootboek>
      */
     public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?Iterator $previousResults = null): iterable
     {

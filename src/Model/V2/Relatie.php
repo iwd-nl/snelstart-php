@@ -658,7 +658,7 @@ final class Relatie extends SnelstartObject
 
     public function getExtraVeldenKlant(): array
     {
-        return $this->extraVeldenKlant ?? [];
+        return $this->extraVeldenKlant;
     }
 
     public function setExtraVeldenKlant(NaamWaarde ... $extraVeldenKlant): self

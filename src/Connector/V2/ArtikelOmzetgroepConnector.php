@@ -28,15 +28,13 @@ final class ArtikelOmzetgroepConnector extends BaseConnector
     }
 
     /**
-     * @template T as ArtikelOmzetgroep
-     * @psalm-return \Generator<T>
-     * @return iterable
+     * @return iterable<ArtikelOmzetgroep>
      */
     public function findAll(): iterable
     {
         $mapper = new ArtikelOmzetgroepMapper();
         $request = new ArtikelOmzetgroepRequest();
 
-        return $mapper->findAll($this->connection->doRequest($request->findAll()));
+        yield from $mapper->findAll($this->connection->doRequest($request->findAll()));
     }
 }

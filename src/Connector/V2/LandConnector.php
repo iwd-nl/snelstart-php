@@ -29,15 +29,13 @@ final class LandConnector extends BaseConnector
     }
 
     /**
-     * @template T as Land
-     * @psalm-return \Generator<T>
-     * @return iterable
+     * @return iterable<Land>
      */
     public function findAll(): iterable
     {
         $mapper = new LandMapper();
         $request = new LandRequest();
 
-        return $mapper->findAll($this->connection->doRequest($request->findAll()));
+        yield from $mapper->findAll($this->connection->doRequest($request->findAll()));
     }
 }
