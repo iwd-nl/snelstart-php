@@ -27,7 +27,7 @@ final class ArtikelMapper extends AbstractMapper
     public function findAll(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-        return $this->mapManyResultsToSubMappers();
+        yield from $this->mapManyResultsToSubMappers();
     }
 
     public function add(ResponseInterface $response): Artikel
@@ -81,11 +81,11 @@ final class ArtikelMapper extends AbstractMapper
     {
         $prijsafspraak = new Prijsafspraak();
 
-        if (isset($data["relatie"]) && $data["relatie"] !== null) {
+        if (isset($data["relatie"])) {
             $prijsafspraak->setRelatie(Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
         }
 
-        if (isset($data["artikel"]) && $data["artikel"] !== null) {
+        if (isset($data["artikel"])) {
             $prijsafspraak->setArtikel(Artikel::createFromUUID(Uuid::fromString($data["artikel"]["id"])));
         }
 

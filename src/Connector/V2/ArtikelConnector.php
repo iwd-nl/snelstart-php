@@ -37,23 +37,18 @@ final class ArtikelConnector extends BaseConnector
         $artikelRequest = new Request\ArtikelRequest();
         $artikelMapper = new Mapper\ArtikelMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $artikelen = $artikelMapper->findAll($this->connection->doRequest($artikelRequest->findAll($ODataRequestData, $relatie, $aantal)));
-        $iterator = $previousResults ?? new \AppendIterator();
+        yield from $artikelMapper->findAll($this->connection->doRequest($artikelRequest->findAll($ODataRequestData, $relatie, $aantal)));
 
-        if ($iterator instanceof \AppendIterator && $artikelen->valid()) {
-            $iterator->append($artikelen);
-        }
-
-        if ($fetchAll && $artikelen->valid()) {
+        if ($fetchAll) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findAll($ODataRequestData, true, $iterator, $relatie, $aantal);
+            if ($ODataRequestData->getSkip() < 50) {
+                yield from $this->findAll($ODataRequestData, true, [], $relatie, $aantal);
+            }
         }
-
-        return $iterator;
     }
 }
