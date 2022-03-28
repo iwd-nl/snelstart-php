@@ -13,6 +13,7 @@ use SnelstartPHP\Mapper\AbstractMapper;
 use SnelstartPHP\Model\IncassoMachtiging;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\Type\ProcesStatus;
+use SnelstartPHP\Model\Type\VerkooporderBtwIngave;
 use SnelstartPHP\Model\V2\Artikel;
 use SnelstartPHP\Model\V2\Relatie;
 use SnelstartPHP\Model\V2\Verkoopfactuur;
@@ -93,6 +94,10 @@ final class VerkooporderMapper extends AbstractMapper
 
         if ($data["verkoopordersjabloon"] !== null) {
             $verkooporder->setVerkoopordersjabloon(Verkoopordersjabloon::createFromUUID(Uuid::fromString($data["verkoopordersjabloon"]["id"])));
+        }
+
+        if ($data["verkooporderBtwIngaveModel"] !== null) {
+            $verkooporder->setVerkooporderBtwIngaveModel(VerkooporderBtwIngave::from($data["verkooporderBtwIngaveModel"]));
         }
 
         return $verkooporder;
