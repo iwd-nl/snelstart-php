@@ -46,9 +46,7 @@ final class ArtikelConnector extends BaseConnector
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            if ($ODataRequestData->getSkip() < 50) {
-                yield from $this->findAll($ODataRequestData, true, [], $relatie, $aantal);
-            }
+            yield from $this->findAll($ODataRequestData, true, [], $relatie, $aantal);
         }
     }
 }
