@@ -40,10 +40,14 @@ final class GrootboekConnector extends BaseConnector
         $request = new Request\GrootboekRequest();
         $mapper = new Mapper\GrootboekMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $hasItems = false;
 
-        yield from $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
+        foreach ($mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData))) as $grootboek) {
+            $hasItems = true;
+            yield $grootboek;
+        }
 
-        if ($fetchAll) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {

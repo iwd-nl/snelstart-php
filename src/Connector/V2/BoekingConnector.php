@@ -39,10 +39,14 @@ final class BoekingConnector extends BaseConnector
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $hasItems = false;
 
-        yield from $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData)));
+        foreach ($boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
+            $hasItems = true;
+            yield $inkoopboeking;
+        }
 
-        if ($fetchAll) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
@@ -98,11 +102,15 @@ final class BoekingConnector extends BaseConnector
     {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
-
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        yield from $boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
+        $hasItems = false;
 
-        if ($fetchAll) {
+        foreach ($boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
+            $hasItems = true;
+            yield $verkoopboeking;
+        }
+
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {

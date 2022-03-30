@@ -30,16 +30,21 @@ final class ArtikelConnector extends BaseConnector
     }
 
     /**
-     * @return Model\Artikel[]|iterable
+     * @return iterable<Model\Artikel>
      */
     public function findAll(?ODataRequestData $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null, ?Model\Relatie $relatie = null, ?int $aantal = null): iterable
     {
         $artikelRequest = new Request\ArtikelRequest();
         $artikelMapper = new Mapper\ArtikelMapper();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        yield from $artikelMapper->findAll($this->connection->doRequest($artikelRequest->findAll($ODataRequestData, $relatie, $aantal)));
+        $hasItems = false;
 
-        if ($fetchAll) {
+        foreach ($artikelMapper->findAll($this->connection->doRequest($artikelRequest->findAll($ODataRequestData, $relatie, $aantal))) as $artikel) {
+            $hasItems = true;
+            yield $artikel;
+        }
+
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {

@@ -47,10 +47,14 @@ final class RelatieConnector extends BaseConnector
         $mapper = new Mapper\RelatieMapper();
         $request = new Request\RelatieRequest();
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $hasItems = false;
 
-        yield from $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
+        foreach ($mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData))) as $relatie) {
+            $hasItems = true;
+            yield $relatie;
+        }
 
-        if ($fetchAll) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
