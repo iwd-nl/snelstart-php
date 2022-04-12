@@ -7,6 +7,7 @@
 
 namespace SnelstartPHP\Mapper\V2;
 
+use DateTimeImmutable;
 use function array_map;
 use Psr\Http\Message\ResponseInterface;
 use Ramsey\Uuid\Uuid;
@@ -36,16 +37,40 @@ final class BoekingMapper extends AbstractMapper
         yield from $this->mapManyResultsToSubMappers(Model\Inkoopboeking::class);
     }
 
+    public function findAllInkoopfacturen(ResponseInterface $response): \Generator
+    {
+        $this->setResponseData($response);
+        return $this->mapManyResultsToSubMappers(Model\Inkoopfactuur::class);
+    }
+
     public function findAllVerkoopboekingen(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
         yield from $this->mapManyResultsToSubMappers(Model\Verkoopboeking::class);
     }
 
+    public function findAllVerkoopfacturen(ResponseInterface $response): \Generator
+    {
+        $this->setResponseData($response);
+        return $this->mapManyResultsToSubMappers(Model\Verkoopfactuur::class);
+    }
+
     public function addInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
     {
         $this->setResponseData($response);
         return $this->mapInkoopboekingResult(new Model\Inkoopboeking());
+    }
+
+    public function updateInkoopboeking(ResponseInterface $response): Model\Inkoopboeking
+    {
+        $this->setResponseData($response);
+        return $this->mapInkoopboekingResult(new Model\Inkoopboeking());
+    }
+
+    public function updateVerkoopboeking(ResponseInterface $response): Model\Verkoopboeking
+    {
+        $this->setResponseData($response);
+        return $this->mapVerkoopboekingResult(new Model\Verkoopboeking());
     }
 
     public function addVerkoopboeking(ResponseInterface $response): Model\Verkoopboeking
@@ -114,6 +139,66 @@ final class BoekingMapper extends AbstractMapper
         return $verkoopboeking;
     }
 
+    protected function mapVerkoopfactuurResult(Model\Verkoopfactuur $verkoopfactuur, array $data = []): Model\Verkoopfactuur
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        // This maps "id", "uri", "modifiedOn" and "factuurnummer".
+        $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
+
+        if (isset($data['relatie'])) {
+            $verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
+        }
+        if (isset($data['verkoopBoeking'])) {
+            $verkoopfactuur->setVerkoopBoeking(Model\Verkoopboeking::createFromUUID(Uuid::fromString($data['verkoopBoeking']['id'])));
+        }
+
+        if (isset($data['factuurDatum'])) {
+            $verkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
+        }
+        if (isset($data['factuurBedrag'])) {
+            $verkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
+        }
+        if (isset($data['openstaandSaldo'])) {
+            $verkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
+        }
+        if (isset($data['vervalDatum'])) {
+            $verkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+        }
+
+        return $verkoopfactuur;
+    }
+
+    protected function mapInkoopfactuurResult(Model\Inkoopfactuur $inkoopfactuur, array $data = []): Model\Inkoopfactuur
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        // This maps "id", "uri", "modifiedOn" and "factuurnummer".
+        $inkoopfactuur = $this->mapArrayDataToModel($inkoopfactuur, $data);
+
+        if (isset($data['relatie'])) {
+            $inkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
+        }
+        if (isset($data['inkoopBoeking'])) {
+            $inkoopfactuur->setInkoopboeking(Model\Inkoopboeking::createFromUUID(Uuid::fromString($data['inkoopBoeking']['id'])));
+        }
+
+        if (isset($data['factuurDatum'])) {
+            $inkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
+        }
+        if (isset($data['factuurBedrag'])) {
+            $inkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
+        }
+        if (isset($data['openstaandSaldo'])) {
+            $inkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
+        }
+        if (isset($data['vervalDatum'])) {
+            $inkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+        }
+
+        return $inkoopfactuur;
+    }
+
     protected function mapBoekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
     {
         $data = empty($data) ? $this->responseData : $data;
@@ -142,9 +227,12 @@ final class BoekingMapper extends AbstractMapper
         if (isset($data["boekingsregels"])) {
             $boeking->setBoekingsregels(...array_map(function(array $boekingsregel): Model\Boekingsregel {
                 $boekingsregelObject = (new Model\Boekingsregel())
-                    ->setOmschrijving($boekingsregel["omschrijving"])
                     ->setBedrag($this->getMoney($boekingsregel["bedrag"]))
                     ->setBtwSoort(new Type\BtwSoort($boekingsregel["btwSoort"]));
+
+                if (isset($boekingsregel["omschrijving"])) {
+                    $boekingsregelObject->setOmschrijving($boekingsregel["omschrijving"]);
+                }
 
                 if (isset($boekingsregel["grootboek"])) {
                     $boekingsregelObject
@@ -187,6 +275,10 @@ final class BoekingMapper extends AbstractMapper
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Verkoopboeking::class) {
                 yield $this->mapVerkoopboekingResult(new $className, $boekingData);
+            } else if ($className === Model\Verkoopfactuur::class) {
+                yield $this->mapVerkoopfactuurResult(new $className, $boekingData);
+            } else if ($className === Model\Inkoopfactuur::class) {
+                yield $this->mapInkoopfactuurResult(new $className, $boekingData);
             }
         }
     }

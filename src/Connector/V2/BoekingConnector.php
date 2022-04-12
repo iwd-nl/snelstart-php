@@ -32,7 +32,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Model\Inkoopboeking>
+     * @return iterable<Model\Inkoopfactuur>
      */
     public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
@@ -41,7 +41,7 @@ final class BoekingConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $hasItems = false;
 
-        foreach ($boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
+        foreach ($boekingMapper->findAllInkoopfacturen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
             $hasItems = true;
             yield $inkoopboeking;
         }
@@ -63,8 +63,6 @@ final class BoekingConnector extends BaseConnector
             throw PreValidationException::unexpectedIdException();
         }
 
-        $inkoopboeking->assertInBalance();
-
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
 
@@ -83,6 +81,30 @@ final class BoekingConnector extends BaseConnector
         return $documentMapper->add($this->connection->doRequest($documentRequest->addInkoopBoekingDocument($document, $inkoopboeking)));
     }
 
+    public function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): Model\Inkoopboeking
+    {
+        if ($inkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateInkoopboeking($this->connection->doRequest($boekingRequest->updateInkoopboeking($inkoopboeking)));
+    }
+
+    public function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): Model\Verkoopboeking
+    {
+        if ($verkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateVerkoopboeking($this->connection->doRequest($boekingRequest->updateVerkoopboeking($verkoopboeking)));
+    }
+
     public function findVerkoopboeking(UuidInterface $uuid): ?Model\Verkoopboeking
     {
         $boekingRequest = new Request\BoekingRequest();
@@ -96,7 +118,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Model\Verkoopboeking>
+     * @return iterable<Model\Verkoopfactuur>
      */
     public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
@@ -105,7 +127,7 @@ final class BoekingConnector extends BaseConnector
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $hasItems = false;
 
-        foreach ($boekingMapper->findAllVerkoopboekingen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
+        foreach ($boekingMapper->findAllVerkoopfacturen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
             $hasItems = true;
             yield $verkoopboeking;
         }
@@ -126,8 +148,6 @@ final class BoekingConnector extends BaseConnector
         if ($verkoopboeking->getId() !== null) {
             throw PreValidationException::unexpectedIdException();
         }
-
-        $verkoopboeking->assertInBalance();
 
         if ($verkoopboeking->getVervaldatum() !== null && $verkoopboeking->getBetalingstermijn() === null) {
             $verkoopboeking->setBetalingstermijn((int) (new \DateTime())->diff($verkoopboeking->getVervaldatum())->format("%a"));

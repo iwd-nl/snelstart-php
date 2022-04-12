@@ -80,7 +80,7 @@ abstract class Boeking extends SnelstartObject
      * @see Boekingsregel
      * @var Boekingsregel[]
      */
-    protected $boekingsregels;
+    protected $boekingsregels = [];
 
     /**
      * De af te dragen btw van de boeking per btw-tarief
@@ -255,21 +255,5 @@ abstract class Boeking extends SnelstartObject
         $this->documents[] = $document;
 
         return $this;
-    }
-
-    public function assertInBalance(): void
-    {
-        $targetAmount = $this->getFactuurbedrag();
-
-        /**
-         * @var Boekingsregel $boekingsregel
-         */
-        foreach ($this->getBoekingsregels() as $boekingsregel) {
-            $targetAmount->subtract($boekingsregel->getBedrag());
-        }
-
-        if ($targetAmount->isZero()) {
-            throw new BookingNotInBalanceException();
-        }
     }
 }
