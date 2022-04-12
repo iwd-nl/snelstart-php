@@ -146,7 +146,6 @@ final class BoekingMapper extends AbstractMapper
         // This maps "id", "uri", "modifiedOn" and "factuurnummer".
         $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
 
-
         if (isset($data['relatie'])) {
             $verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
         }
@@ -231,7 +230,7 @@ final class BoekingMapper extends AbstractMapper
                     ->setBedrag($this->getMoney($boekingsregel["bedrag"]))
                     ->setBtwSoort(new Type\BtwSoort($boekingsregel["btwSoort"]));
 
-                if (isset($boekingsregel["omschrijving"]) && $boekingsregel["omschrijving"] !== null) {
+                if (isset($boekingsregel["omschrijving"])) {
                     $boekingsregelObject->setOmschrijving($boekingsregel["omschrijving"]);
                 }
 

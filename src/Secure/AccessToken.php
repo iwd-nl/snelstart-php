@@ -6,8 +6,6 @@
 
 namespace SnelstartPHP\Secure;
 
-use DateTime;
-use DateTimeZone;
 use SnelstartPHP\Secure\BearerToken\BearerTokenInterface;
 
 final class AccessToken implements \JsonSerializable
@@ -52,7 +50,7 @@ final class AccessToken implements \JsonSerializable
 
     private function getCurrentUtcTimestamp(): int
     {
-        return (new DateTime('now', new DateTimeZone('UTC')))->getTimestamp();
+        return (new \DateTime('now', new \DateTimeZone('UTC')))->getTimestamp();
     }
 
     public function getExpiresIn(): int

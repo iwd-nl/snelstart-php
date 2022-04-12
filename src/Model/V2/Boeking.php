@@ -256,33 +256,4 @@ abstract class Boeking extends SnelstartObject
 
         return $this;
     }
-
-    /**
-     * @internal TODO: The API already validates the boeking is in balance. We
-     *                 don't need to duplicate that complicated logic here. The
-     *                 logic is broken anyway because it checks if the target
-     *                 amount is zero, while it  should check that the target
-     *                 amount is not zero. Simply negating the check doesn't
-     *                 resolve the issue either, because the factuurbedrag
-     *                 includes VAT/taxes and the boekingsregels do not, so we
-     *                 would also have to sum up all those.
-     *
-     * @deprecated SnelStart API already validates the boeking is in balance,
-     *             manual checks are not needed.
-     */
-    public function assertInBalance(): void
-    {
-        $targetAmount = $this->getFactuurbedrag();
-
-        /**
-         * @var Boekingsregel $boekingsregel
-         */
-        foreach ($this->getBoekingsregels() as $boekingsregel) {
-            $targetAmount->subtract($boekingsregel->getBedrag());
-        }
-
-        if ($targetAmount->isZero()) {
-            throw new BookingNotInBalanceException();
-        }
-    }
 }

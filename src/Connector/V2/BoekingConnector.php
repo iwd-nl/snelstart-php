@@ -32,7 +32,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Model\Inkoopboeking>
+     * @return iterable<Model\Inkoopfactuur>
      */
     public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
@@ -118,7 +118,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Model\Verkoopboeking>
+     * @return iterable<Model\Verkoopfactuur>
      */
     public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
