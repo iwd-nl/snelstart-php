@@ -25,7 +25,7 @@ final class GrootboekMapper extends AbstractMapper
     public function findAll(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-        return $this->mapManyResultsToSubMappers();
+        yield from $this->mapManyResultsToSubMappers();
     }
 
     protected function mapResultToGrootboekModel(Model\Grootboek $grootboek, array $data = []): Model\Grootboek

@@ -48,6 +48,28 @@ abstract class Boeking extends SnelstartObject
 
 
     /**
+     * De omzetregels van de boeking. De btw-bedragen staan hier niet in,
+     * deze staan in de Btw-collectie.
+     *
+     * @see Boekingsregel
+     * @var Boekingsregel[]
+     */
+    protected $boekingsregels = [];
+
+    /**
+     * De af te dragen btw van de boeking per btw-tarief
+     *
+     * @see Btwregel
+     * @var Btwregel[]|null
+     */
+    protected $btw;
+
+    /**
+     * @var Document[]
+     */
+    protected $documents = [];
+
+    /**
      * @var string[]
      */
     public static $editableAttributes = [
@@ -120,4 +142,46 @@ abstract class Boeking extends SnelstartObject
     }
 
 
+    public function setFactuurbedrag(Money $factuurbedrag): self
+    {
+        $this->factuurbedrag = $factuurbedrag;
+
+        return $this;
+    }
+
+    public function getBoekingsregels(): array
+    {
+        return $this->boekingsregels;
+    }
+
+    public function setBoekingsregels(Boekingsregel ...$boekingsregels): self
+    {
+        $this->boekingsregels = $boekingsregels;
+
+        return $this;
+    }
+
+    public function getBtw(): array
+    {
+        return $this->btw ?? [];
+    }
+
+    public function setBtw(Btwregel ...$btw): self
+    {
+        $this->btw = $btw;
+
+        return $this;
+    }
+
+    public function getDocuments(): array
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        $this->documents[] = $document;
+
+        return $this;
+    }
 }

@@ -90,7 +90,7 @@ abstract class BaseConnection implements ConnectionInterface
                 $request = $this->setOrReplaceSubscriptionKeyInRequest($request, $this->subscriptionKey->getPrimary());
             }
 
-            $this->preRequestValidation($request = $request->withHeader("Authorization", sprintf("Bearer %s", $this->accessToken->getAccessToken())));
+            $this->preRequestValidation($request = $request->withHeader("Authorization", sprintf("%s %s", $this->accessToken->getTokenType(), $this->accessToken->getAccessToken())));
             $this->numRetries++;
 
             if ($this->logger !== null) {
@@ -109,13 +109,13 @@ abstract class BaseConnection implements ConnectionInterface
         } catch (ClientException $clientException) {
             $response = $clientException->getResponse();
 
-            if ($response === null) {
-                throw new \RuntimeException("We haven't received any response or whatsoever.");
-            }
-
             if ($response->getStatusCode() === 400) {
                 $jsonBody = (string) $response->getBody();
-                $body = Utils::jsonDecode($jsonBody, true);
+                $body = [ 'message' => $response->getReasonPhrase(), 'errorCode' => 'NONEXISTENT' ];
+
+                if ($jsonBody !== '') {
+                    $body = Utils::jsonDecode($jsonBody, true);
+                }
 
                 if ($this->logger !== null) {
                     $this->logger->error("[Connection] " . $jsonBody, [
@@ -124,14 +124,20 @@ abstract class BaseConnection implements ConnectionInterface
                 }
 
                 throw SnelstartApiErrorException::handleError($body);
-            } else if ($response->getStatusCode() === 401) {
+            }
+
+            if ($response->getStatusCode() === 401) {
                 throw SnelstartApiAccessDeniedException::createFromParent($clientException);
-            } else if ($response->getStatusCode() === 403) {
+            }
+
+            if ($response->getStatusCode() === 403) {
                 throw new SnelstartApiAccessDeniedException($response->getReasonPhrase(), $request, $response);
-            } else if ($response->getStatusCode() === 404) {
+            }
+
+            if ($response->getStatusCode() === 404) {
                 $body = (string) $response->getBody();
 
-                if (mb_strlen($body) > 0) {
+                if ($body !== '') {
                     $body = \GuzzleHttp\json_decode($body, true);
                 }
 
@@ -141,9 +147,11 @@ abstract class BaseConnection implements ConnectionInterface
                     $response,
                     $clientException
                 );
-            } else if ($response->getStatusCode() === 429) {
+            }
+
+            if ($response->getStatusCode() === 429) {
                 // We received another 429 on the secondary key. Throw a different exception.
-                if (in_array($this->subscriptionKey->getSecondary(), $request->getHeader(self::SUBSCRIPTION_HEADER_NAME))) {
+                if (in_array($this->subscriptionKey->getSecondary(), $request->getHeader(self::SUBSCRIPTION_HEADER_NAME), true)) {
                     throw new MaxRetriesReachedException();
                 }
 
@@ -181,8 +189,7 @@ abstract class BaseConnection implements ConnectionInterface
             $this->logger->debug(sprintf("[Connection] Replacing the subscription key in the request to '%s'", $key));
         }
 
-        $request = $request->withHeader(self::SUBSCRIPTION_HEADER_NAME, $key);
-        return $request;
+        return $request->withHeader(self::SUBSCRIPTION_HEADER_NAME, $key);
     }
 
     protected function getClient(): ClientInterface

@@ -26,6 +26,11 @@ final class RelatieRequest extends BaseRequest
         return new Request("GET", "relaties/" . $id->toString());
     }
 
+    public function findDoorlopendeIncassoMachtigingen(UuidInterface $id): RequestInterface
+    {
+        return new Request("GET", "relaties/" . $id->toString() . "/doorlopendeincassomachtigingen");
+    }
+
     public function add(Model\Relatie $relatie): RequestInterface
     {
         return new Request("POST", "relaties", [

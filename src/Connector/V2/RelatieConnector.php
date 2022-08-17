@@ -31,34 +31,38 @@ final class RelatieConnector extends BaseConnector
         }
     }
 
+    public function findDoorlopendeIncassoMachtigingen(UuidInterface $id): array
+    {
+        $mapper = new Mapper\Relatie\DoorlopendeIncassoMachtigingMapper();
+        $request = new Request\RelatieRequest();
+
+        return iterator_to_array($mapper->findByRelatie($this->connection->doRequest($request->findDoorlopendeIncassoMachtigingen($id))));
+    }
+
     /**
-     * @return Model\Relatie[]|iterable
-     * @psalm-return iterable<int, Model\Relatie>
+     * @return iterable<Model\Relatie>
      */
     public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?iterable $previousResults = null): iterable
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $iterator = $previousResults ?? new \AppendIterator();
-
         $mapper = new Mapper\RelatieMapper();
         $request = new Request\RelatieRequest();
-        $relaties = $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $hasItems = false;
 
-        if ($iterator instanceof \AppendIterator && $relaties->valid()) {
-            $iterator->append($relaties);
+        foreach ($mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData))) as $relatie) {
+            $hasItems = true;
+            yield $relatie;
         }
 
-        if ($fetchAll && $relaties->valid()) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findAll($ODataRequestData, true, $iterator);
+            yield from $this->findAll($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     /**
@@ -71,12 +75,12 @@ final class RelatieConnector extends BaseConnector
 
         if (\method_exists($ODataRequestData, "setFilter")) {
             $ODataRequestData->setFilter(\array_merge(
-                    $ODataRequestData->getFilter(),
-                    [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
+                $ODataRequestData->getFilter(),
+                [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
             );
         }
 
-        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
+        yield from $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     /**
@@ -94,7 +98,7 @@ final class RelatieConnector extends BaseConnector
             );
         }
 
-        return $this->findAll($ODataRequestData, $fetchAll, $previousResults);
+        yield from $this->findAll($ODataRequestData, $fetchAll, $previousResults);
     }
 
     public function add(Model\Relatie $relatie): Model\Relatie

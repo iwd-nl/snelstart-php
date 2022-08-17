@@ -33,34 +33,29 @@ final class GrootboekConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Grootboek
-     * @psalm-return \Iterator<T>
+     * @return iterable<Model\Grootboek>
      */
-    public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?Iterator $previousResults = null): iterable
+    public function findAll(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $iterator = $previousResults ?? new AppendIterator();
-
-        $mapper = new Mapper\GrootboekMapper();
         $request = new Request\GrootboekRequest();
+        $mapper = new Mapper\GrootboekMapper();
+        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $hasItems = false;
 
-        $grootboeken = $mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData)));
-
-        if ($iterator instanceof AppendIterator && $grootboeken->valid()) {
-            $iterator->append($grootboeken);
+        foreach ($mapper->findAll($this->connection->doRequest($request->findAll($ODataRequestData))) as $grootboek) {
+            $hasItems = true;
+            yield $grootboek;
         }
 
-        if ($fetchAll && $grootboeken->valid()) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findAll($ODataRequestData, true, $iterator);
+            yield from $this->findAll($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     public function findByNumber(string $number): ?Model\Grootboek

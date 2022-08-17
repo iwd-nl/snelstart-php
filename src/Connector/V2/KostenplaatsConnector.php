@@ -18,10 +18,10 @@ final class KostenplaatsConnector extends BaseConnector
 {
     public function find(UuidInterface $id): ?Kostenplaats
     {
-        try {
-            $request = new Request\KostenplaatsRequest();
-            $mapper = new Mapper\KostenplaatsMapper();
+        $request = new Request\KostenplaatsRequest();
+        $mapper = new Mapper\KostenplaatsMapper();
 
+        try {
             return $mapper->find($this->connection->doRequest($request->find($id)));
         } catch (SnelstartResourceNotFoundException $e) {
             return null;
@@ -29,11 +29,11 @@ final class KostenplaatsConnector extends BaseConnector
     }
 
     /**
-     * @return Kostenplaats[]|iterable
+     * @return iterable<Kostenplaats>
      */
     public function findAll(): iterable
     {
-        return (new Mapper\KostenplaatsMapper())->findAll($this->connection->doRequest((new Request\KostenplaatsRequest())->findAll()));
+        yield from (new Mapper\KostenplaatsMapper())->findAll($this->connection->doRequest((new Request\KostenplaatsRequest())->findAll()));
     }
 
     public function add(Kostenplaats $kostenplaats): Kostenplaats
@@ -47,7 +47,7 @@ final class KostenplaatsConnector extends BaseConnector
 
     public function update(Kostenplaats $kostenplaats): Kostenplaats
     {
-        if ($kostenplaats->getId() !== null) {
+        if ($kostenplaats->getId() === null) {
             throw PreValidationException::shouldHaveAnIdException();
         }
 

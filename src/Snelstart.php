@@ -29,31 +29,31 @@ final class Snelstart
     public const DATETIME_FORMAT = "Y-m-d\TH:i:s.u";
 
     // Maximum results that will be returned on GET operations
-    public const MAX_RESULTS = 500;
+    public const MAX_RESULTS = 25;
 
     // Only supports EUR
     public const CURRENCY = 'EUR';
 
     public static function getCurrency(): Currency
     {
-        return new Currency(static::CURRENCY);
+        return new Currency(self::CURRENCY);
     }
 
     public static function getMoneyFormatter(): MoneyFormatter
     {
-        if (static::$moneyFormatter === null) {
-            static::$moneyFormatter = new DecimalMoneyFormatter(new ISOCurrencies());
+        if (self::$moneyFormatter === null) {
+            self::$moneyFormatter = new DecimalMoneyFormatter(new ISOCurrencies());
         }
 
-        return static::$moneyFormatter;
+        return self::$moneyFormatter;
     }
 
     public static function getMoneyParser(): MoneyParser
     {
-        if (static::$moneyParser === null) {
-            static::$moneyParser = new DecimalMoneyParser(new ISOCurrencies());
+        if (self::$moneyParser === null) {
+            self::$moneyParser = new DecimalMoneyParser(new ISOCurrencies());
         }
 
-        return static::$moneyParser;
+        return self::$moneyParser;
     }
 }

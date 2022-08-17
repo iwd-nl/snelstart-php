@@ -2,7 +2,6 @@
 /**
  * @author  IntoWebDevelopment <info@intowebdevelopment.nl>
  * @project SnelstartApiPHP
- * @deprecated
  */
 
 namespace SnelstartPHP\Connector\V2;
@@ -10,17 +9,17 @@ namespace SnelstartPHP\Connector\V2;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Connector\BaseConnector;
 use SnelstartPHP\Exception\SnelstartResourceNotFoundException;
-use SnelstartPHP\Mapper\V2\LandMapper;
-use SnelstartPHP\Model\Land;
-use SnelstartPHP\Request\V2\LandRequest;
+use SnelstartPHP\Mapper\V2\ArtikelOmzetgroepMapper;
+use SnelstartPHP\Model\V2\ArtikelOmzetgroep;
+use SnelstartPHP\Request\V2\ArtikelOmzetgroepRequest;
 
-final class LandConnector extends BaseConnector
+final class ArtikelOmzetgroepConnector extends BaseConnector
 {
-    public function find(UuidInterface $id): ?Land
+    public function find(UuidInterface $id): ?ArtikelOmzetgroep
     {
         try {
-            $mapper = new LandMapper();
-            $request = new LandRequest();
+            $mapper = new ArtikelOmzetgroepMapper();
+            $request = new ArtikelOmzetgroepRequest();
 
             return $mapper->find($this->connection->doRequest($request->find($id)));
         } catch (SnelstartResourceNotFoundException $e) {
@@ -29,12 +28,12 @@ final class LandConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Land>
+     * @return iterable<ArtikelOmzetgroep>
      */
     public function findAll(): iterable
     {
-        $mapper = new LandMapper();
-        $request = new LandRequest();
+        $mapper = new ArtikelOmzetgroepMapper();
+        $request = new ArtikelOmzetgroepRequest();
 
         yield from $mapper->findAll($this->connection->doRequest($request->findAll()));
     }

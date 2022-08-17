@@ -32,34 +32,29 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Inkoopboeking
-     * @psalm-return \Iterator<T>
-     * @return Model\Inkoopboeking[]|iterable
+     * @return iterable<Model\Inkoopfactuur>
      */
-    public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, ?\Iterator $previousResults = null): iterable
+    public function findInkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
-
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $inkoopfacturen = $boekingMapper->findAllInkoopboekingen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData)));
-        $iterator = $previousResults ?? new \AppendIterator();
+        $hasItems = false;
 
-        if ($iterator instanceof \AppendIterator && $inkoopfacturen->valid()) {
-            $iterator->append($inkoopfacturen);
+        foreach ($boekingMapper->findAllInkoopfacturen($this->connection->doRequest($factuurRequest->findInkoopfacturen($ODataRequestData))) as $inkoopboeking) {
+            $hasItems = true;
+            yield $inkoopboeking;
         }
 
-        if ($fetchAll && $inkoopfacturen->valid()) {
+        if ($fetchAll && $hasItems) {
             if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findInkoopfacturen($ODataRequestData, true, $iterator);
+            yield from $this->findInkoopfacturen($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     public function addInkoopboeking(Model\Inkoopboeking $inkoopboeking): Model\Inkoopboeking
@@ -67,8 +62,6 @@ final class BoekingConnector extends BaseConnector
         if ($inkoopboeking->getId() !== null) {
             throw PreValidationException::unexpectedIdException();
         }
-
-        $inkoopboeking->assertInBalance();
 
         $boekingMapper = new Mapper\BoekingMapper();
         $boekingRequest = new Request\BoekingRequest();
@@ -88,6 +81,30 @@ final class BoekingConnector extends BaseConnector
         return $documentMapper->add($this->connection->doRequest($documentRequest->addInkoopBoekingDocument($document, $inkoopboeking)));
     }
 
+    public function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): Model\Inkoopboeking
+    {
+        if ($inkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateInkoopboeking($this->connection->doRequest($boekingRequest->updateInkoopboeking($inkoopboeking)));
+    }
+
+    public function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): Model\Verkoopboeking
+    {
+        if ($verkoopboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->updateVerkoopboeking($this->connection->doRequest($boekingRequest->updateVerkoopboeking($verkoopboeking)));
+    }
+
     public function findVerkoopboeking(UuidInterface $uuid): ?Model\Verkoopboeking
     {
         $boekingRequest = new Request\BoekingRequest();
@@ -101,37 +118,29 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @template T as Model\Verkoopfactuur
-     * @psalm-return \Iterator<T>
      * @return Model\Verkoopboeking[]|iterable
      */
-    public function findVerkoopfacturen(
-        ?ODataRequestDataInterface $ODataRequestData = null,
-        bool $fetchAll = false,
-        ?\Iterator $previousResults = null
-    ): iterable {
+    public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
+    {
         $factuurRequest = new Request\FactuurRequest();
         $boekingMapper = new Mapper\BoekingMapper();
-
         $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
-        $verkoopfacturen = $boekingMapper->findAllVerkoopfacturen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData)));
-        $iterator = $previousResults ?? new \AppendIterator();
+        $hasItems = false;
 
-        if ($iterator instanceof \AppendIterator && $verkoopfacturen->valid()) {
-            $iterator->append($verkoopfacturen);
+        foreach ($boekingMapper->findAllVerkoopfacturen($this->connection->doRequest($factuurRequest->findVerkoopfacturen($ODataRequestData))) as $verkoopboeking) {
+            $hasItems = true;
+            yield $verkoopboeking;
         }
 
-        if ($fetchAll && $verkoopfacturen->valid()) {
-            if($previousResults === null) {
+        if ($fetchAll && $hasItems) {
+            if ($previousResults === null) {
                 $ODataRequestData->setSkip($ODataRequestData->getTop());
             } else {
                 $ODataRequestData->setSkip($ODataRequestData->getSkip() + $ODataRequestData->getTop());
             }
 
-            return $this->findVerkoopfacturen($ODataRequestData, true, $iterator);
+            yield from $this->findVerkoopfacturen($ODataRequestData, true, []);
         }
-
-        return $iterator;
     }
 
     public function addVerkoopboeking(Model\Verkoopboeking $verkoopboeking): Model\Verkoopboeking
@@ -139,8 +148,6 @@ final class BoekingConnector extends BaseConnector
         if ($verkoopboeking->getId() !== null) {
             throw PreValidationException::unexpectedIdException();
         }
-
-        $verkoopboeking->assertInBalance();
 
         if ($verkoopboeking->getVervaldatum() !== null && $verkoopboeking->getBetalingstermijn() === null) {
             $verkoopboeking->setBetalingstermijn((int) (new \DateTime())->diff($verkoopboeking->getVervaldatum())->format("%a"));

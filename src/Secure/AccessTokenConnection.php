@@ -38,7 +38,7 @@ final class AccessTokenConnection implements ConnectionInterface
     {
         $this->bearerToken = $bearerToken;
         $this->client = $client ?? new Client([
-            "base_uri"  =>  static::getEndpoint(),
+            "base_uri"  =>  self::getEndpoint(),
         ]);
         $this->logger = $logger;
     }

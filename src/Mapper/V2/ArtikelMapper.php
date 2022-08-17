@@ -21,19 +21,28 @@ final class ArtikelMapper extends AbstractMapper
     public function find(ResponseInterface $response): ?Artikel
     {
         $this->setResponseData($response);
-        return $this->mapResponseToArtikelInstance(new Artikel());
+        return $this->mapResponseToArtikelModel(new Artikel());
     }
 
     public function findAll(ResponseInterface $response): \Generator
     {
         $this->setResponseData($response);
-
-        foreach ($this->responseData as $data) {
-            yield $this->mapResponseToArtikelInstance(new Artikel(), $data);
-        }
+        yield from $this->mapManyResultsToSubMappers();
     }
 
-    protected function mapResponseToArtikelInstance(Artikel $artikel, array $data = []): Artikel
+    public function add(ResponseInterface $response): Artikel
+    {
+        $this->setResponseData($response);
+        return $this->mapResponseToArtikelModel(new Artikel());
+    }
+
+    public function update(ResponseInterface $response): Artikel
+    {
+        $this->setResponseData($response);
+        return $this->mapResponseToArtikelModel(new Artikel());
+    }
+
+    protected function mapResponseToArtikelModel(Artikel $artikel, array $data = []): Artikel
     {
         $data = empty($data) ? $this->responseData : $data;
 
@@ -72,11 +81,11 @@ final class ArtikelMapper extends AbstractMapper
     {
         $prijsafspraak = new Prijsafspraak();
 
-        if (isset($data["relatie"]) && $data["relatie"] !== null) {
+        if (isset($data["relatie"])) {
             $prijsafspraak->setRelatie(Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
         }
 
-        if (isset($data["artikel"]) && $data["artikel"] !== null) {
+        if (isset($data["artikel"])) {
             $prijsafspraak->setArtikel(Artikel::createFromUUID(Uuid::fromString($data["artikel"]["id"])));
         }
 
@@ -89,5 +98,17 @@ final class ArtikelMapper extends AbstractMapper
             ->setDatumTotEnMet($data["datumTotEnMet"] !== null ? new \DateTimeImmutable($data["datumTotEnMet"]) : null)
             ->setPrijsBepalingSoort(new PrijsBepalingSoort($data["prijsBepalingSoort"]))
         ;
+    }
+
+    /**
+     * Map many results to the mapper.
+     *
+     * @return \Generator
+     */
+    protected function mapManyResultsToSubMappers(): \Generator
+    {
+        foreach ($this->responseData as $artikelData) {
+            yield $this->mapResponseToArtikelModel(new Artikel(), $artikelData);
+        }
     }
 }
