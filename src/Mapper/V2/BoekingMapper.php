@@ -195,32 +195,39 @@ final class BoekingMapper extends AbstractMapper
 	{
 		$data = empty($data) ? $this->responseData : $data;
 
-        // This maps "id", "uri", "modifiedOn" and "factuurnummer".
-        $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
+        /**
+         * @var Model\Verkoopfactuur $verkoopfactuur
+         */
+        $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data); // This maps "id", "uri", "modifiedOn" and "factuurnummer".
+
         if (isset($data['relatie'])) {
-            $inkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
+            $verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
         }
-        if (isset($data['inkoopBoeking'])) {
-            $inkoopfactuur->setInkoopboeking(Model\Inkoopboeking::createFromUUID(Uuid::fromString($data['inkoopBoeking']['id'])));
+
+        if (isset($data["verkoopBoeking"])) {
+            $verkoopfactuur->setVerkoopBoeking(Model\Verkoopboeking::createFromUUID(Uuid::fromString($data["verkoopBoeking"]["id"])));
         }
 
         if (isset($data['factuurDatum'])) {
-            $inkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
-        }
-        if (isset($data['factuurBedrag'])) {
-            $inkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
-        }
-        if (isset($data['openstaandSaldo'])) {
-            $inkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
-        }
-        if (isset($data['vervalDatum'])) {
-            $inkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+            $verkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
         }
 
-        return $inkoopfactuur;
+        if (isset($data['factuurBedrag'])) {
+            $verkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
+        }
+
+        if (isset($data['openstaandSaldo'])) {
+            $verkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
+        }
+
+        if (isset($data['vervalDatum'])) {
+            $verkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+        }
+
+        return $verkoopfactuur;
     }
 
-    protected function mapBoekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
+    protected function mapKoopboekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
     {
         $data = empty($data) ? $this->responseData : $data;
 
