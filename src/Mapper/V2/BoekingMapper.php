@@ -227,7 +227,7 @@ final class BoekingMapper extends AbstractMapper
         return $verkoopfactuur;
     }
 
-    protected function mapKoopboekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
+    protected function mapKoopboekingResult(Model\Koopboeking $boeking, array $data = []): Model\Boeking
     {
         $data = empty($data) ? $this->responseData : $data;
 

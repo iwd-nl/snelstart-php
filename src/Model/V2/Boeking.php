@@ -128,7 +128,6 @@ abstract class Boeking extends SnelstartObject
         return $this;
     }
 
-
     public function getOmschrijving(): ?string
     {
         return $this->omschrijving;
@@ -141,47 +140,4 @@ abstract class Boeking extends SnelstartObject
         return $this;
     }
 
-
-    public function setFactuurbedrag(Money $factuurbedrag): self
-    {
-        $this->factuurbedrag = $factuurbedrag;
-
-        return $this;
-    }
-
-    public function getBoekingsregels(): array
-    {
-        return $this->boekingsregels;
-    }
-
-    public function setBoekingsregels(Boekingsregel ...$boekingsregels): self
-    {
-        $this->boekingsregels = $boekingsregels;
-
-        return $this;
-    }
-
-    public function getBtw(): array
-    {
-        return $this->btw ?? [];
-    }
-
-    public function setBtw(Btwregel ...$btw): self
-    {
-        $this->btw = $btw;
-
-        return $this;
-    }
-
-    public function getDocuments(): array
-    {
-        return $this->documents;
-    }
-
-    public function addDocument(Document $document): self
-    {
-        $this->documents[] = $document;
-
-        return $this;
-    }
 }
