@@ -20,7 +20,7 @@
         "guzzlehttp/guzzle": "^6.3|7.*",
         "moneyphp/money": "^3.0|^4.0",
         "myclabs/php-enum": "^1.6",
-        "psr/cache": "^1.0",
+        "psr/cache": "^1.0|^2.0|^3.0",
         "psr/http-message": "^1.0",
         "psr/log": "^1.0",
         "ramsey/uuid": "^3.8|^4.0"
@@ -31,6 +31,12 @@
         "phpunit/phpunit": "^8.4",
         "vimeo/psalm": "^4.0"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/HVSoftware/snelstart-php"
+        }
+    ],
     "suggest": {
         "psr/cache": "Caching made a little easier. Useful for access tokens."
     },
