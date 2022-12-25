@@ -17,9 +17,9 @@ parameters:
 			paths:
 				- src/Model/V2
 		-
-		    message: '#PHPDoc tag \@param for parameter \$editableAttributes with type array#'
-		    paths:
-		        - src/Request
+			message: '#PHPDoc tag \@param for parameter \$editableAttributes with type array#'
+			paths:
+				- src/Request
 		-
 			message: '#Method SnelstartPHP\\Mapper\\AbstractMapper\:\:__construct\(\) with return type void returns SnelstartPHP\\Mapper\\AbstractMapper but should not return anything#'
 			paths:
