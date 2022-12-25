@@ -1,5 +1,22 @@
 parameters:
-	level: 1
+	level: 2
 	paths:
 		- src
 		- tests
+	ignoreErrors:
+		-
+			message: '#Call to an undefined method Iterator\:\:append\(\)#'
+			paths:
+				- src/Connector/V1
+		-
+			message: '#Call to an undefined method SnelstartPHP\\Mapper\\AbstractMapper#'
+			paths:
+				- src/Mapper/V1
+		-
+			message: '#PHPDoc tag \@param for parameter \$relatiesoort with type array#'
+			paths:
+				- src/Model/V2
+		-
+		    message: '#PHPDoc tag \@param for parameter \$editableAttributes with type array#'
+		    paths:
+		        - src/Request
