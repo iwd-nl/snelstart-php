@@ -1,5 +1,5 @@
 parameters:
-	level: 2
+	level: 4
 	paths:
 		- src
 		- tests
@@ -20,3 +20,11 @@ parameters:
 		    message: '#PHPDoc tag \@param for parameter \$editableAttributes with type array#'
 		    paths:
 		        - src/Request
+		-
+			message: '#Method SnelstartPHP\\Mapper\\AbstractMapper\:\:__construct\(\) with return type void returns SnelstartPHP\\Mapper\\AbstractMapper but should not return anything#'
+			paths:
+				- src/Mapper
+		-
+			message: '#Method SnelstartPHP\\Model\\SnelstartObject\:\:createFromUUID\(\) should return static#'
+			paths:
+				- src/Model
