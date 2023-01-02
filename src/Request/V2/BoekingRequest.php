@@ -3,6 +3,7 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
@@ -25,7 +26,7 @@ final class BoekingRequest extends BaseRequest
     {
         return new Request("POST", "inkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): RequestInterface
@@ -36,14 +37,14 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "inkoopboekingen/" . $inkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public function addVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
     {
         return new Request("POST", "verkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     public function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
@@ -54,7 +55,7 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "verkoopboekingen/" . $verkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     /**

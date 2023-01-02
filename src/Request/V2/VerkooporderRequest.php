@@ -7,6 +7,7 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V2\Verkooporder;
@@ -18,7 +19,7 @@ final class VerkooporderRequest extends BaseRequest
     {
         return new Request("POST", "verkooporders", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkooporder)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($verkooporder)));
     }
 
     public function delete(Verkooporder $verkooporder): RequestInterface
