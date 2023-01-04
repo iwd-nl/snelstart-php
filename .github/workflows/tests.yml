@@ -3,14 +3,47 @@ name: Tests
 on: [push, pull_request]
 
 jobs:
+    static-analysis:
+        runs-on: ubuntu-latest
+
+        name: Static analysis
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup PHP
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: 8.1
+                  extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv, imagick, fileinfo
+                  coverage: none
+
+            - name: Setup problem matchers
+              run: |
+                  echo "::add-matcher::${{ runner.tool_cache }}/php.json"
+
+            - name: Validate composer.json
+              run: composer validate --strict
+
+            - name: Lint files
+              run: find src tests -name '*.php' | xargs -n 1 -P4 php -l
+
+            - name: Install dependencies
+              run: composer update --prefer-dist --no-interaction
+
+            - name: Analyse files
+              run: vendor/bin/phpstan analyse --level 0 src tests
+
     test:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: true
             matrix:
                 php: [7.2, 7.3, 7.4, 8.0, 8.1]
+                stability: [prefer-lowest, prefer-stable]
 
-        name: PHP ${{ matrix.php }}
+        name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
 
         steps:
             - name: Checkout code
@@ -28,14 +61,8 @@ jobs:
                   echo "::add-matcher::${{ runner.tool_cache }}/php.json"
                   echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
 
-            - name: Validate composer.json
-              run: composer validate --strict
-
-            - name: Lint files
-              run: find src tests -name '*.php' | xargs -n 1 -P4 php -l
-
             - name: Install dependencies
-              run: composer update --prefer-stable --prefer-dist --no-interaction
+              run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
             - name: Execute tests
               run: vendor/bin/phpunit --fail-on-risky
