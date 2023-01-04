@@ -15,6 +15,8 @@ use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type\ProcesStatus;
 use SnelstartPHP\Model\Type\VerkooporderBtwIngave;
 use SnelstartPHP\Snelstart;
+use function array_merge;
+use function array_unique;
 
 final class Verkooporder extends SnelstartObject
 {
@@ -179,8 +181,8 @@ final class Verkooporder extends SnelstartObject
 
     public static function getEditableAttributes(): array
     {
-        return \array_unique(
-            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        return array_unique(
+            array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
         );
     }
 
