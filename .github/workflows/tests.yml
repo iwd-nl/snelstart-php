@@ -41,5 +41,8 @@ jobs:
             - name: Execute tests
               run: vendor/bin/phpunit --fail-on-risky
 
-            - name: Analyse files
+            - name: Analyse files with phpstan
+              run: vendor/bin/phpstan analyse --level 0 src tests
+
+            - name: Analyse files with psalm
               run: vendor/bin/phpstan analyse --level 0 src tests
