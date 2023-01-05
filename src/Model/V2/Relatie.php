@@ -226,7 +226,7 @@ final class Relatie extends SnelstartObject
     /**
      * @var NaamWaarde[]
      */
-    private $extraVeldenKlant;
+    private $extraVeldenKlant = [];
 
     /**
      * @var string[]
