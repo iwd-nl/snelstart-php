@@ -26,7 +26,6 @@
         "ramsey/uuid": "^3.8|^4.0"
     },
     "require-dev": {
-        "dg/bypass-finals": "^1.1",
         "phpstan/phpstan": "^1.5",
         "phpunit/phpunit": "^8.5.23",
         "vimeo/psalm": "^4.0"
