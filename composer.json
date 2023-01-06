@@ -17,7 +17,7 @@
         "php": ">=7.2",
         "ext-json": "*",
         "ext-mbstring": "*",
-        "guzzlehttp/guzzle": "^6.3|7.*",
+        "guzzlehttp/guzzle": "^6.4|^7.0",
         "moneyphp/money": "^3.0|^4.0",
         "myclabs/php-enum": "^1.6",
         "psr/cache": "^1.0|^2.0|^3.0",
@@ -26,9 +26,8 @@
         "ramsey/uuid": "^3.8|^4.0"
     },
     "require-dev": {
-        "dg/bypass-finals": "^1.1",
         "phpstan/phpstan": "^1.9",
-        "phpunit/phpunit": "^8.4",
+        "phpunit/phpunit": "^8.5.23",
         "vimeo/psalm": "^4.0|^5.0"
     },
     "suggest": {
