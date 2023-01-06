@@ -8,13 +8,13 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V2 as Model;
 use SnelstartPHP\Request\BaseRequest;
 use SnelstartPHP\Request\ODataRequestDataInterface;
+use SnelstartPHP\Utils;
 
 final class GrootboekRequest extends BaseRequest
 {

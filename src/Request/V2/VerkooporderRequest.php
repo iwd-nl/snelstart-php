@@ -7,11 +7,11 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V2\Verkooporder;
 use SnelstartPHP\Request\BaseRequest;
+use SnelstartPHP\Utils;
 
 final class VerkooporderRequest extends BaseRequest
 {

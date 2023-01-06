@@ -3,7 +3,6 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
@@ -13,6 +12,7 @@ use SnelstartPHP\Model\V2\Inkoopboeking;
 use SnelstartPHP\Model\V2\Relatie;
 use SnelstartPHP\Model\V2\Verkoopboeking;
 use SnelstartPHP\Request\BaseRequest;
+use SnelstartPHP\Utils;
 
 final class DocumentRequest extends BaseRequest
 {
