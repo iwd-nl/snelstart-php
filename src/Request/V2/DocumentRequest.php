@@ -3,6 +3,7 @@
 namespace SnelstartPHP\Request\V2;
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Utils;
 use Psr\Http\Message\RequestInterface;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
@@ -60,7 +61,7 @@ final class DocumentRequest extends BaseRequest
 
         return new Request("PUT", "documenten/" . $document->getId()->toString(), [
             "Content-Type"  =>  "application/json",
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 
     public function deleteDocument(Document $document): RequestInterface
@@ -76,6 +77,6 @@ final class DocumentRequest extends BaseRequest
     {
         return new Request("POST", sprintf("documenten/%s", $documentType->getValue()), [
             "Content-Type" =>   "application/json",
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 }
