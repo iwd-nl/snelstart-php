@@ -139,7 +139,8 @@ final class VerkooporderRegel extends BaseObject
     public function calculateAndSetTotaal(): self
     {
         if ($this->getStuksprijs() !== null) {
-            $this->totaal = $this->getStuksprijs()->multiply($this->getAantal());
+            $aantal = (int) ($this->getAantal() * 100);
+            $this->totaal = $this->getStuksprijs()->multiply($aantal)->divide(100);
         }
 
         return $this;
