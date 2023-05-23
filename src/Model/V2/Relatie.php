@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeInterface;
 use Money\Money;
 use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\EmailVersturen;
@@ -19,7 +20,7 @@ final class Relatie extends SnelstartObject
     /**
      * Datum waarop de gegevens van deze relatie zijn aangepast
      *
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $modifiedOn;
 
@@ -266,12 +267,12 @@ final class Relatie extends SnelstartObject
         "extraVeldenKlant",
     ];
 
-    public function getModifiedOn(): ?\DateTimeInterface
+    public function getModifiedOn(): ?DateTimeInterface
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(?\DateTimeInterface $modifiedOn): self
+    public function setModifiedOn(?DateTimeInterface $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
 

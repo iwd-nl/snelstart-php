@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeImmutable;
 use Money\Money;
 use SnelstartPHP\Model\Adres;
 use SnelstartPHP\Model\IncassoMachtiging;
@@ -15,6 +16,8 @@ use SnelstartPHP\Model\Type\ProcesStatus;
 use SnelstartPHP\Model\Type\VerkooporderBtwIngave;
 use SnelstartPHP\Model\Type\VerkooporderStatus;
 use SnelstartPHP\Snelstart;
+use function array_merge;
+use function array_unique;
 
 final class Verkooporder extends SnelstartObject
 {
@@ -40,14 +43,14 @@ final class Verkooporder extends SnelstartObject
     /**
      * Het tijdstip waarop de verkooporder voor het laatst is gewijzigd.
      *
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $modifiedOn;
 
     /**
      * De orderdatum.
      *
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $datum;
 
@@ -187,8 +190,8 @@ final class Verkooporder extends SnelstartObject
 
     public static function getEditableAttributes(): array
     {
-        return \array_unique(
-            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        return array_unique(
+            array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
         );
     }
 
@@ -228,24 +231,24 @@ final class Verkooporder extends SnelstartObject
         return $this;
     }
 
-    public function getModifiedOn(): ?\DateTimeImmutable
+    public function getModifiedOn(): ?DateTimeImmutable
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(\DateTimeImmutable $modifiedOn): self
+    public function setModifiedOn(DateTimeImmutable $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
 
         return $this;
     }
 
-    public function getDatum(): ?\DateTimeImmutable
+    public function getDatum(): ?DateTimeImmutable
     {
         return $this->datum;
     }
 
-    public function setDatum(\DateTimeImmutable $datum): self
+    public function setDatum(DateTimeImmutable $datum): self
     {
         $this->datum = $datum;
 

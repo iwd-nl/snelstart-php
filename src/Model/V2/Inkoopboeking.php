@@ -6,6 +6,9 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use function array_merge;
+use function array_unique;
+
 final class Inkoopboeking extends Boeking
 {
     /**
@@ -24,8 +27,8 @@ final class Inkoopboeking extends Boeking
 
     public static function getEditableAttributes(): array
     {
-        return \array_unique(
-            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        return array_unique(
+            array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
         );
     }
 

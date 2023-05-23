@@ -6,8 +6,10 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use InvalidArgumentException;
 use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Model\SnelstartObject;
+use SplFileObject;
 
 final class Document extends SnelstartObject
 {
@@ -97,10 +99,10 @@ final class Document extends SnelstartObject
         return $this;
     }
 
-    public static function createFromFile(\SplFileObject $file, UuidInterface $parentIdentifier): self
+    public static function createFromFile(SplFileObject $file, UuidInterface $parentIdentifier): self
     {
         if (!$file->isReadable()) {
-            throw new \InvalidArgumentException("Given file is not readable");
+            throw new InvalidArgumentException("Given file is not readable");
         }
 
         return (new static())
