@@ -48,5 +48,15 @@ For an example see ``var/doc/v2/inkoopboeking_add.php``
 ## Supported resources
 Not all resources are currently implemented. Feel free to create a pull request.
 
+# PHPStan
+
+PHPStan scans your whole codebase and looks for both obvious & tricky bugs. Even in those rarely executed if statements 
+that certainly aren't covered by tests. You can run it on your machine and in CI to prevent those bugs ever reaching 
+your customers in production. 
+
+ - vendor/bin/phpstan analyse  
+
+Within the phpstan.neon configuration file the level and the check folder are defined 
+
 # Links
 - [https://b2bapi-developer.snelstart.nl/]
