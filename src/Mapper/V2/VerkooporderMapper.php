@@ -14,6 +14,7 @@ use SnelstartPHP\Model\IncassoMachtiging;
 use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\Type\ProcesStatus;
 use SnelstartPHP\Model\Type\VerkooporderBtwIngave;
+use SnelstartPHP\Model\Type\VerkooporderStatus;
 use SnelstartPHP\Model\V2\Artikel;
 use SnelstartPHP\Model\V2\Relatie;
 use SnelstartPHP\Model\V2\Verkoopfactuur;
@@ -98,6 +99,10 @@ final class VerkooporderMapper extends AbstractMapper
 
         if ($data["verkooporderBtwIngaveModel"] !== null) {
             $verkooporder->setVerkooporderBtwIngaveModel(VerkooporderBtwIngave::from($data["verkooporderBtwIngaveModel"]));
+        }
+
+        if ($data["verkoopOrderStatus"] !== null) {
+            $verkooporder->setVerkooporderStatus(new VerkooporderStatus($data["verkoopOrderStatus"]));
         }
 
         return $verkooporder;

@@ -49,6 +49,7 @@ $verkooporder
     ->setKrediettermijn(14)
     ->setOmschrijving("Week 50")
     ->setRegels(...$lines)
+    ->setVerkooporderStatus(\SnelstartPHP\Model\Type\VerkooporderStatus::UITGEVOERD())
 ;
 
 $verkoopboekingConnector = new \SnelstartPHP\Connector\V2\VerkooporderConnector($connection);
