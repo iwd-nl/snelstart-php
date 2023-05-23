@@ -13,6 +13,7 @@ use SnelstartPHP\Model\Kostenplaats;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type\ProcesStatus;
 use SnelstartPHP\Model\Type\VerkooporderBtwIngave;
+use SnelstartPHP\Model\Type\VerkooporderStatus;
 use SnelstartPHP\Snelstart;
 
 final class Verkooporder extends SnelstartObject
@@ -150,6 +151,13 @@ final class Verkooporder extends SnelstartObject
     private $totaalInclusiefBtw;
 
     /**
+     * Status van de order. Als deze niet is opgegeven wordt de default waarde InBehandeling gebruikt.
+     *
+     * @var VerkooporderStatus|null
+     */
+    private $verkoopOrderStatus;
+
+    /**
      * @var string[]
      */
     public static $editableAttributes = [
@@ -174,6 +182,7 @@ final class Verkooporder extends SnelstartObject
         "verkoopordersjabloon",
         "totaalExclusiefBtw",
         "totaalInclusiefBtw",
+        "verkoopOrderStatus",
     ];
 
     public static function getEditableAttributes(): array
@@ -434,6 +443,18 @@ final class Verkooporder extends SnelstartObject
     public function setTotaalInclusiefBtw(Money $totaalInclusiefBtw): self
     {
         $this->totaalInclusiefBtw = $totaalInclusiefBtw;
+
+        return $this;
+    }
+
+    public function getVerkoopOrderStatus(): ?VerkooporderStatus
+    {
+        return $this->verkoopOrderStatus;
+    }
+
+    public function setVerkoopOrderStatus(?VerkooporderStatus $verkoopOrderStatus): self
+    {
+        $this->verkoopOrderStatus = $verkoopOrderStatus;
 
         return $this;
     }
