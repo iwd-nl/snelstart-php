@@ -47,7 +47,11 @@ abstract class AbstractMapper
         return $class;
     }
 
-    protected function getMoney(string $money): Money
+    /**
+     * @param float|string $money (don't change to string, it will remove cents)
+     * @return Money
+     */
+    protected function getMoney($money): Money
     {
         return new Money(intval(floatval($money) * 100), Snelstart::getCurrency());
     }

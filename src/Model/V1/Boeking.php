@@ -293,7 +293,7 @@ abstract class Boeking extends SnelstartObject
         }
 
         if ($targetAmount->isZero()) {
-            throw new BookingNotInBalanceException();
+            throw new BookingNotInBalanceException('Boeking not in balance');
         }
     }
 }

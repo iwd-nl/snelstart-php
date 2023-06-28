@@ -118,7 +118,7 @@ final class BoekingConnector extends BaseConnector
     }
 
     /**
-     * @return iterable<Model\Verkoopfactuur>
+     * @return Model\Verkoopboeking[]|iterable
      */
     public function findVerkoopfacturen(?ODataRequestDataInterface $ODataRequestData = null, bool $fetchAll = false, iterable $previousResults = null): iterable
     {
@@ -169,5 +169,55 @@ final class BoekingConnector extends BaseConnector
         $documentRequest = new Request\DocumentRequest();
 
         return $documentMapper->add($this->connection->doRequest($documentRequest->addVerkoopBoekingDocument($document, $verkoopboeking)));
+    }
+
+    public function findKasboeking(UuidInterface $uuid): ?Model\Kasboeking
+    {
+        $boekingRequest = new Request\BoekingRequest();
+        $boekingMapper = new Mapper\BoekingMapper();
+
+        try {
+            return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->findKasboeking($uuid)));
+        } catch (SnelstartResourceNotFoundException $e) {
+            return null;
+        }
+    }
+    public function addKasboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    {
+        if ($kasboeking->getId() !== null) {
+            throw PreValidationException::unexpectedIdException();
+        }
+
+        $kasboeking->assertInBalance();
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->addKasboeking($kasboeking)));
+    }
+
+    public function updateKasboeking(Model\Kasboeking $kasboeking): Model\Kasboeking
+    {
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $kasboeking->assertInBalance();
+
+        $boekingMapper = new Mapper\BoekingMapper();
+        $boekingRequest = new Request\BoekingRequest();
+
+        return $boekingMapper->mapKasboeking($this->connection->doRequest($boekingRequest->updateKasboeking($kasboeking)));
+    }
+
+    public function deleteKasboeking(Model\Kasboeking $kasboeking): void
+    {
+        if ($kasboeking->getId() === null) {
+            throw PreValidationException::shouldHaveAnIdException();
+        }
+
+        $boekingRequest = new Request\BoekingRequest();
+
+        $this->connection->doRequest($boekingRequest->deleteKasboeking($kasboeking));
     }
 }
