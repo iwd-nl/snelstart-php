@@ -79,6 +79,6 @@ final class CachedAccessTokenConnection
 
     protected function getItemKey(): string
     {
-        return self::CACHE_ITEM_PREFIX . \spl_object_hash($this) . mt_rand(0, 99);
+        return self::CACHE_ITEM_PREFIX . \spl_object_hash($this) . random_int(0, 99);
     }
 }

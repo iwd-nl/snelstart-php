@@ -11,7 +11,7 @@ final class SnelstartApiErrorException extends \RuntimeException
     public static function handleError(array $body): self
     {
         if (isset($body["modelState"])) {
-            $errorMessages = [ sprintf("%d validation failures occurred.", \count($body["modelState"])) ];
+            $errorMessages = [ sprintf("%d validation failures occurred.", is_array($body["modelState"]) || $body["modelState"] instanceof \Countable ? \count($body["modelState"]) : 0) ];
 
             foreach ($body["modelState"] as $field => $modelStateErrors) {
                 $errorMessages[] = $field . ": ";
