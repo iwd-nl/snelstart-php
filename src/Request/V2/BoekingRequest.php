@@ -8,6 +8,7 @@ use Ramsey\Uuid\UuidInterface;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\V2 as Model;
 use SnelstartPHP\Request\BaseRequest;
+use SnelstartPHP\Utils;
 
 final class BoekingRequest extends BaseRequest
 {
@@ -25,7 +26,7 @@ final class BoekingRequest extends BaseRequest
     {
         return new Request("POST", "inkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public function updateInkoopboeking(Model\Inkoopboeking $inkoopboeking): RequestInterface
@@ -36,14 +37,14 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "inkoopboekingen/" . $inkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($inkoopboeking)));
     }
 
     public function addVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
     {
         return new Request("POST", "verkoopboekingen", [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     public function updateVerkoopboeking(Model\Verkoopboeking $verkoopboeking): RequestInterface
@@ -54,7 +55,7 @@ final class BoekingRequest extends BaseRequest
 
         return new Request("PUT", "verkoopboekingen/" . $verkoopboeking->getId()->toString(), [
             "Content-Type"  =>  "application/json"
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($verkoopboeking)));
     }
 
     public function findKasboeking(UuidInterface $uuid): RequestInterface

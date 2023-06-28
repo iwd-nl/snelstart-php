@@ -12,6 +12,7 @@ use SnelstartPHP\Model\V2\Inkoopboeking;
 use SnelstartPHP\Model\V2\Relatie;
 use SnelstartPHP\Model\V2\Verkoopboeking;
 use SnelstartPHP\Request\BaseRequest;
+use SnelstartPHP\Utils;
 
 final class DocumentRequest extends BaseRequest
 {
@@ -60,7 +61,7 @@ final class DocumentRequest extends BaseRequest
 
         return new Request("PUT", "documenten/" . $document->getId()->toString(), [
             "Content-Type"  =>  "application/json",
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 
     public function deleteDocument(Document $document): RequestInterface
@@ -76,6 +77,6 @@ final class DocumentRequest extends BaseRequest
     {
         return new Request("POST", sprintf("documenten/%s", $documentType->getValue()), [
             "Content-Type" =>   "application/json",
-        ], \GuzzleHttp\json_encode($this->prepareAddOrEditRequestForSerialization($document)));
+        ], Utils::jsonEncode($this->prepareAddOrEditRequestForSerialization($document)));
     }
 }
