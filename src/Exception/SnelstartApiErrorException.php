@@ -11,7 +11,7 @@ final class SnelstartApiErrorException extends \RuntimeException
     public static function handleError(array $body): self
     {
         if (isset($body["modelState"])) {
-            $errorMessages = [ sprintf("%d validation failures occurred.", \count($body["modelState"])) ];
+            $errorMessages = [ sprintf("%d validation failures occurred.", is_countable($body["modelState"]) ? \count($body["modelState"]) : 0) ];
 
             foreach ($body["modelState"] as $field => $modelStateErrors) {
                 $errorMessages[] = $field . ": ";
@@ -39,6 +39,6 @@ final class SnelstartApiErrorException extends \RuntimeException
             return new static($body["Message"] ?? $body["message"], 400);
         }
 
-        throw new static("Unknown exception. Message body: " . \json_encode($body), 400);
+        throw new static("Unknown exception. Message body: " . \json_encode($body, JSON_THROW_ON_ERROR), 400);
     }
 }
