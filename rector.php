@@ -26,8 +26,8 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->skip([
-//        TypedPropertyFromAssignsRector::class,
-//        NullCoalescingOperatorRector::class, // https://wiki.php.net/rfc/null_coalesce_equal_operator
-//        ClosureToArrowFunctionRector::class, // https://wiki.php.net/rfc/arrow_functions_v2
+        TypedPropertyFromAssignsRector::class,
+        NullCoalescingOperatorRector::class, // https://wiki.php.net/rfc/null_coalesce_equal_operator
+        ClosureToArrowFunctionRector::class, // https://wiki.php.net/rfc/arrow_functions_v2
     ]);
 };
