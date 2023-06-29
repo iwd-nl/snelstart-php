@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": ">=7.4",
         "ext-json": "*",
         "ext-mbstring": "*",
         "guzzlehttp/guzzle": "^6.4|^7.0",
@@ -28,6 +28,7 @@
     "require-dev": {
         "phpstan/phpstan": "^1.5",
         "phpunit/phpunit": "^8.5.23",
+        "rector/rector": "^0.17.1",
         "vimeo/psalm": "^4.0|^5.0"
     },
     "suggest": {
