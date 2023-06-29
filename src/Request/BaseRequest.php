@@ -4,6 +4,7 @@ namespace SnelstartPHP\Request;
 
 use Money\Money;
 use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
 use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Serializer\RequestSerializerInterface;
@@ -53,8 +54,7 @@ abstract class BaseRequest
             }
 
             if (!$methodExists) {
-                \trigger_error(sprintf("There is no method (get or is) on object %s for property %s", get_class($object), $editableAttributeName), \E_USER_NOTICE);
-                continue;
+                throw new RuntimeException(sprintf("There is no method (get or is) on object %s for property %s", get_class($object), $editableAttributeName));
             }
 
             $value = $object->{$methodName}();

@@ -6,6 +6,7 @@ use Money\Money;
 use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use RuntimeException;
 use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Serializer\RequestSerializerInterface;
@@ -45,7 +46,8 @@ class BaseRequestTest extends TestCase
 
         $object::$editableAttributes = [ "notExistingProperty" ];
 
-        $this->expectNotice();
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('There is no method (get or is) on object SnelstartPHP\\Tests\\stubs\\SimpleRequestObjectStub for property notExistingProperty');
         $this->assertEmpty($request->prepareAddOrEditRequestForSerialization($object));
     }
 
