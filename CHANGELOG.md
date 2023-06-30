@@ -1,3 +1,6 @@
+# 3.0.0
+- BC-BREAK: V1 classes are been removed  
+
 # 2.0.4
 - Added support for NaamWaarde fields (please see Model\Relatie) for more information.
 
