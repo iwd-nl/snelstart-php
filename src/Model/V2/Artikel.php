@@ -89,6 +89,11 @@ final class Artikel extends SnelstartObject
     private $vrijeVoorraad;
 
     /**
+     * @var array<string, mixed>
+     */
+    private $extraVelden = [];
+
+    /**
      * @var string[]
      */
     public static $editableAttributes = [
@@ -247,6 +252,16 @@ final class Artikel extends SnelstartObject
         $this->vrijeVoorraad = $vrijeVoorraad;
 
         return $this;
+    }
+
+    public function getExtraVelden(): array
+    {
+        return $this->extraVelden;
+    }
+
+    public function setExtraVelden(array $extraVelden): void
+    {
+        $this->extraVelden = $extraVelden;
     }
 
     public function getInkoopprijs(): Money
