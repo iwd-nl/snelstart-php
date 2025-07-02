@@ -74,6 +74,16 @@ final class ArtikelMapper extends AbstractMapper
             );
         }
 
+        if (!empty($data["extraVelden"])) {
+            $extraVelden = [];
+
+            foreach ($data["extraVelden"] as $extraVeld) {
+                $extraVelden[$extraVeld["naam"]] = $extraVeld["waarde"];
+            }
+
+            $artikel->setExtraVelden($extraVelden);
+        }
+
         return $artikel;
     }
 
