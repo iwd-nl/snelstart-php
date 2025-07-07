@@ -79,6 +79,12 @@ final class BoekingMapper extends AbstractMapper
         return $this->mapVerkoopboekingResult(new Model\Verkoopboeking());
     }
 
+    public function mapKasboeking(ResponseInterface $response): Model\Kasboeking
+    {
+        $this->setResponseData($response);
+        return $this->mapKasboekingResult(new Model\Kasboeking());
+    }
+
     protected function mapDocumentResult(array $data = []): Model\Document
     {
         $data = empty($data) ? $this->responseData : $data;
@@ -92,81 +98,13 @@ final class BoekingMapper extends AbstractMapper
         /**
          * @var Model\Inkoopboeking $inkoopboeking
          */
-        $inkoopboeking = $this->mapBoekingResult($inkoopboeking, $data);
+        $inkoopboeking = $this->mapKoopboekingResult($inkoopboeking, $data);
 
         if (isset($data["leverancier"])) {
             $inkoopboeking->setLeverancier(Model\Relatie::createFromUUID(Uuid::fromString($data["leverancier"]["id"])));
         }
 
         return $inkoopboeking;
-    }
-
-    protected function mapVerkoopboekingResult(Model\Verkoopboeking $verkoopboeking, array $data = []): Model\Verkoopboeking
-    {
-        $data = empty($data) ? $this->responseData : $data;
-
-        /**
-         * @var Model\Verkoopboeking $verkoopboeking
-         */
-        $verkoopboeking = $this->mapBoekingResult($verkoopboeking, $data);
-
-        if (isset($data["klant"])) {
-            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
-        } else if (isset($data["relatie"])) {
-            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
-        }
-
-        if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
-            $doorlopendeIncassoMachtiging = IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"]));
-            $verkoopboeking->setDoorlopendeIncassoMachtiging($doorlopendeIncassoMachtiging);
-        }
-
-        if (isset($data["eenmaligeIncassoMachtiging"]["datum"])) {
-            $incassomachtiging = (new IncassoMachtiging())
-                ->setDatum(new \DateTimeImmutable($data["eenmaligeIncassoMachtiging"]["datum"]));
-
-            if ($data["eenmaligeIncassoMachtiging"]["kenmerk"] !== null) {
-                $incassomachtiging->setKenmerk($data["eenmaligeIncassoMachtiging"]["kenmerk"]);
-            }
-
-            if (isset($data["eenmaligeIncassoMachtiging"]["omschrijving"])) {
-                $incassomachtiging->setOmschrijving($data["eenmaligeIncassoMachtiging"]["omschrijving"]);
-            }
-
-            $verkoopboeking->setEenmaligeIncassoMachtiging($incassomachtiging);
-        }
-
-        return $verkoopboeking;
-    }
-
-    protected function mapVerkoopfactuurResult(Model\Verkoopfactuur $verkoopfactuur, array $data = []): Model\Verkoopfactuur
-    {
-        $data = empty($data) ? $this->responseData : $data;
-
-        // This maps "id", "uri", "modifiedOn" and "factuurnummer".
-        $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data);
-
-        if (isset($data['relatie'])) {
-            $verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
-        }
-        if (isset($data['verkoopBoeking'])) {
-            $verkoopfactuur->setVerkoopBoeking(Model\Verkoopboeking::createFromUUID(Uuid::fromString($data['verkoopBoeking']['id'])));
-        }
-
-        if (isset($data['factuurDatum'])) {
-            $verkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
-        }
-        if (isset($data['factuurBedrag'])) {
-            $verkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
-        }
-        if (isset($data['openstaandSaldo'])) {
-            $verkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
-        }
-        if (isset($data['vervalDatum'])) {
-            $verkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
-        }
-
-        return $verkoopfactuur;
     }
 
     protected function mapInkoopfactuurResult(Model\Inkoopfactuur $inkoopfactuur, array $data = []): Model\Inkoopfactuur
@@ -199,12 +137,132 @@ final class BoekingMapper extends AbstractMapper
         return $inkoopfactuur;
     }
 
-    protected function mapBoekingResult(Model\Boeking $boeking, array $data = []): Model\Boeking
+    protected function mapKasboekingResult(Model\Kasboeking $kasboeking, array $data = []): Model\Kasboeking
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        $kasboeking = $this->mapArrayDataToModel($kasboeking, $data);
+
+        if (isset($data["modifiedOn"])) {
+            $kasboeking->setModifiedOn(new \DateTimeImmutable($data["modifiedOn"]));
+        }
+
+        if (isset($data["datum"])) {
+            $kasboeking->setDatum(new \DateTimeImmutable($data["datum"]));
+        }
+
+        if (isset($data["grootboekBoekingsRegels"])) {
+            $kasboeking->setGrootboekBoekingsRegels(...$this->mapKasboekingregels($data["grootboekBoekingsRegels"]));
+        }
+
+        if (isset($data["inkoopboekingBoekingsRegels"])) {
+            $kasboeking->setInkoopboekingBoekingsRegels(...$this->mapKasboekingregels($data["inkoopboekingBoekingsRegels"]));
+        }
+
+        if (isset($data["verkoopboekingBoekingsRegels"])) {
+            $kasboeking->setVerkoopboekingBoekingsRegels(...$this->mapKasboekingregels($data["verkoopboekingBoekingsRegels"]));
+        }
+
+        if (isset($data["btwBoekingsregels"])) {
+            $kasboeking->setBtwBoekingsregels(...array_map(function(array $btw): Model\BtwBoekingsregel {
+                return (new Model\BtwBoekingsregel())
+                    ->setType(new Type\BtwBoekingsregelType($btw["type"]))
+                    ->setTarief(new Type\BtwSoort($btw["tarief"]))
+                    ->setCredit($this->getMoney($btw['credit']))
+                    ->setDebet($this->getMoney($btw['debet']));
+            }, $data["btwBoekingsregels"]));
+        }
+
+        return $kasboeking;
+    }
+
+    protected function mapVerkoopboekingResult(Model\Verkoopboeking $verkoopboeking, array $data = []): Model\Verkoopboeking
     {
         $data = empty($data) ? $this->responseData : $data;
 
         /**
-         * @var Model\Boeking $boeking
+         * @var Model\Verkoopboeking $verkoopboeking
+         */
+        $verkoopboeking = $this->mapKoopboekingResult($verkoopboeking, $data);
+
+        if (isset($data["klant"])) {
+            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["klant"]["id"])));
+        } else if (isset($data["relatie"])) {
+            $verkoopboeking->setKlant(Model\Relatie::createFromUUID(Uuid::fromString($data["relatie"]["id"])));
+        }
+
+        if (isset($data["doorlopendeIncassoMachtiging"]["id"])) {
+            $doorlopendeIncassoMachtiging = IncassoMachtiging::createFromUUID(Uuid::fromString($data["doorlopendeIncassoMachtiging"]["id"]));
+            $verkoopboeking->setDoorlopendeIncassoMachtiging($doorlopendeIncassoMachtiging);
+        }
+
+        if (isset($data["eenmaligeIncassoMachtiging"]["datum"])) {
+            $incassomachtiging = (new IncassoMachtiging())
+                ->setDatum(new \DateTimeImmutable($data["eenmaligeIncassoMachtiging"]["datum"]));
+
+            if ($data["eenmaligeIncassoMachtiging"]["kenmerk"] !== null) {
+                $incassomachtiging->setKenmerk($data["eenmaligeIncassoMachtiging"]["kenmerk"]);
+            }
+
+            if (isset($data["eenmaligeIncassoMachtiging"]["omschrijving"])) {
+                $incassomachtiging->setOmschrijving($data["eenmaligeIncassoMachtiging"]["omschrijving"]);
+            }
+
+            $verkoopboeking->setEenmaligeIncassoMachtiging($incassomachtiging);
+        }
+
+        return $verkoopboeking;
+    }
+
+	/**
+	 * @param Model\Verkoopfactuur $verkoopfactuur
+	 * @param array $data
+	 *
+	 * @return Model\Verkoopfactuur
+	 * @throws \Exception
+	 */
+	protected function mapVerkoopfactuurResult(Model\Verkoopfactuur $verkoopfactuur, array $data = []): Model\Verkoopfactuur
+	{
+		$data = empty($data) ? $this->responseData : $data;
+
+        /**
+         * @var Model\Verkoopfactuur $verkoopfactuur
+         */
+        $verkoopfactuur = $this->mapArrayDataToModel($verkoopfactuur, $data); // This maps "id", "uri", "modifiedOn" and "factuurnummer".
+
+        if (isset($data['relatie'])) {
+            $verkoopfactuur->setRelatie(Model\Relatie::createFromUUID(Uuid::fromString($data['relatie']['id'])));
+        }
+
+        if (isset($data["verkoopBoeking"])) {
+            $verkoopfactuur->setVerkoopBoeking(Model\Verkoopboeking::createFromUUID(Uuid::fromString($data["verkoopBoeking"]["id"])));
+        }
+
+        if (isset($data['factuurDatum'])) {
+            $verkoopfactuur->setFactuurDatum(new DateTimeImmutable($data['factuurDatum']));
+        }
+
+        if (isset($data['factuurBedrag'])) {
+            $verkoopfactuur->setFactuurBedrag($this->getMoney($data['factuurBedrag']));
+        }
+
+        if (isset($data['openstaandSaldo'])) {
+            $verkoopfactuur->setOpenstaandSaldo($this->getMoney($data['openstaandSaldo']));
+        }
+
+        if (isset($data['vervalDatum'])) {
+            $verkoopfactuur->setVervalDatum(new DateTimeImmutable($data['vervalDatum']));
+        }
+
+        return $verkoopfactuur;
+    }
+
+    protected function mapKoopboekingResult(Model\Koopboeking $boeking, array $data = []): Model\Boeking
+    {
+        $data = empty($data) ? $this->responseData : $data;
+
+        /**
+         * @var Model\Koopboeking $boeking
          */
         $boeking = $this->mapArrayDataToModel($boeking, $data);
 
@@ -273,13 +331,40 @@ final class BoekingMapper extends AbstractMapper
         foreach ($this->responseData as $boekingData) {
             if ($className === Model\Inkoopboeking::class) {
                 yield $this->mapInkoopboekingResult(new $className, $boekingData);
-            } else if ($className === Model\Verkoopboeking::class) {
-                yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Verkoopfactuur::class) {
-                yield $this->mapVerkoopfactuurResult(new $className, $boekingData);
+				yield $this->mapVerkoopfactuurResult(new $className, $boekingData);
+			} else if ($className === Model\Verkoopboeking::class) {
+                yield $this->mapVerkoopboekingResult(new $className, $boekingData);
             } else if ($className === Model\Inkoopfactuur::class) {
                 yield $this->mapInkoopfactuurResult(new $className, $boekingData);
+            } else if ($className === Model\Kasboeking::class) {
+                yield $this->mapKasboekingResult(new $className, $boekingData);
             }
         }
+    }
+
+    protected function mapKasboekingregels(array $boekingsregels): array
+    {
+        return array_map(function (array $boekingsregel): Model\KasBoekingsregel {
+            $boekingsregelObject = (new Model\KasBoekingsregel())
+                ->setOmschrijving($boekingsregel["omschrijving"])
+                ->setCredit($this->getMoney($boekingsregel["credit"]))
+                ->setDebet($this->getMoney($boekingsregel["debet"]));
+
+            if (isset($boekingsregel["grootboek"])) {
+                $boekingsregelObject
+                    ->setGrootboek(
+                        Model\Grootboek::createFromUUID(Uuid::fromString($boekingsregel["grootboek"]["id"]))
+                    );
+            }
+
+            if (isset($boekingsregel["kostenplaats"])) {
+                $boekingsregelObject->setKostenplaats(
+                    Kostenplaats::createFromUUID(Uuid::fromString($boekingsregel["kostenplaats"]["id"]))
+                );
+            }
+
+            return $boekingsregelObject;
+        }, $boekingsregels);
     }
 }
