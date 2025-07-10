@@ -6,7 +6,7 @@ PHP client library to use the Snelstart B2B API.
 __Note that this library is not created, or maintained, by Snelstart.__
 
 # Pre-word
-This release will support both version 1 and version 2. Version 1 is considered deprecated, as Snelstart does not activly promote it anymore. Instructions on how to upgrade will be added when the next release takes place.
+This release will support only version 2. Version 1 is deprecated and is removed from this project, as Snelstart does not actively promote it anymore. Instructions on how to upgrade will be added when the next release takes place.
 
 # Installation
 Installation is easy as 1, 2, 3 thanks to Composer.

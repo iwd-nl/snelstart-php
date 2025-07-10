@@ -40,7 +40,6 @@
         }
     },
     "autoload": {
-        "files": [ "src/deprecated.php" ],
         "psr-4": {
             "SnelstartPHP\\": "src/"
         }
