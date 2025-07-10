@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeInterface;
 use SnelstartPHP\Model\SnelstartObject;
 use SnelstartPHP\Model\Type\Grootboekfunctie;
 use SnelstartPHP\Model\Type\Rekeningcode;
@@ -15,7 +16,7 @@ final class Grootboek extends SnelstartObject
     /**
      * Het tijdstip waarop het grootboek is aangemaakt of voor het laatst is gewijzigd
      *
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $modifiedOn;
 
@@ -69,12 +70,12 @@ final class Grootboek extends SnelstartObject
      */
     private $rgsCode = [];
 
-    public function getModifiedOn(): ?\DateTimeInterface
+    public function getModifiedOn(): ?DateTimeInterface
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(?\DateTimeInterface $modifiedOn): Grootboek
+    public function setModifiedOn(?DateTimeInterface $modifiedOn): Grootboek
     {
         $this->modifiedOn = $modifiedOn;
 

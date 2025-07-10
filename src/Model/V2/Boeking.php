@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeInterface;
 use Money\Money;
 use SnelstartPHP\Exception\BookingNotInBalanceException;
 use SnelstartPHP\Model\SnelstartObject;
@@ -15,7 +16,7 @@ abstract class Boeking extends SnelstartObject
     /**
      * Het tijdstip waarop het grootboek is aangemaakt of voor het laatst is gewijzigd
      *
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     protected $modifiedOn;
 
@@ -43,14 +44,14 @@ abstract class Boeking extends SnelstartObject
     /**
      * De datum van de factuur, dit is ook de datum waarop de boeking wordt geboekt.
      *
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     protected $factuurDatum;
 
     /**
      * Het tijdstip waarop de factuur is of zal vervallen
      *
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     protected $vervalDatum;
 
@@ -113,12 +114,12 @@ abstract class Boeking extends SnelstartObject
         "documents",
     ];
 
-    public function getModifiedOn(): ?\DateTimeInterface
+    public function getModifiedOn(): ?DateTimeInterface
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(?\DateTimeInterface $modifiedOn): self
+    public function setModifiedOn(?DateTimeInterface $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
 
@@ -161,24 +162,24 @@ abstract class Boeking extends SnelstartObject
         return $this;
     }
 
-    public function getFactuurdatum(): ?\DateTimeInterface
+    public function getFactuurdatum(): ?DateTimeInterface
     {
         return $this->factuurDatum;
     }
 
-    public function setFactuurdatum(?\DateTimeInterface $factuurDatum): self
+    public function setFactuurdatum(?DateTimeInterface $factuurDatum): self
     {
         $this->factuurDatum = $factuurDatum;
 
         return $this;
     }
 
-    public function getVervaldatum(): ?\DateTimeInterface
+    public function getVervaldatum(): ?DateTimeInterface
     {
         return $this->vervalDatum;
     }
 
-    public function setVervaldatum(?\DateTimeInterface $vervalDatum): self
+    public function setVervaldatum(?DateTimeInterface $vervalDatum): self
     {
         $this->vervalDatum = $vervalDatum;
 

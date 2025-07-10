@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeInterface;
 use Money\Money;
 use SnelstartPHP\Exception\PreValidationException;
 use SnelstartPHP\Model\SnelstartObject;
@@ -60,7 +61,7 @@ final class Artikel extends SnelstartObject
     private $eenheid;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      */
     private $modifiedOn;
 
@@ -194,12 +195,12 @@ final class Artikel extends SnelstartObject
         return $this;
     }
 
-    public function getModifiedOn(): ?\DateTimeInterface
+    public function getModifiedOn(): ?DateTimeInterface
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(\DateTimeInterface $modifiedOn): self
+    public function setModifiedOn(DateTimeInterface $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
 

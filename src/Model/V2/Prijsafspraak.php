@@ -2,6 +2,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeInterface;
 use Money\Money;
 use SnelstartPHP\Model\BaseObject;
 use SnelstartPHP\Model\Type\PrijsBepalingSoort;
@@ -19,7 +20,7 @@ final class Prijsafspraak extends BaseObject
     private $artikel;
 
     /**
-     * @var \DateTimeInterface
+     * @var DateTimeInterface
      */
     private $datum;
 
@@ -44,12 +45,12 @@ final class Prijsafspraak extends BaseObject
     private $basisprijs;
 
     /**
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $datumVanaf;
 
     /**
-     * @var \DateTimeInterface|null
+     * @var DateTimeInterface|null
      */
     private $datumTotEnMet;
 
@@ -87,12 +88,12 @@ final class Prijsafspraak extends BaseObject
         return $this;
     }
 
-    public function getDatum(): \DateTimeInterface
+    public function getDatum(): DateTimeInterface
     {
         return $this->datum;
     }
 
-    public function setDatum(\DateTimeInterface $datum): self
+    public function setDatum(DateTimeInterface $datum): self
     {
         $this->datum = $datum;
 
@@ -147,24 +148,24 @@ final class Prijsafspraak extends BaseObject
         return $this;
     }
 
-    public function getDatumVanaf(): ?\DateTimeInterface
+    public function getDatumVanaf(): ?DateTimeInterface
     {
         return $this->datumVanaf;
     }
 
-    public function setDatumVanaf(?\DateTimeInterface $datumVanaf): self
+    public function setDatumVanaf(?DateTimeInterface $datumVanaf): self
     {
         $this->datumVanaf = $datumVanaf;
 
         return $this;
     }
 
-    public function getDatumTotEnMet(): ?\DateTimeInterface
+    public function getDatumTotEnMet(): ?DateTimeInterface
     {
         return $this->datumTotEnMet;
     }
 
-    public function setDatumTotEnMet(?\DateTimeInterface $datumTotEnMet): self
+    public function setDatumTotEnMet(?DateTimeInterface $datumTotEnMet): self
     {
         $this->datumTotEnMet = $datumTotEnMet;
 

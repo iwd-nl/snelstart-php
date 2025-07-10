@@ -7,6 +7,8 @@
 namespace SnelstartPHP\Model\V2;
 
 use SnelstartPHP\Model\IncassoMachtiging;
+use function array_merge;
+use function array_unique;
 
 final class Verkoopboeking extends Boeking
 {
@@ -50,8 +52,8 @@ final class Verkoopboeking extends Boeking
 
     public static function getEditableAttributes(): array
     {
-        return \array_unique(
-            \array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
+        return array_unique(
+            array_merge(parent::$editableAttributes, parent::getEditableAttributes(), static::$editableAttributes, self::$editableAttributes)
         );
     }
 

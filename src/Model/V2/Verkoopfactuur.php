@@ -6,6 +6,7 @@
 
 namespace SnelstartPHP\Model\V2;
 
+use DateTimeImmutable;
 use Money\Money;
 use SnelstartPHP\Model\SnelstartObject;
 
@@ -21,7 +22,7 @@ final class Verkoopfactuur extends SnelstartObject
     /**
      * Het tijdstip waarop de verkoopfactuur voor het laatst is gewijzigd.
      *
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $modifiedOn;
 
@@ -42,7 +43,7 @@ final class Verkoopfactuur extends SnelstartObject
     /**
      * Het tijdstip waarop de factuur is of zal vervallen
      *
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $vervalDatum;
 
@@ -54,7 +55,7 @@ final class Verkoopfactuur extends SnelstartObject
     /**
      * De datum waarop de factuur is aangemaakt
      *
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $factuurDatum;
 
@@ -90,12 +91,12 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    public function getModifiedOn(): ?\DateTimeImmutable
+    public function getModifiedOn(): ?DateTimeImmutable
     {
         return $this->modifiedOn;
     }
 
-    public function setModifiedOn(\DateTimeImmutable $modifiedOn): self
+    public function setModifiedOn(DateTimeImmutable $modifiedOn): self
     {
         $this->modifiedOn = $modifiedOn;
 
@@ -126,12 +127,12 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    public function getVervalDatum(): ?\DateTimeImmutable
+    public function getVervalDatum(): ?DateTimeImmutable
     {
         return $this->vervalDatum;
     }
 
-    public function setVervalDatum(\DateTimeImmutable $vervalDatum): self
+    public function setVervalDatum(DateTimeImmutable $vervalDatum): self
     {
         $this->vervalDatum = $vervalDatum;
 
@@ -150,12 +151,12 @@ final class Verkoopfactuur extends SnelstartObject
         return $this;
     }
 
-    public function getFactuurDatum(): ?\DateTimeImmutable
+    public function getFactuurDatum(): ?DateTimeImmutable
     {
         return $this->factuurDatum;
     }
 
-    public function setFactuurDatum(\DateTimeImmutable $factuurDatum): self
+    public function setFactuurDatum(DateTimeImmutable $factuurDatum): self
     {
         $this->factuurDatum = $factuurDatum;
 
