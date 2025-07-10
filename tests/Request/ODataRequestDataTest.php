@@ -15,7 +15,6 @@ class ODataRequestDataTest extends TestCase
             "testData"
         ]);
 
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
             $ODataRequestData->getFilter(),
             [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
@@ -26,7 +25,7 @@ class ODataRequestDataTest extends TestCase
 
     public function testODataWithMerge()
     {
-        $ODataRequestData = $ODataRequestData ?? new ODataRequestData();
+        $ODataRequestData = new ODataRequestData();
         $ODataRequestData->setFilter(\array_merge(
             [ sprintf("Relatiesoort/any(soort:soort eq '%s')", Relatiesoort::LEVERANCIER()->getValue()) ])
         );

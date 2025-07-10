@@ -11,13 +11,6 @@ use Ramsey\Uuid\UuidInterface;
 final class IncassoMachtiging extends SnelstartObject
 {
     /**
-     * De publieke sleutel (public identifier, als uuid) dat uniek een object identificeert.
-     *
-     * @var UuidInterface|null
-     */
-    protected $id;
-
-    /**
      * @var string
      */
     private $kenmerk;
