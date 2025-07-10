@@ -24,12 +24,12 @@ final class ODataRequestData implements ODataRequestDataInterface
     /**
      * @var int
      */
-    private $top;
+    private $top = Snelstart::MAX_RESULTS;
 
     /**
      * @var int
      */
-    private $skip;
+    private $skip = 0;
 
     /**
      * @var string
@@ -48,8 +48,6 @@ final class ODataRequestData implements ODataRequestDataInterface
 
     public function __construct()
     {
-        $this->top = Snelstart::MAX_RESULTS;
-        $this->skip = 0;
     }
 
     public function getFilter(): array
